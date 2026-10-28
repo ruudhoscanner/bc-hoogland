@@ -198,6 +198,10 @@ ol.adj b{font-family:var(--f-mono);color:var(--club)}
 .cmp .num{font-family:var(--f-display);font-weight:800;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
 .warn{color:var(--heart);font-weight:700;font-size:.9rem}
 .panel .btn.more{align-self:flex-start}
+a.panel{text-decoration:none;color:var(--ink)}
+a.panel:hover{border-color:var(--spade)}
+.video .play{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--heart);color:#fff;font-size:1rem}
+.video.t-diamond .play{background:var(--diamond)}
 .hand{display:flex;flex-direction:column;gap:4px;background:var(--bg);border-radius:12px;padding:12px 14px}
 .hand .ex{font-size:1rem}
 .sig ol{margin:6px 0 0;padding-left:1.2em}
@@ -622,7 +626,12 @@ footer a{color:#fff}
     <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Test jezelf</h2></div>
     <div class="panel t-diamond quiz" id="quiz"></div>
 
-    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Verder lezen</h2></div>
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Kijken & leren</h2></div>
+    <div class="grid g2">
+      <a class="panel t-heart video" href="https://www.youtube.com/@bicacademie1807" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><h3>Speel Bridge met Berry ↗</h3><p>Kijk mee over de schouder van Berry Westra. Per aflevering bespreekt hij een of twee spellen: bieden, afspelen en tegenspel. Op het YouTube-kanaal van BiC Academie.</p></a>
+      <a class="panel t-diamond video" href="https://www.youtube.com/@nederlandsecontent9688/search?query=Iedereen%20kan%20Bridgen" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><h3>Iedereen kan Bridgen ↗</h3><p>De tv-lessenreeks met Berry Westra, van puntentelling en openen tot tussenbieden en preëmptief bieden. Handig naast de beginnerscursus.</p></a>
+    </div>
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Verder lezen</h2></div>
     <div class="grid g3">
       <a class="panel" href="https://www.bridge.nl" target="_blank" rel="noopener"><h3>Nederlandse Bridge Bond ↗</h3><p>Nieuws, spelregels en cursussen.</p></a>
       <a class="panel" href="https://www.bridgeshop.nl/" target="_blank" rel="noopener"><h3>Bridge- en Boekenshop ↗</h3><p>Lesboeken, biedboxen en kaarten.</p></a>
