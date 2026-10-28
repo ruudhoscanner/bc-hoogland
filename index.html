@@ -1079,31 +1079,87 @@ $("#q").addEventListener("input", renderTerms);
 renderTerms();
 
 /* ---------- Quiz ---------- */
-const qs = [
-  ["Hoeveel honneurpunten zitten er in een heel spel kaarten?",["30","40","52"],1,"Vier kleuren × (4+3+2+1) = 40."],
-  ["Hoeveel slagen moet je halen in een contract van 4♥?",["4","8","10"],2,"Niveau plus zes: 4 + 6 = 10 slagen."],
-  ["Welk contract is een manche?",["3♦","3SA","2♠"],1,"3SA levert 40+30+30 = 100 punten op en is dus manche."],
-  ["Wie legt de kaarten open op tafel?",["De leider","De blinde","De uitkomende speler"],1,"De partner van de leider is de blinde."],
-  ["Wat vraagt Stayman na een 1SA-opening?",["Azen","Een hoge vierkaart","Een vijfkaart klaveren"],1,"2♣ vraagt of de opener vier harten of vier schoppen heeft."],
-  ["Je hebt ♥ HVB32. Waarmee kom je uit?",["♥2","♥H","♥B"],1,"De hoogste van een serie: de heer."],
-  ["Schiedams: je gooit een kleine klaver bij. Wat vraag je?",["Ruiten","Harten","Schoppen"],0,"Zwart vraagt om rood, laag om de lage kleur: ruiten."],
-  ["Volgens de slagkracht-telling: hoeveel punten is 1 slag?",["2","3","4"],1,"Wolthuis rekent 3 punten per slag; een opening is 4 slagen, dus 12 punten."]
+const QS = [
+ // Basis
+ ["Basis","Hoeveel honneurpunten zitten er in een heel spel kaarten?",["30","40","52"],1,"Vier kleuren × (4+3+2+1) = 40."],
+ ["Basis","Hoeveel slagen moet je halen in een contract van 4♥?",["4","8","10"],2,"Niveau plus zes: 4 + 6 = 10 slagen."],
+ ["Basis","Wie legt de kaarten open op tafel?",["De leider","De blinde","De uitkomende speler"],1,"De partner van de leider is de blinde."],
+ ["Basis","Wie komt uit?",["De leider","De linkertegenstander van de leider","De rechtertegenstander van de leider"],1,"De speler links van de leider speelt de eerste kaart."],
+ ["Basis","Hoeveel kaarten krijgt elke speler?",["12","13","14"],1,"52 kaarten over vier spelers: 13 elk."],
+ ["Basis","Wat is de volgorde van laag naar hoog in de bieding?",["♣ ♦ ♥ ♠ SA","♠ ♥ ♦ ♣ SA","♦ ♣ ♥ ♠ SA"],0,"Klaveren is het laagst, dan ruiten, harten, schoppen en sans atout."],
+ ["Basis","Hoeveel slagen heb je nodig voor een klein slem?",["11","12","13"],1,"Klein slem is het zesniveau: 6 + 6 = 12 slagen."],
+ ["Basis","Hoeveel punten zijn A, H, V en B samen in één kleur?",["8","10","12"],1,"4 + 3 + 2 + 1 = 10."],
+ // Bieden
+ ["Bieden","Met hoeveel punten open je meestal 1SA?",["12–14","15–17","18–20"],1,"Een 1SA-opening belooft 15–17 punten en een gelijkmatige hand."],
+ ["Bieden","Wat vraagt Stayman na een 1SA-opening?",["Azen","Een hoge vierkaart","Een vijfkaart klaveren"],1,"2♣ vraagt of de opener vier harten of vier schoppen heeft."],
+ ["Bieden","Partner opent 1SA, jij vraagt 2♣. Partner heeft geen hoge vierkaart. Wat biedt hij?",["2♦","2SA","Pas"],0,"Zonder vierkaart harten of schoppen antwoordt de opener 2♦."],
+ ["Bieden","Wat belooft 2♦ als Jacoby-transfer na 1SA?",["Vijf ruiten","Vijf harten","Vijf schoppen"],1,"Je biedt de kleur onder je vijfkaart: 2♦ belooft harten."],
+ ["Bieden","Mag je een transfer bieden met 0 punten?",["Ja","Nee","Alleen kwetsbaar"],0,"Ja. Je laat partner je vijfkaart bieden en past; dat speelt meestal beter dan 1SA."],
+ ["Bieden","Na 1SA bied je 2♥ (transfer). Wat moet de opener bieden?",["2♠","2SA","3♥"],0,"2♥ belooft schoppen, dus de opener biedt 2♠."],
+ ["Bieden","Wat vraagt 4SA (Blackwood)?",["Heren","Azen","Lengte in troef"],1,"Blackwood vraagt naar het aantal azen, om te zien of een slem kan."],
+ ["Bieden","Waar staat een sterke 2♣-opening voor?",["Lange klaveren","Een zwakke hand","Een zeer sterke hand, meestal 22+"],2,"Sterke 2♣ is kunstmatig en zegt niets over klaveren."],
+ ["Bieden","Niemeijer: partner opent 2SA, jij vraagt 3♣. Wat betekent 3♦?",["Geen hoge vier- of vijfkaart","Minstens één vierkaart hoog, geen vijfkaart","Vijf ruiten"],1,"3♦ belooft een vierkaart hoog; met een vijfkaart had hij 3♥ of 3♠ geboden."],
+ ["Bieden","Wat zegt de regel van 20?",["Open met 20 punten","Punten plus de lengte van je twee langste kleuren is 20+: openen","20 punten samen is genoeg voor manche"],1,"Bijvoorbeeld 11 punten met een 5-4-verdeling: 11 + 9 = 20, dus openen."],
+ // Spelen & tegenspel
+ ["Spelen","Je hebt ♥ HVB32. Waarmee kom je uit?",["♥2","♥H","♥B"],1,"De hoogste van een serie: de heer."],
+ ["Spelen","Je hebt ♠ 973 en wilt in die kleur uitkomen. Welke kaart?",["9","7","3"],0,"Top van niets: de hoogste kaart, zodat partner weet dat je geen plaatje hebt."],
+ ["Spelen","Je hebt ♦ H532. Met welke kaart kom je uit?",["H","5","2"],2,"Een kleintje belooft een plaatje."],
+ ["Spelen","Tegen een troefcontract heb je ♣ A853. Wat is de vuistregel?",["Kom uit met de aas","Kom niet uit onder je aas","Kom uit met de 3"],1,"Uitkomen onder je aas kan de leider een goedkope slag geven."],
+ ["Spelen","Met welke kleur kom je meestal uit tegen sans atout?",["Je kortste kleur","Je langste kleur","Altijd de troefkleur"],1,"Met je langste kleur probeer je lengteslagen te ontwikkelen."],
+ ["Spelen","MUD: je hebt drie kleintjes, 9-7-3. Welke speel je eerst?",["9","7","3"],1,"Middle, up, down: eerst de middelste."],
+ ["Spelen","Aan-af-signaal: partner speelt een hoge kaart bij. Wat betekent dat?",["Ik wil deze kleur","Ik wil deze kleur niet","Ik heb er geen meer"],0,"Hoog = aan, laag = af."],
+ ["Spelen","Schiedams: je gooit een kleine klaver bij. Wat vraag je?",["Ruiten","Harten","Schoppen"],0,"Zwart vraagt om rood, laag om de lage kleur: ruiten."],
+ ["Spelen","Schiedams: je gooit een hoge harten bij. Wat vraag je?",["Klaveren","Schoppen","Ruiten"],1,"Rood vraagt om zwart, hoog om de hoge kleur: schoppen."],
+ ["Spelen","Lavinthal, schoppen is troef. Je gooit een hoge klaver bij. Wat vraag je?",["Ruiten","Harten","Klaveren"],1,"Hoog vraagt om de hoogste overgebleven kleur: harten."],
+ ["Spelen","Romeins Lavinthal: wat betekent een oneven kaart?",["Ga door met deze kleur","Speel de hoogste andere kleur","Ik heb een even aantal"],0,"Een oneven kaart is het aansignaal."],
+ ["Spelen","Je hebt AV in de blinde en kleintjes in je hand. Waar moet de heer zitten om de impasse te laten lukken?",["Bij je linkertegenstander","Bij je rechtertegenstander","Maakt niet uit"],0,"Je speelt naar de AV toe; de heer moet dan vóór de AV zitten, links van jou."],
+ ["Spelen","Wanneer mag je een gespeelde slag niet meer bekijken?",["Als de slag compleet is","Als je je eigen kaart hebt omgedraaid","Nooit"],1,"Zolang jouw kaart nog open ligt, mag je de hele slag nog zien."],
+ // Scoren
+ ["Scoren","Welk contract is een manche?",["3♦","3SA","2♠"],1,"3SA levert 40 + 30 + 30 = 100 punten op en is dus manche."],
+ ["Scoren","Wat is de laagste manche in een lage kleur?",["4♣","5♣","3♦"],1,"Lage kleuren tellen 20 per slag: 5 × 20 = 100."],
+ ["Scoren","4♠ gemaakt, niet kwetsbaar. Hoeveel punten?",["420","450","620"],0,"4 × 30 = 120, plus 300 manchepremie = 420."],
+ ["Scoren","3SA gemaakt, kwetsbaar. Hoeveel punten?",["400","600","630"],1,"40 + 30 + 30 = 100, plus 500 manchepremie kwetsbaar = 600."],
+ ["Scoren","1 down, ongedoubleerd, niet kwetsbaar. Hoeveel krijgt de tegenpartij?",["50","100","200"],0,"Niet kwetsbaar kost elke down ongedoubleerd 50 punten."],
+ ["Scoren","Wat betekent een score van 50% bij parenbridge?",["Precies gemiddeld","Halve punten gehaald, dus slecht","Gewonnen"],0,"50% is gemiddeld; boven de 55% is een sterke zitting."],
+ ["Scoren","Volgens de slagkracht-telling: hoeveel punten is 1 slag?",["2","3","4"],1,"Wolthuis rekent 3 punten per slag; een opening is 4 slagen, dus 12 punten."],
+ ["Scoren","Wat doet Wolthuis met een 4-3-3-3 verdeling?",["+1 punt","−1 punt","Niets"],1,"Een vlakke 4-3-3-3 hand heeft geen extra slagkracht: 1 punt eraf."],
+ // Club
+ ["Club","Op welke dag speelt B.C. Hoogland?",["Maandag","Dinsdag","Donderdag"],1,"Op dinsdagmiddag en dinsdagavond, in Dorpshuis De Neng."],
+ ["Club","Wanneer is het Hooglands Bridgekampioenschap 2026?",["28 november","12 december","3 januari"],0,"Zaterdag 28 november 2026 in Concordia, ook voor niet-leden."],
+ ["Club","Waar speelt de club?",["Concordia","Dorpshuis De Neng","Het gemeentehuis"],1,"In Dorpshuis De Neng, Engweg 7 in Hoogland."],
+ ["Club","Wat is de contributie voor seizoen 2026-2027?",["€ 120","€ 135","€ 150"],1,"€ 135 per jaar, zoals besloten op de ledenvergadering. Betalen kan in twee termijnen."],
+ ["Club","Op welke avond is de cursus Bridge voor beginners?",["Maandagavond","Dinsdagavond","Woensdagavond"],0,"Op maandagavond van 19.00 tot 21.00 uur, 12 lessen."],
+ ["Club","Wie werden clubkampioen van de dinsdagavond 2025-2026?",["Else Brinkman & Reinie de Jong","Petra Huigsloot & Joris Rademaker","Frans Tibbe & Simon van Valkenhoef"],1,"Petra Huigsloot & Joris Rademaker, met gemiddeld 58,66%."]
 ];
-let qi=0, good=0;
+const QCATS = ["Alles","Basis","Bieden","Spelen","Scoren","Club"];
+const ROUND = 10;
+let qcat="Alles", round=[], qi=0, good=0;
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function startQuiz(){
+  const pool = QS.filter(q => qcat==="Alles" || q[0]===qcat);
+  round = shuffle(pool).slice(0, ROUND); qi=0; good=0; renderQ();
+}
 function renderQ(){
-  if(qi>=qs.length){ $("#quiz").innerHTML = `<h3>${good} van de ${qs.length} goed</h3><p>${good===qs.length?"Perfect! Tijd voor de A-lijn.":good>=3?"Netjes gedaan.":"Blader nog even door de begrippenlijst."}</p><div><button type="button" id="qr">Opnieuw</button></div>`; $("#qr").onclick=()=>{qi=0;good=0;renderQ();}; return; }
-  const [t,o] = qs[qi];
-  $("#quiz").innerHTML = `<span class="meta">Vraag ${qi+1} van ${qs.length}</span><h3>${t}</h3><div class="opts">${o.map((x,i)=>`<button type="button" data-i="${i}">${x}</button>`).join("")}</div><p id="qf" class="meta"></p>`;
+  const cats = `<div class="lines" style="flex-wrap:wrap;margin-bottom:6px">${QCATS.map(c=>`<button type="button" data-qc="${c}" aria-pressed="${c===qcat}">${c} <span class="meta">${c==="Alles"?QS.length:QS.filter(q=>q[0]===c).length}</span></button>`).join("")}</div>`;
+  if(qi>=round.length){
+    const pct = good/round.length;
+    $("#quiz").innerHTML = cats + `<h3>${good} van de ${round.length} goed</h3><p>${pct===1?"Perfect! Tijd voor de A-lijn.":pct>=.6?"Netjes gedaan.":"Blader nog even door de infotheek en probeer het opnieuw."}</p><div><button type="button" id="qr">Nieuwe ronde</button></div>`;
+    $("#qr").onclick = startQuiz; return;
+  }
+  const [c,t,o] = round[qi];
+  $("#quiz").innerHTML = cats + `<span class="meta">Vraag ${qi+1} van ${round.length} · ${c} · ${good} goed</span><h3>${t}</h3><div class="opts">${o.map((x,i)=>`<button type="button" data-i="${i}">${x}</button>`).join("")}</div><p id="qf" class="meta"></p>`;
 }
 $("#quiz").addEventListener("click", e => {
+  const c = e.target.closest("button[data-qc]");
+  if(c){ qcat = c.dataset.qc; startQuiz(); return; }
   const b = e.target.closest("button[data-i]"); if(!b || b.disabled) return;
-  const [, , ok, why] = qs[qi]; const i=+b.dataset.i;
+  const [, , , ok, why] = round[qi]; const i=+b.dataset.i;
   $("#quiz").querySelectorAll("button[data-i]").forEach(x => { x.disabled=true; if(+x.dataset.i===ok) x.classList.add("ok"); });
   if(i===ok) good++; else b.classList.add("no");
-  $("#qf").innerHTML = why + ` <button type="button" id="qn">Volgende</button>`;
+  $("#qf").innerHTML = why + ` <button type="button" id="qn">${qi+1<round.length?"Volgende":"Uitslag"}</button>`;
   $("#qn").onclick = () => { qi++; renderQ(); };
 });
-renderQ();
+startQuiz();
 
 /* ---------- Kopiëren & contactformulier ---------- */
 function copy(text, btn){
