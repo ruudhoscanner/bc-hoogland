@@ -1,0 +1,1108 @@
+<title>B.C. Hoogland</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: kaartspel-concept — elke rubriek heeft een eigen kleurkleur (♠ ♥ ♦ ♣), een felle kopband en kaartvormige panelen op een licht "lakenblauw" papier. */
+:root{
+  --bg:#f3f6fb; --surface:#ffffff; --ink:#18213a; --muted:#566079; --line:#d8dfec;
+  --spade:#2b3a8f; --heart:#e2414f; --diamond:#f29a1f; --club:#1f9a63;
+  --spade-soft:#e4e8fb; --heart-soft:#fde6e8; --diamond-soft:#fff0d9; --club-soft:#dff4ea;
+  --on-accent:#ffffff; --band:#2b3a8f;
+  --f-display:"Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", Verdana, system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10142a; --surface:#1a2040; --ink:#eef1fb; --muted:#a6aecb; --line:#2e365e;
+  --spade:#8f9cff; --heart:#ff6b77; --diamond:#ffb54d; --club:#46cf8f;
+  --spade-soft:#232b5c; --heart-soft:#3a1d2a; --diamond-soft:#3a2b17; --club-soft:#163a2c;
+  --on-accent:#10142a; --band:#232b5c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10142a; --surface:#1a2040; --ink:#eef1fb; --muted:#a6aecb; --line:#2e365e;
+  --spade:#8f9cff; --heart:#ff6b77; --diamond:#ffb54d; --club:#46cf8f;
+  --spade-soft:#232b5c; --heart-soft:#3a1d2a; --diamond-soft:#3a2b17; --club-soft:#163a2c;
+  --on-accent:#10142a; --band:#232b5c; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--band)}
+a{color:var(--spade);text-underline-offset:3px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800}
+h3{font-size:1.25rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--diamond);outline-offset:2px;border-radius:6px}
+
+/* Kopbalk */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--band);color:#fff}
+.top .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:1.25rem;margin-right:auto}
+.brand .pips{display:flex;gap:2px;font-size:1.05rem}
+.pips span:nth-child(1){color:#fff}.pips span:nth-child(2){color:#ff8a94}.pips span:nth-child(3){color:#ffc46b}.pips span:nth-child(4){color:#7ee3b0}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;padding:7px 12px;border-radius:999px;font-weight:700;font-size:.95rem}
+nav a:hover{background:rgba(255,255,255,.14)}
+nav a[aria-current="page"]{background:#fff;color:#2b3a8f}
+.login{font-size:.85rem;color:#fff;opacity:.85}
+
+/* Hero */
+.hero{padding-block:48px 36px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .9fr;gap:40px;align-items:center}
+.eyebrow{font-family:var(--f-mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--heart);margin-bottom:12px}
+.hero h1{font-size:clamp(2.6rem,7vw,4.8rem);font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--heart),var(--diamond));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.2rem;margin-top:18px;max-width:34ch;color:var(--muted)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;font-weight:700;text-decoration:none;border:0;font:inherit;font-weight:700;cursor:pointer}
+.btn.p{background:var(--heart);color:var(--on-accent)}
+.btn.s{background:var(--surface);color:var(--ink);border:2px solid var(--line)}
+.btn:hover{transform:translateY(-1px)}
+
+.fan{position:relative;height:300px;max-width:100%}
+.card{position:absolute;width:150px;height:210px;border-radius:14px;background:var(--surface);border:2px solid var(--line);box-shadow:0 10px 30px rgba(20,30,70,.15);display:flex;flex-direction:column;justify-content:space-between;padding:10px 12px;font-family:var(--f-display);font-weight:800;transition:transform .35s ease}
+.card .c{font-size:1.5rem;line-height:1}
+.card .big{font-size:4.5rem;align-self:center;line-height:1}
+.card .c.r{align-self:flex-end;transform:rotate(180deg)}
+.card:nth-child(1){left:8%;top:40px;transform:rotate(-18deg);color:var(--spade)}
+.card:nth-child(2){left:26%;top:20px;transform:rotate(-6deg);color:var(--heart)}
+.card:nth-child(3){left:44%;top:20px;transform:rotate(6deg);color:var(--diamond)}
+.card:nth-child(4){left:62%;top:40px;transform:rotate(18deg);color:var(--club)}
+.fan:hover .card:nth-child(1){transform:rotate(-24deg) translateY(-8px)}
+.fan:hover .card:nth-child(4){transform:rotate(24deg) translateY(-8px)}
+
+/* Volgende speeldag */
+.next{background:var(--spade);color:var(--on-accent);border-radius:20px;padding:22px 26px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.next .day{font-family:var(--f-display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.next .mo{font-family:var(--f-mono);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;opacity:.85}
+.next .what{flex:1;min-width:200px}
+.next .what b{font-family:var(--f-display);font-size:1.4rem}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;font-weight:500}
+
+section.page{padding-block:20px 60px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:36px 0 20px;flex-wrap:wrap}
+.sec-head .suit{font-size:2rem;line-height:1}
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:22px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.panel.t-spade{border-top:8px solid var(--spade)}
+.panel.t-heart{border-top:8px solid var(--heart)}
+.panel.t-diamond{border-top:8px solid var(--diamond)}
+.panel.t-club{border-top:8px solid var(--club)}
+.meta{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.panel .more{margin-top:auto;font-weight:700}
+.tile{border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tile.heart{background:var(--heart-soft)} .tile.diamond{background:var(--diamond-soft)} .tile.club{background:var(--club-soft)} .tile.spade{background:var(--spade-soft)}
+.tile .s{font-size:2rem;line-height:1}
+.tile.heart .s{color:var(--heart)}.tile.diamond .s{color:var(--diamond)}.tile.club .s{color:var(--club)}.tile.spade .s{color:var(--spade)}
+
+/* Agenda */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{font:inherit;font-weight:700;font-size:.9rem;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 14px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.agenda{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.agenda li{display:grid;grid-template-columns:92px 1fr auto;gap:14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 16px}
+.agenda li.past{opacity:.5}
+.agenda li.now{border-color:var(--heart);box-shadow:0 0 0 3px var(--heart-soft)}
+.agenda .d{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.9rem}
+.agenda .act{font-weight:700;min-width:0}
+.agenda .note{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
+.c-zomer{background:var(--diamond-soft);color:var(--ink)} .c-ladder{background:var(--spade-soft);color:var(--ink)} .c-event{background:var(--heart-soft);color:var(--ink)} .c-vergadering{background:var(--club-soft);color:var(--ink)}
+
+/* Tabellen */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+tr.win td{font-weight:700}
+tr.win td:first-child::before{content:"♛ ";color:var(--diamond)}
+
+/* Standen */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 18px;cursor:pointer;background:var(--surface);color:var(--ink);border:2px solid var(--line);display:flex;align-items:center;gap:8px}
+.tabs button .s{font-size:1.2rem;line-height:1}
+.tabs button[aria-selected="true"]{color:var(--on-accent);border-color:transparent}
+.tabs button[data-k="avond"][aria-selected="true"]{background:var(--spade)}
+.tabs button[data-k="middag"][aria-selected="true"]{background:var(--heart)}
+.tabs button[data-k="zomer"][aria-selected="true"]{background:var(--diamond)}
+.tabs button[data-k="mp"][aria-selected="true"]{background:var(--club)}
+.podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px;align-items:end}
+.pod{border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pod .pl{font-family:var(--f-display);font-weight:800;font-size:2.4rem;line-height:1}
+.pod .nm{font-weight:700;line-height:1.3}
+.pod .sc{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:1.1rem}
+.pod.p1{background:var(--diamond-soft);padding-block:28px}.pod.p1 .pl{color:var(--diamond)}
+.pod.p2{background:var(--spade-soft)}.pod.p2 .pl{color:var(--spade)}
+.pod.p3{background:var(--heart-soft)}.pod.p3 .pl{color:var(--heart)}
+.standings{gap:14px}
+.st-top{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.lines{display:flex;gap:6px}
+.lines button{font:inherit;font-weight:700;font-size:.9rem;border:2px solid var(--line);background:transparent;color:var(--ink);padding:5px 14px;border-radius:999px;cursor:pointer}
+.lines button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+table.st td,table.st th{white-space:nowrap}
+table.st td.pair{white-space:normal;min-width:200px;font-weight:700}
+table.st th.r,table.st td.r{text-align:center}
+table.st td.rk{font-family:var(--f-display);font-weight:800;font-size:1.1rem;width:44px}
+table.st td.gem{font-family:var(--f-mono);font-weight:500;font-size:1rem;text-align:right}
+.bar{display:block;height:5px;border-radius:3px;background:var(--line);margin-top:4px;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--club)}
+.cell{display:inline-block;min-width:62px;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.85rem;padding:3px 6px;border-radius:7px}
+.cell.hi{background:var(--club-soft)} .cell.top{background:var(--club);color:var(--on-accent)}
+.cell.lo{background:var(--heart-soft)} .cell.ab{color:var(--muted)}
+.cell sup{font-size:.65rem;margin-left:2px;opacity:.8}
+tr.me td{background:var(--diamond-soft)}
+tr.hide{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;color:var(--muted)}
+.legend b{font-family:var(--f-mono);color:var(--ink)}
+@media (max-width:860px){.podium{grid-template-columns:1fr}.pod.p1{order:-1}}
+
+/* Uitkomen, signaleren, slagkracht */
+.intro{max-width:68ch;color:var(--muted);margin:-6px 0 16px}
+table.kv th{font-family:var(--f-mono);font-size:.72rem;width:110px;vertical-align:top}
+table.kv td{vertical-align:top}
+td.ex,.ex{font-family:var(--f-mono);font-size:.9rem;letter-spacing:.03em}
+.ex b{color:var(--heart)}
+.ex.big{font-size:1rem}
+.blk{color:var(--spade);font-weight:700}.rd{color:var(--heart);font-weight:700}
+ul.ticks,ol.adj{margin:0;padding-left:1.2em;display:grid;gap:6px}
+ul.ticks li::marker{content:"♦  ";color:var(--diamond)}
+ol.adj b{font-family:var(--f-mono);color:var(--club)}
+.form.f4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sig{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--bg);border-radius:14px;padding:16px 18px}
+.sig .big{font-family:var(--f-display);font-weight:800;font-size:2.4rem;line-height:1}
+.sig p{flex:1;min-width:200px}
+.sk{display:grid;gap:8px}
+.sk .r{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center}
+.sk .su{font-size:1.5rem;line-height:1}
+.sk .hn{display:flex;gap:4px;flex-wrap:wrap}
+.sk .hn button{font-family:var(--f-display);font-weight:800;width:36px;padding:6px 0;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.sk .hn button[aria-pressed="true"]{background:var(--club);border-color:var(--club);color:var(--on-accent)}
+.sk select{padding:5px 8px}
+.sk .pts{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);min-width:44px;text-align:right}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmp > div{background:var(--bg);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:2px}
+.cmp .num{font-family:var(--f-display);font-weight:800;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.warn{color:var(--heart);font-weight:700;font-size:.9rem}
+.panel .btn.more{align-self:flex-start}
+.hand{display:flex;flex-direction:column;gap:4px;background:var(--bg);border-radius:12px;padding:12px 14px}
+.hand .ex{font-size:1rem}
+.sig ol{margin:6px 0 0;padding-left:1.2em}
+@media (max-width:860px){.form.f4{grid-template-columns:1fr 1fr}}
+
+/* Infotheek */
+.search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.search input{flex:1;min-width:220px;font:inherit;padding:12px 16px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.term{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.term b{font-family:var(--f-display);font-size:1.1rem;display:block}
+.term .cat{float:right;font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.empty{color:var(--muted);font-style:italic}
+
+/* HCP-teller */
+.hcp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.hcp .row{display:flex;flex-direction:column;gap:6px;align-items:center}
+.hcp .row .su{font-size:1.6rem;line-height:1}
+.hcp button{font-family:var(--f-display);font-weight:800;font-size:1.05rem;width:100%;max-width:64px;padding:8px 0;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.hcp button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.result{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px}
+.result .num{font-family:var(--f-display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+
+/* Scorecalculator */
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem}
+select,textarea,.form input{font:inherit;padding:9px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+
+/* Quiz */
+.quiz .opts{display:flex;gap:8px;flex-wrap:wrap}
+.quiz button{font:inherit;font-weight:700;padding:8px 14px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.quiz button.ok{background:var(--club);color:var(--on-accent);border-color:var(--club)}
+.quiz button.no{background:var(--heart);color:var(--on-accent);border-color:var(--heart)}
+
+.copy{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.copy code{font-family:var(--f-mono);font-size:.9rem;background:var(--bg);padding:3px 8px;border-radius:6px;word-break:break-all}
+.copy button{font:inherit;font-size:.8rem;font-weight:700;border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:2px 10px;cursor:pointer}
+.notice{background:var(--diamond-soft);border-radius:14px;padding:14px 18px;font-size:.95rem}
+
+footer{background:var(--band);color:#fff;margin-top:40px}
+footer .wrap{padding-block:30px;display:flex;gap:24px;flex-wrap:wrap;justify-content:space-between;font-size:.9rem}
+footer a{color:#fff}
+
+@media (max-width:860px){
+  .hero .wrap,.g3,.g2{grid-template-columns:1fr}
+  .fan{height:250px;width:340px;margin:0 auto}
+  .card{width:120px;height:170px}.card .big{font-size:3.4rem}
+  .form{grid-template-columns:1fr}
+  .agenda li{grid-template-columns:80px 1fr}
+  .agenda li .chip{grid-column:2;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="pips" aria-hidden="true"><span>♠</span><span>♥</span><span>♦</span><span>♣</span></span>B.C. Hoogland</a>
+    <nav aria-label="Hoofdmenu">
+      <a href="#home">Home</a>
+      <a href="#berichten">Berichten</a>
+      <a href="#uitslagen">Uitslagen</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#club">Clubinfo</a>
+      <a href="#infotheek">Infotheek</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="login" href="https://24022.bridge.nl?sso-login=login" target="_blank" rel="noopener">Inloggen leden ↗</a>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="page" id="v-home" data-view="home">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Bridgeclub · Dorpshuis De Neng</div>
+        <h1>Gezellig bridgen in <em>Hoogland</em></h1>
+        <p class="lead">Ruim 100 leden spelen elke dinsdagmiddag en dinsdagavond in De Neng. Gezelligheid staat voorop, en nieuwe leden zijn van harte welkom.</p>
+        <div class="btns">
+          <a class="btn p" href="#contact">Kom eens kijken</a>
+          <a class="btn s" href="#infotheek">Naar de infotheek</a>
+        </div>
+      </div>
+      <div class="fan" aria-hidden="true">
+        <div class="card"><span class="c">A♠</span><span class="big">♠</span><span class="c r">A♠</span></div>
+        <div class="card"><span class="c">K♥</span><span class="big">♥</span><span class="c r">K♥</span></div>
+        <div class="card"><span class="c">V♦</span><span class="big">♦</span><span class="c r">V♦</span></div>
+        <div class="card"><span class="c">B♣</span><span class="big">♣</span><span class="c r">B♣</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="next" id="nextBox"></div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Dit seizoen</h2></div>
+    <div class="grid g3">
+      <div class="tile heart"><span class="s">♥</span><h3>Hooglands Bridgekampioenschap</h3><p>Zaterdag 28 november 2026 in Concordia. Ook voor niet-leden: neem familie, buren en Hooglandse vrienden mee.</p></div>
+      <div class="tile diamond"><span class="s">♦</span><h3>Cursus Bridge voor beginners</h3><p>Deel 1 loopt sinds 28 september op maandagavond, 19.00–21.00 uur. Deel 2 start in januari. 12 lessen, € 120 inclusief boeken.</p></div>
+      <div class="tile club"><span class="s">♣</span><h3>Clubkampioenen 2025-2026</h3><p>Avond: Petra Huigsloot & Joris Rademaker. Middag: Gerrit Groenendaal & Karel Rietzschel. <a href="#uitslagen">Bekijk de top 5</a></p></div>
+    </div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Laatste berichten</h2></div>
+    <div class="grid g3" id="homePosts"></div>
+  </div>
+</section>
+
+<!-- BERICHTEN -->
+<section class="page" id="v-berichten" data-view="berichten" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Berichten</h2></div>
+    <div class="grid g3" id="allPosts"></div>
+    <p class="meta" style="margin-top:20px">De volledige berichten met bijlagen staan op de clubsite en zijn deels alleen voor leden. <a href="https://24022.bridge.nl/berichten/" target="_blank" rel="noopener">Alle berichten op de clubsite ↗</a></p>
+  </div>
+</section>
+
+<!-- UITSLAGEN -->
+<section class="page" id="v-uitslagen" data-view="uitslagen" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Uitslagen</h2><span class="meta">stand na dinsdag 27 oktober 2026</span></div>
+    <div class="tabs" role="tablist" id="compTabs"></div>
+    <div class="podium" id="podium"></div>
+    <div class="panel standings">
+      <div class="st-top">
+        <div><h3 id="compTitle"></h3><span class="meta" id="compSub"></span></div>
+        <div class="search" style="margin:0;flex:1;justify-content:flex-end"><input id="stQ" type="search" placeholder="Zoek je naam" aria-label="Zoek een speler in de stand" style="max-width:280px"></div>
+      </div>
+      <div class="lines" id="lineTabs"></div>
+      <div class="tbl"><table class="st" id="stTable"></table></div>
+      <button type="button" class="btn s" id="stMore" hidden style="align-self:flex-start">Toon de hele lijst</button>
+      <div class="legend" id="legend"></div>
+    </div>
+    <p class="meta" style="margin-top:12px">Overgenomen van de NBB-uitslagenservice. Bij verschillen is die leidend.</p>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="panel t-club"><h3>Actuele uitslagen</h3><p>De officiële uitslagen per zitting, direct na de speeldag bijgewerkt, inclusief spelverdelingen en het archief van eerdere seizoenen.</p><a class="btn p more" href="https://24022.bridge.nl/competities/" target="_blank" rel="noopener">Naar de uitslagen ↗</a></div>
+      <div class="panel t-spade"><h3>Uitslagenservice NBB</h3><p>Rechtstreeks naar het overzicht van alle competities van B.C. Hoogland bij de Bridgebond.</p><a class="btn s more" href="https://uitslagen.bridge.nl/ords/f?p=USS:2010::::RP:AI_AANROEP_VANUIT_CLUBSITES,P0_VER_ID_NBB:J,24022" target="_blank" rel="noopener">Open de NBB-uitslagen ↗</a></div>
+      <div class="panel t-diamond"><h3>Klassementen</h3><p>De seizoensstand per lijn. Alleen zichtbaar voor ingelogde leden.</p><a class="btn s more" href="https://24022.bridge.nl/klassementen/" target="_blank" rel="noopener">Naar de klassementen ↗</a></div>
+    </div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--diamond)">♦</span><h2>Clubkampioenen 2025-2026</h2></div>
+    <div class="grid g2">
+      <div class="panel t-heart"><h3>Dinsdagavond</h3><span class="meta">A-lijn · 7 van 7 ronden</span>
+        <div class="tbl"><table><thead><tr><th>Paar</th><th style="text-align:right">Gem. %</th></tr></thead><tbody>
+          <tr class="win"><td>Petra Huigsloot & Joris Rademaker</td><td class="n">58,66</td></tr>
+          <tr><td>Else Brinkman & Reinie de Jong</td><td class="n">56,27</td></tr>
+          <tr><td>Johan Jansen & Gerdien van Sandijk</td><td class="n">56,25</td></tr>
+          <tr><td>Frans Tibbe & Simon van Valkenhoef</td><td class="n">56,13</td></tr>
+          <tr><td>Henk Rigter & Herman Schrijver</td><td class="n">53,19</td></tr>
+        </tbody></table></div></div>
+      <div class="panel t-diamond"><h3>Dinsdagmiddag</h3><span class="meta">A-lijn · 6 van 6 ronden</span>
+        <div class="tbl"><table><thead><tr><th>Paar</th><th style="text-align:right">Gem. %</th></tr></thead><tbody>
+          <tr class="win"><td>Gerrit Groenendaal & Karel Rietzschel</td><td class="n">55,41</td></tr>
+          <tr><td>Annemarie Overmars & Harry Overmars</td><td class="n">53,01</td></tr>
+          <tr><td>Willie van Middelaar & Henk van Middelaar</td><td class="n">52,52</td></tr>
+          <tr><td>Frans Daemen & Frits Peters</td><td class="n">50,71</td></tr>
+          <tr><td>Marian de Munck & Ria van der Stroom</td><td class="n">49,46</td></tr>
+        </tbody></table></div></div>
+    </div>
+    <p class="meta" style="margin-top:14px">Gemiddelde van de rondepercentages in de A-lijn. Het officiële klassement op de clubsite is leidend.</p>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section class="page" id="v-agenda" data-view="agenda" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Agenda 2026-2027</h2></div>
+    <div class="filters" role="group" aria-label="Filter agenda">
+      <button type="button" data-f="all" aria-pressed="true">Alles</button>
+      <button type="button" data-f="ladder" aria-pressed="false">Competitie</button>
+      <button type="button" data-f="zomer" aria-pressed="false">Zomercompetitie</button>
+      <button type="button" data-f="event" aria-pressed="false">Evenementen</button>
+      <button type="button" data-f="upcoming" aria-pressed="false">Alleen komend</button>
+    </div>
+    <ul class="agenda" id="agendaList"></ul>
+    <p class="meta" style="margin-top:16px">Speeldagen zijn op dinsdag, middag en avond. De rest van het seizoen staat in de volledige agenda voor leden. <a href="https://24022.bridge.nl/clubcompetitie-2026-2027/" target="_blank" rel="noopener">Volledige agenda ↗</a></p>
+  </div>
+</section>
+
+<!-- CLUB -->
+<section class="page" id="v-club" data-view="club" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--diamond)">♦</span><h2>Clubinformatie</h2></div>
+    <div class="grid g2">
+      <div class="panel t-diamond"><h3>Speellocatie</h3><p><b>Dorpshuis De Neng</b><br>Engweg 7, 3828 CJ Hoogland</p><p>Consumpties tegen dorpshuisprijzen.</p><a class="more" href="https://www.openstreetmap.org/search?query=Engweg%207%20Hoogland" target="_blank" rel="noopener">Route ↗</a></div>
+      <div class="panel t-spade"><h3>Spelen</h3><p>Elke <b>dinsdagmiddag</b> en <b>dinsdagavond</b>. Je kiest zelf of je 's middags, 's avonds of allebei speelt.</p><p>Ongeveer 100 leden, verdeeld over een A- en B-lijn.</p></div>
+      <div class="panel t-heart"><h3>Contributie</h3><p>Seizoen 2026-2027: <b>€ 135 per jaar</b>, zoals besloten op de ledenvergadering.</p><p>Betalen kan in één keer of in twee termijnen: oktober en januari.</p></div>
+      <div class="panel t-club"><h3>Bestuur & contact</h3><p><b>Henk Rigter</b>, voorzitter<br><b>Jan Louwes</b>, secretaris<br><b>Gé Boom</b>, docent bridgecursus</p><a class="more" href="#contact">Contactgegevens</a></div>
+    </div>
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Voor leden</h2></div>
+    <div class="grid g3">
+      <a class="panel" href="https://24022.bridge.nl/algemene-gegevens/leden/" target="_blank" rel="noopener"><h3>Ledenlijst ↗</h3><p>Alleen na inloggen.</p></a>
+      <a class="panel" href="https://24022.bridge.nl/algemene-gegevens/commissies/" target="_blank" rel="noopener"><h3>Commissies ↗</h3><p>Wie doet wat binnen de club.</p></a>
+      <a class="panel" href="https://24022.bridge.nl/statuten-en-reglementen/" target="_blank" rel="noopener"><h3>Statuten & reglementen ↗</h3><p>Als bijlage op de clubsite.</p></a>
+      <a class="panel" href="https://24022.bridge.nl/fotoalbums/" target="_blank" rel="noopener"><h3>Fotogalerij ↗</h3><p>Foto's van zittingen en drives.</p></a>
+      <a class="panel" href="https://24022.bridge.nl/forum/" target="_blank" rel="noopener"><h3>Praat mee! ↗</h3><p>Het forum van de club.</p></a>
+      <a class="panel" href="https://www.mijnbridge.nl" target="_blank" rel="noopener"><h3>MijnBridge ↗</h3><p>Je persoonlijke pagina bij de NBB.</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- INFOTHEEK -->
+<section class="page" id="v-infotheek" data-view="infotheek" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Infotheek</h2><span class="meta">begrippen, hulpmiddelen en een quizje</span></div>
+
+    <div class="grid g2">
+      <div class="panel t-spade">
+        <h3>Punten tellen</h3>
+        <p>Tik de honneurs in je hand aan. Aas 4, Heer 3, Vrouw 2, Boer 1.</p>
+        <div class="hcp" id="hcp"></div>
+        <div class="result"><span class="num" id="hcpNum">0</span><p id="hcpAdv" style="flex:1;min-width:180px"></p></div>
+      </div>
+      <div class="panel t-heart">
+        <h3>Scorecalculator</h3>
+        <p>Wedstrijdscore voor één spel.</p>
+        <div class="form">
+          <label for="sLvl">Niveau<select id="sLvl"></select></label>
+          <label for="sSuit">Kleur<select id="sSuit"><option value="c">♣ Klaveren</option><option value="d">♦ Ruiten</option><option value="h">♥ Harten</option><option value="s" selected>♠ Schoppen</option><option value="nt">SA</option></select></label>
+          <label for="sDbl">Doublet<select id="sDbl"><option value="1">Geen</option><option value="2">Gedoubleerd</option><option value="4">Geredoubleerd</option></select></label>
+          <label for="sVul">Kwetsbaarheid<select id="sVul"><option value="0">Niet kwetsbaar</option><option value="1">Kwetsbaar</option></select></label>
+          <label for="sTricks">Slagen gehaald<select id="sTricks"></select></label>
+        </div>
+        <div class="result"><span class="num" id="sNum">0</span><p id="sTxt" style="flex:1;min-width:180px"></p></div>
+      </div>
+    </div>
+
+    <!-- NA 1SA: STAYMAN & JACOBY -->
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Na sans atout: Stayman, Jacoby & Niemeijer</h2></div>
+    <p class="intro">Partner opent 1SA: 15–17 punten en een gelijkmatige hand. Heb je een hoge kleur, dan wil je weten of er een fit is. Met een <b>vierkaart</b> vraag je het met Stayman. Met een <b>vijfkaart</b> vertel je het met een transfer.</p>
+    <div class="grid g2">
+      <div class="panel t-spade">
+        <h3>Stayman: 2♣</h3>
+        <p>Met 2♣ vraag je: heb jij een vierkaart harten of schoppen? Gebruik het met minstens één hoge vierkaart en 8 of meer punten.</p>
+        <div class="tbl"><table class="kv"><thead><tr><th>Opener</th><th>Betekenis</th></tr></thead><tbody>
+          <tr><td class="ex"><b>2♦</b></td><td>Geen hoge vierkaart</td></tr>
+          <tr><td class="ex"><b>2♥</b></td><td>Vier harten, misschien ook vier schoppen</td></tr>
+          <tr><td class="ex"><b>2♠</b></td><td>Vier schoppen, geen vier harten</td></tr>
+        </tbody></table></div>
+        <p><b>Daarna:</b> met een fit bied je 3 in de kleur (8–9 punten) of 4 (10+). Zonder fit bied je 2SA (8–9) of 3SA (10+).</p>
+        <div class="hand"><span class="meta">Voorbeeld · 10 punten</span><span class="ex"><span class="blk">♠</span> H B 8 4 · <span class="rd">♥</span> V 7 2 · <span class="rd">♦</span> A 6 3 · <span class="blk">♣</span> 9 5 2</span><span>Je biedt 2♣. Op 2♠ bied je 4♠, op 2♦ of 2♥ bied je 3SA.</span></div>
+      </div>
+      <div class="panel t-heart">
+        <h3>Jacoby-transfer: 2♦ en 2♥</h3>
+        <p>Met een vijfkaart hoog bied je de kleur <b>eronder</b>. Partner moet dan jouw kleur bieden.</p>
+        <div class="tbl"><table class="kv"><thead><tr><th>Jij biedt</th><th>Je belooft</th><th>Partner</th></tr></thead><tbody>
+          <tr><td class="ex"><b>2♦</b></td><td>5+ harten</td><td class="ex">2♥</td></tr>
+          <tr><td class="ex"><b>2♥</b></td><td>5+ schoppen</td><td class="ex">2♠</td></tr>
+        </tbody></table></div>
+        <p><b>Daarna:</b> met 0–7 punten pas je. Met 8–9 bied je 2SA, met 10+ bied je 3SA en partner kiest. Met een zeskaart bied je 3 (uitnodigend) of 4 (manche) in je kleur.</p>
+        <div class="hand"><span class="meta">Voorbeeld · 3 punten</span><span class="ex"><span class="blk">♠</span> V 9 6 5 3 · <span class="rd">♥</span> 8 4 · <span class="rd">♦</span> B 7 2 · <span class="blk">♣</span> T 6 4</span><span>Je biedt 2♥, partner biedt 2♠ en jij past.</span></div>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="tile spade"><span class="s">♠</span><h3>Sterke hand speelt</h3><p>Na een transfer wordt de 1SA-opener leider. Zijn honneurs blijven verborgen en de uitkomst komt naar hem toe.</p></div>
+      <div class="tile heart"><span class="s">♥</span><h3>Ook met niets</h3><p>Een transfer mag al met 0 punten. Een vijfkaart troef speelt meestal beter dan 1SA met een zwakke blinde.</p></div>
+      <div class="tile diamond"><span class="s">♦</span><h3>Spreek het af</h3><p>Sommige paren spelen varianten. Zet op je systeemkaart wat jullie spelen.</p></div>
+    </div>
+    <div class="panel t-diamond" style="margin-top:18px">
+      <h3>Niemeijer: 3♣ na 2SA</h3>
+      <p>Een Nederlandse conventie die sterk lijkt op Puppet Stayman. Gewone Stayman vraagt alleen naar een vierkaart hoog. Met Niemeijer vraag je naar een vier- én een vijfkaart, zodat je ook een 5-3-fit vindt. Meestal gebruikt na een <b>2SA-opening</b> (20–21 punten); sommige paren spelen het ook manche-forcerend na 1SA.</p>
+      <div class="grid g2">
+        <div class="tbl"><table class="kv"><thead><tr><th>Opener</th><th>Betekenis</th></tr></thead><tbody>
+          <tr><td class="ex"><b>3♦</b></td><td>Minstens één vierkaart hoog, geen vijfkaart</td></tr>
+          <tr><td class="ex"><b>3♥</b></td><td>Vijfkaart harten</td></tr>
+          <tr><td class="ex"><b>3♠</b></td><td>Vijfkaart schoppen</td></tr>
+          <tr><td class="ex"><b>3SA</b></td><td>Geen vier- of vijfkaart hoog</td></tr>
+        </tbody></table></div>
+        <div class="tbl"><table class="kv"><thead><tr><th>Na 3♦</th><th>Vrager toont</th></tr></thead><tbody>
+          <tr><td class="ex"><b>3♥</b></td><td>Vier schoppen</td></tr>
+          <tr><td class="ex"><b>3♠</b></td><td>Vier harten</td></tr>
+          <tr><td class="ex"><b>4♦</b></td><td>Beide hoge kleuren vier</td></tr>
+          <tr><td class="ex"><b>3SA</b></td><td>Geen vierkaart hoog</td></tr>
+        </tbody></table></div>
+      </div>
+      <p>Na 3♦ bied je de kleur die je <b>niet</b> hebt. Zo wordt de sterke 2SA-hand leider. Heeft de opener jouw vierkaart ook, dan biedt hij de manche in die kleur, anders 3SA.</p>
+      <div class="hand"><span class="meta">Voorbeeld · partner opent 2SA · 6 punten</span><span class="ex"><span class="blk">♠</span> H 7 3 · <span class="rd">♥</span> B 8 5 2 · <span class="rd">♦</span> V 9 4 · <span class="blk">♣</span> 8 6 2</span><span>Je biedt 3♣. Op 3♠ bied je 4♠. Op 3♦ bied je 3♠ (“ik heb vier harten”); partner biedt dan 4♥ of 3SA.</span></div>
+      <p class="meta">Dit is de meest gangbare vorm. Spreek de details met je partner af en zet ze op je systeemkaart.</p>
+    </div>
+
+    <div class="panel t-club" style="margin-top:18px">
+      <h3>Wat bied ik op partners 1SA?</h3>
+      <p>Vul je punten en je lengte in de hoge kleuren in.</p>
+      <div class="form f4">
+        <label for="nsP">Jouw punten<select id="nsP"></select></label>
+        <label for="nsH">Harten<select id="nsH"></select></label>
+        <label for="nsS">Schoppen<select id="nsS"></select></label>
+      </div>
+      <div class="sig" id="nsOut"></div>
+    </div>
+
+    <!-- UITKOMEN & SIGNALEREN -->
+    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Uitkomen & signaleren</h2></div>
+    <p class="intro">Je speelt veel vaker tegen dan af. Goed tegenspel begint bij afspraken met je partner: waarmee kom je uit, en wat betekent de kaart die je bijspeelt? Kies je niveau.</p>
+    <div class="lines lvl" id="lvlTabs" style="margin-bottom:14px">
+      <button type="button" data-l="b" aria-pressed="true">Beginners</button>
+      <button type="button" data-l="g" aria-pressed="false">Gevorderd</button>
+      <button type="button" data-l="v" aria-pressed="false">Ver gevorderd</button>
+      <button type="button" data-l="o" aria-pressed="false">Overige systemen</button>
+    </div>
+    <div class="lvlbox" data-l="b">
+      <div class="grid g2">
+        <div class="panel t-heart"><h3>Afspraken uit de starterscursus</h3>
+          <div class="tbl"><table class="kv"><tbody>
+            <tr><th>Uitkomst</th><td>Hoogste van een serie</td><td class="ex">♥ <b>H</b>VB32</td></tr>
+            <tr><th></th><td>Een kleintje belooft een plaatje</td><td class="ex">♥ H53<b>2</b></td></tr>
+            <tr><th></th><td>Hoogste van niets</td><td class="ex">♥ <b>9</b>73</td></tr>
+            <tr><th>Bijspelen</th><td>Hoog = aan, laag = af</td><td class="ex"></td></tr>
+            <tr><th>Niet bekennen</th><td>Hoog = aan, laag = af</td><td class="ex"></td></tr>
+          </tbody></table></div></div>
+        <div class="panel t-spade"><h3>Vuistregels voor de uitkomst</h3>
+          <ul class="ticks">
+            <li>Kom uit in de kleur die partner heeft geboden.</li>
+            <li>Tegen sans atout: kom uit met je langste kleur, om lengteslagen te ontwikkelen.</li>
+            <li>Kom niet uit met een aas als je de heer er niet bij hebt, tenzij partner die kleur heeft geboden.</li>
+            <li>Tegen een troefcontract: kom niet uit onder je aas.</li>
+          </ul></div>
+      </div>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="panel t-diamond"><h3>Gebroken serie</h3><p>Kom ook bij een gebroken serie uit met de hoogste van de serie.</p><p class="ex big"><b>H</b>BT93 · <b>V</b>T982 · <b>H</b>T983 · A<b>B</b>T54 <span class="meta">(dat laatste alleen tegen SA)</span></p></div>
+        <div class="panel t-club"><h3>MUD: middle, up, down</h3><p>Met drie kleintjes speel je eerst de middelste en daarna pas de hoogste. Zo ziet partner verschil tussen 9-7-3 en 7-3.</p><p class="meta">Voorbeeld: schoppen is troef, jij hebt ♥ AH532 en partner start met de 7. Volgt in ronde twee de 3, dan heeft partner geen harten meer en kan hij introeven. Volgt de 9, dan heeft partner er nog één.</p></div>
+      </div>
+    </div>
+    <div class="lvlbox" data-l="g" hidden>
+      <div class="grid g2">
+        <div class="panel t-heart"><h3>Schiedams</h3><p>Een eenvoudig systeem voor als je niet kunt bekennen. Je signaleert altijd in de andere kleurgroep: een zwarte kaart vraagt om rood, een rode kaart om zwart. Een hoge kaart vraagt om de hoge kleur, een lage kaart om de lage kleur.</p><p>Het voordeel: je kunt ook <b>niets</b> vragen. Je gooit dan een kaart die vraagt om een kleur die je zelf niet hebt.</p></div>
+        <div class="panel t-spade"><h3>Het schema</h3>
+          <div class="tbl"><table class="kv"><tbody>
+            <tr><td>Lage <span class="blk">♠ ♣</span></td><td>vraagt</td><td><span class="rd">♦ Ruiten</span></td></tr>
+            <tr><td>Hoge <span class="blk">♠ ♣</span></td><td>vraagt</td><td><span class="rd">♥ Harten</span></td></tr>
+            <tr><td>Lage <span class="rd">♥ ♦</span></td><td>vraagt</td><td><span class="blk">♣ Klaveren</span></td></tr>
+            <tr><td>Hoge <span class="rd">♥ ♦</span></td><td>vraagt</td><td><span class="blk">♠ Schoppen</span></td></tr>
+          </tbody></table></div>
+          <p class="meta">Voorbeeld: harten is troef en je wilt ruiten terug. Gooi dan een kleine schoppen of een kleine klaver.</p></div>
+      </div>
+    </div>
+    <div class="lvlbox" data-l="v" hidden>
+      <div class="notice" style="margin-bottom:18px"><b>Tip:</b> leg een slag pas dicht als je zeker weet wat je partner speelde. Zolang jouw kaart nog open ligt, mag je de hele slag nog bekijken, ook als de anderen hun kaart al hebben omgedraaid.</div>
+      <div class="grid g2">
+        <div class="panel t-diamond"><h3>Romeins Lavinthal</h3><p>Bij elke uitkomst, voorspeling of bijspeling geef je met een lage kaart aan wat partner moet spelen zodra hij aan slag komt. Zet het wel op je systeemkaart.</p>
+          <div class="tbl"><table class="kv"><tbody>
+            <tr><td>Oneven kaart</td><td>Ga door met deze kleur</td></tr>
+            <tr><td>Lage even kaart</td><td>Speel de laagste overgebleven kleur</td></tr>
+            <tr><td>Hoge even kaart</td><td>Speel de hoogste overgebleven kleur</td></tr>
+          </tbody></table></div><p class="meta">In een troefcontract sla je de troefkleur over.</p></div>
+        <div class="panel t-club"><h3>Distributie: 1e, 3e, 5e</h3><p>Je geeft door hoeveel kaarten je in de kleur hebt. Samen met de bieding weet je zo vaak al na een paar slagen de verdeling van de leider.</p>
+          <ul class="ticks">
+            <li>Uitkomen met de 1e, 3e of 5e hoogste kaart. Hoog-laag betekent een even aantal.</li>
+            <li>Ook bij bijspelen: hoog-laag is even.</li>
+            <li>Hoogste van een serie blijft gelden, net als "plaatje op plaatje".</li>
+            <li>Kun je je aantal de eerste keer niet tonen, doe het dan in ronde twee met het aantal dat je dan nog hebt.</li>
+          </ul>
+          <p class="ex">H74<b>2</b> · H9<b>7</b>42 · <b>9</b>62 · <b>H</b>VB54</p></div>
+      </div>
+    </div>
+    <div class="lvlbox" data-l="o" hidden>
+      <div class="grid g3">
+        <div class="panel t-spade"><h3>Romeins</h3><p>Een kleine oneven kaart is aan in die kleur. Een even kaart vraagt om een andere kleur: hoog om de hoogste, laag om de laagste overgebleven kleur.</p></div>
+        <div class="panel t-heart"><h3>Lavinthal</h3><p>Bij niet bekennen vraagt een hoge kaart om de hoogste overgebleven kleur en een lage kaart om de laagste.</p></div>
+        <div class="panel t-diamond"><h3>Revolving discards</h3><p>Bij niet bekennen vraagt een hoge kaart om de aansluitende hogere kleur en een lage kaart om de aansluitende lagere kleur, rondom gerekend.</p></div>
+      </div>
+      <p class="meta" style="margin-top:12px">Topspelers gebruiken meestal 1e-3e-5e en/of Romeins Lavinthal.</p>
+    </div>
+
+    <div class="panel t-heart" style="margin-top:22px">
+      <h3>Signaalvertaler</h3>
+      <p>Je kunt niet bekennen en gooit een kaart bij. Welke kleur vraag je partner om? Kies het systeem, de troefkleur en de kaart.</p>
+      <div class="form f4">
+        <label for="sgSys">Systeem<select id="sgSys"><option value="sch">Schiedams</option><option value="lav">Lavinthal</option><option value="rev">Revolving discards</option><option value="rom">Romeins</option></select></label>
+        <label for="sgTr">Troef<select id="sgTr"><option value="s">♠ Schoppen</option><option value="h">♥ Harten</option><option value="d">♦ Ruiten</option><option value="c">♣ Klaveren</option><option value="nt">Sans Atout</option></select></label>
+        <label for="sgSuit">Bijgegooide kleur<select id="sgSuit"><option value="c">♣ Klaveren</option><option value="d">♦ Ruiten</option><option value="h">♥ Harten</option><option value="s">♠ Schoppen</option></select></label>
+        <label for="sgCard">Kaart<select id="sgCard"></select></label>
+      </div>
+      <div class="sig" id="sgOut"></div>
+      <p class="meta">Hoog en laag zijn aan tafel relatief. Hier telt 2 t/m 5 als laag en 6 t/m 9 als hoog.</p>
+    </div>
+
+    <!-- SLAGKRACHT -->
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Van puntenkul naar slagkracht</h2></div>
+    <p class="intro">Uit het bridge-essay van Jan Wolthuis (Groningen, april 2024). Zijn punt: punten tellen is een middel, het doel is inschatten hoeveel <b>slagen</b> je hand kan maken. Twee handen met 10 punten kunnen 1 slag of 13 slagen waard zijn.</p>
+    <div class="grid g3">
+      <div class="tile spade"><span class="s">1</span><h3>Denk in slagen</h3><p>Waardeer je hand op slagkracht, voor honneurs en voor verdeling. In zijn telling is 1 slag 3 punten.</p></div>
+      <div class="tile heart"><span class="s">2</span><h3>Tel per kleur</h3><p>Je maakt slagen per kleur, dus tel honneurs per kleur en niet als losse kaarten. Een kale vrouw is weinig waard.</p></div>
+      <div class="tile club"><span class="s">3</span><h3>Honneurs werken samen</h3><p>Een aansluitende honneur is bijna zoveel waard als de hoogste. AHV is veel sterker dan A, H en V in drie kleuren.</p></div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="panel t-club">
+        <h3>Slagkrachtteller</h3>
+        <p>Tik per kleur je honneurs aan en kies de lengte. De teller toont je hand volgens de slagkracht-telling naast de gewone 4-3-2-1.</p>
+        <div class="sk" id="sk"></div>
+        <p class="warn" id="skWarn" hidden></p>
+        <div class="cmp">
+          <div><span class="meta">4-3-2-1</span><span class="num" id="skHcp">0</span><span class="meta">punten</span></div>
+          <div><span class="meta">Slagkracht</span><span class="num" id="skPts" style="color:var(--club)">0</span><span class="meta" id="skTricks">≈ 0 slagen</span></div>
+        </div>
+        <p class="meta">Vereenvoudigd: honneurwaarde per kleur uit de tabel in het essay, 1 punt aftrek als een kleur te kort is voor de combinatie, 3 punten per kaart boven de vier en 1 punt voor een tweede vierkaart.</p>
+      </div>
+      <div class="panel t-diamond">
+        <h3>Blijf je 4-3-2-1 tellen?</h3>
+        <p>Dan raadt Wolthuis deze correcties aan:</p>
+        <ol class="adj">
+          <li><b>+1</b> voor ten minste twee azen die niet kaal zijn.</li>
+          <li><b>−1</b> voor kale honneurs, ook HV, HB of VB zonder kleintje.</li>
+          <li><b>−1</b> voor losse vrouwen en boeren, zoals Vx, Bx of Bxx.</li>
+          <li><b>+1</b> voor een tien met twee hogere honneurs in die kleur.</li>
+          <li><b>+1</b> voor AH, <b>+2</b> voor AHV en andere aansluitende honneurs.</li>
+          <li><b>+1</b> per honneur die gesteund wordt door een hogere, met hooguit één gat ertussen.</li>
+          <li><b>−1</b> voor een 4-3-3-3 verdeling.</li>
+          <li><b>+</b> voor een verdeelde hand. In SA mag een goede vijfkaart al +1.</li>
+          <li><b>+</b> voor korte kleuren alleen als je kunt introeven.</li>
+          <li>Herwaardeer elke biedronde, ook op passen van de tegenstanders.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--diamond)">♦</span><h2>Begrippenlijst</h2></div>
+    <div class="search"><input id="q" type="search" placeholder="Zoek een begrip, bijv. impasse of Stayman" aria-label="Zoek in de begrippenlijst"></div>
+    <div class="filters" role="group" aria-label="Categorie" id="catF"></div>
+    <div class="terms" id="terms"></div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Test jezelf</h2></div>
+    <div class="panel t-diamond quiz" id="quiz"></div>
+
+    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Verder lezen</h2></div>
+    <div class="grid g3">
+      <a class="panel" href="https://www.bridge.nl" target="_blank" rel="noopener"><h3>Nederlandse Bridge Bond ↗</h3><p>Nieuws, spelregels en cursussen.</p></a>
+      <a class="panel" href="https://www.bridgeshop.nl/" target="_blank" rel="noopener"><h3>Bridge- en Boekenshop ↗</h3><p>Lesboeken, biedboxen en kaarten.</p></a>
+      <a class="panel" href="https://clubsites.bridge.nl/faq/" target="_blank" rel="noopener"><h3>Veelgestelde vragen ↗</h3><p>Over inloggen en de clubsites.</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="page" id="v-contact" data-view="contact" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Contact & aanmelden</h2></div>
+    <div class="grid g2">
+      <div class="panel t-heart" style="gap:14px">
+        <h3>Rechtstreeks contact</h3>
+        <div><b>Algemeen</b><div class="copy"><code>bchoogland@outlook.com</code><button type="button" data-copy="bchoogland@outlook.com">Kopieer</button></div></div>
+        <div><b>Henk Rigter</b>, voorzitter<div class="copy"><code>hpmr@kpnmail.nl</code><button type="button" data-copy="hpmr@kpnmail.nl">Kopieer</button></div><div class="copy"><code>06 53132242</code></div></div>
+        <div><b>Jan Louwes</b>, secretaris<div class="copy"><code>aljalo100@gmail.com</code><button type="button" data-copy="aljalo100@gmail.com">Kopieer</button></div></div>
+        <div><b>Gé Boom</b>, docent cursus<div class="copy"><code>g.boom033@hetnet.nl</code><button type="button" data-copy="g.boom033@hetnet.nl">Kopieer</button></div><div class="copy"><code>06 50817650</code></div></div>
+      </div>
+      <div class="panel t-club">
+        <h3>Stel je bericht op</h3>
+        <form id="cf" class="form" style="grid-template-columns:1fr">
+          <label for="cName">Naam<input id="cName" required></label>
+          <label for="cMail">Je e-mailadres<input id="cMail" type="email" required></label>
+          <label for="cType">Onderwerp<select id="cType"><option>Lid worden</option><option>Bridgecursus</option><option>Hooglands Bridgekampioenschap</option><option>Algemene vraag</option></select></label>
+          <label for="cMsg">Bericht<textarea id="cMsg" rows="4" required></textarea></label>
+          <button class="btn p" type="submit">Maak bericht klaar</button>
+        </form>
+        <div id="cOut" hidden class="notice"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland</div>
+    <div>Aangesloten bij de <a href="https://www.bridge.nl" target="_blank" rel="noopener">Nederlandse Bridge Bond</a><br><a href="https://www.bridge.nl/privacy/" target="_blank" rel="noopener">Privacybeleid</a> · <a href="https://www.bridge.nl/cookiereglement/" target="_blank" rel="noopener">Cookiereglement</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+const $ = s => document.querySelector(s);
+
+/* ---------- Routing ---------- */
+const views = ["home","berichten","uitslagen","agenda","club","infotheek","contact"];
+function route(){
+  const h = (location.hash||"").replace("#","");
+  const v = views.includes(h) ? h : "home";
+  document.querySelectorAll("[data-view]").forEach(el => el.hidden = el.dataset.view !== v);
+  document.querySelectorAll("nav a").forEach(a => { if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
+/* ---------- Berichten ---------- */
+const posts = [
+  {t:"Clubcompetitie 2026 – 2027", d:"11-08-2026", a:"Frans Tibbe", x:"De agenda van het nieuwe seizoen: zomercompetitie, jaarvergadering, ladders en het Hooglands kampioenschap.", u:"https://24022.bridge.nl/clubcompetitie-2026-2027/", c:"heart"},
+  {t:"Statuten en reglementen", d:"07-02-2026", a:"Frans Tibbe", x:"In de bijlage staan de statuten en reglementen van onze club.", u:"https://24022.bridge.nl/statuten-en-reglementen/", c:"spade"},
+  {t:"Nieuwsbrief augustus 2025", d:"21-08-2025", a:"Frans Tibbe", x:"Het bestuur heeft af en toe wat te melden. Lees hier de nieuwsbrief van augustus.", u:"https://24022.bridge.nl/1652-2/", c:"club"}
+];
+const postHTML = p => `<article class="panel t-${p.c}"><span class="meta">${p.d} · ${p.a}</span><h3>${p.t}</h3><p>${p.x}</p><a class="more" href="${p.u}" target="_blank" rel="noopener">Lees artikel ↗</a></article>`;
+$("#homePosts").innerHTML = posts.map(postHTML).join("");
+$("#allPosts").innerHTML = posts.map(postHTML).join("");
+
+/* ---------- Agenda ---------- */
+const ag = [
+  ["2026-09-01","Zomercompetitie","zomer"],["2026-09-08","Zomercompetitie","zomer"],["2026-09-15","Zomercompetitie","zomer"],["2026-09-22","Zomercompetitie","zomer"],
+  ["2026-09-29","Zomercompetitie","zomer","Jaarvergadering ('s middags)"],
+  ["2026-10-06","Ladder 1","ladder"],["2026-10-13","Ladder 1","ladder"],["2026-10-20","Ladder 1","ladder"],["2026-10-27","Ladder 1","ladder"],["2026-11-03","Ladder 1","ladder"],
+  ["2026-11-10","Ladder 2","ladder"],["2026-11-17","Ladder 2","ladder"],["2026-11-24","Ladder 2","ladder"],
+  ["2026-11-28","Hooglands Bridgekampioenschap","event","Zaterdag, in Concordia. Ook voor niet-leden"]
+].map(r => ({date:new Date(r[0]+"T00:00:00"), act:r[1], type:r[2], note:r[3]||""}));
+const labels = {zomer:"Zomer", ladder:"Competitie", event:"Evenement"};
+const fmt = d => d.toLocaleDateString("nl-NL",{weekday:"short",day:"numeric",month:"short"});
+const next = ag.find(e => e.date >= TODAY);
+let filt = "all";
+function renderAgenda(){
+  $("#agendaList").innerHTML = ag.filter(e => filt==="all" || (filt==="upcoming" ? e.date>=TODAY : e.type===filt)).map(e => {
+    const cls = e===next ? "now" : (e.date<TODAY ? "past" : "");
+    return `<li class="${cls}"><span class="d">${fmt(e.date)}</span><span class="act">${e.act}${e.note?`<span class="note">${e.note}</span>`:""}${e===next?`<span class="note" style="color:var(--heart);font-weight:700">Eerstvolgende speeldag</span>`:""}</span><span class="chip c-${e.type}">${labels[e.type]}</span></li>`;
+  }).join("") || `<li><span class="empty">Geen activiteiten in deze selectie.</span></li>`;
+}
+document.querySelectorAll("#v-agenda .filters button").forEach(b => b.addEventListener("click", () => {
+  filt = b.dataset.f;
+  document.querySelectorAll("#v-agenda .filters button").forEach(x => x.setAttribute("aria-pressed", x===b));
+  renderAgenda();
+}));
+renderAgenda();
+
+if(next){
+  const days = Math.round((next.date - TODAY)/86400000);
+  const when = days===0 ? "Vandaag" : days===1 ? "Morgen" : `Over ${days} dagen`;
+  $("#nextBox").innerHTML = `<div><div class="day">${next.date.getDate()}</div><div class="mo">${next.date.toLocaleDateString("nl-NL",{month:"long"})}</div></div>
+  <div class="what"><span class="chip" style="background:rgba(255,255,255,.18)">${when}</span><br><b>${next.act}</b><br>${next.note || "Dinsdagmiddag en -avond in De Neng"}</div>
+  <a class="btn s" href="#agenda">Hele agenda</a>`;
+} else { $("#nextBox").hidden = true; }
+
+/* ---------- Standen ---------- */
+// Rijen: paar | gemiddelde | zittingen van nieuw naar oud (zoals op de NBB-site)
+const COMP = {
+ avond:{name:"Dinsdagavondcompetitie '26-'27", s:"♠", sub:"4 van 5 zittingen gespeeld · nog 1 te gaan", dates:["6/10","13/10","20/10","27/10"], lines:{"A-lijn":`
+Frans Tibbe & Simon van Valkenhoef|56,40|63,13 51,04i 55,03 56,40
+Alex Druyff & Denise Druyff|56,02|57,97 53,91 53,87 58,33
+Petra Huigsloot & Joris Rademaker|55,83|52,24 53,75 65,22m 52,50a
+Evert van de Beek & Ge Boom|55,23|57,32 45,70 59,82 58,20m
+Johan Jansen & Gerdien van Sandijk|54,75|41,38 57,71 61,01 58,90
+Annemarie van Empelen & Henk van Middelaar|53,10|52,50a 50,42 60,68 48,81
+Gerda Pool & Henk Pool|52,64|65,21 41,67 51,19 52,50a
+Joop van Wijk & Koos Vijverberg|52,61|52,50a 48,70 54,79 54,46
+Else Brinkman & Reinie de Jong|52,12|50,73 52,63 48,51 56,61
+Jan Louwes & Anton van den Hout|51,94|50,27m 54,22i 48,21 55,00
+Henk Rigter & Herman Schrijver|50,57|53,75 55,16 47,02 46,34
+Timo Voskuilen & Ben Schoonderbeek|48,09|50,16 57,50 41,07c 43,63c
+Ad Immink & Marijke Schutijser|47,65|55,76 39,64 47,50a 47,70a
+Henk van de Grootevheen & Willem van der Ben|46,70|49,53 52,66i 43,15i 41,46i
+Henk van Valkenhoef & Martin van Westerlaak|46,65|43,13 45,26 43,45 54,76
+Jan Bart Jutte & Co Hilhorst|43,36|44,38 44,38a 41,07c 43,63c
+Bram Hurkmans & Renee Scholtemeijer|42,85|39,90 42,85a 42,85a 45,93m
+John Dols & Marianne Saelmans|42,58|36,68m 54,82 38,13c 40,26m
+Albert Rigter & Thea van Beers|41,87|47,89 40,08 38,13c 41,37
+Hetty Kramer & Marjon ten Hoor|38,27|40,05 45,16 28,57m 38,90
+Patrica Heersink & Jan Dijkhuis|0,00|0,00a 0,00a 0,00a 0,00a`}},
+ middag:{name:"BC Hoogland middag 2026/2027", s:"♥", sub:"4 van 5 zittingen gespeeld · nog 1 te gaan", dates:["6/10","10/10","20/10","27/10"], lines:{"A-lijn":`
+Trudy Dieke & Els Strijbos|56,21|55,65 52,50a 57,14i 59,52c
+Gerrit Groenendaal & Karel Rietzschel|55,49|58,93i 63,33 45,54 54,17i
+Willie van Middelaar & Henk van Middelaar|54,85|53,27 59,58 52,38 54,17
+Ina Kraijo & Jaap van Tuyll|53,75|52,68 46,25 66,37 49,70
+Marijke Koelman & Ben Mokkink|52,98|58,57m 46,25 48,51 59,52c
+Paul de Kleuver & Ruud van den Hoven|51,19|51,49 50,00 49,70 53,57
+Annemarie Overmars & Harry Overmars|50,73|44,64m 62,92 41,96 52,38
+Mary Lans & Marjo Scheijmans|50,60|50,30 50,60a 44,64 56,85
+Carlie Vriesekoop & Valerie Welch|49,70|54,76 45,83c 50,60 47,62
+Gerry Ising & Wil de Ridder|48,76|45,71m 45,83c 60,12 42,86
+Annelies Beentjes & Peter Beentjes|48,11|37,50m 45,42 54,17 53,57
+Jeroen Pels & Carla Pels|47,32|38,99 47,32a 48,21 54,76
+Frans Daemen & Frits Peters|46,16|46,79m 51,67 41,37 44,94
+Hermien Engberink & Mia van den Hoven|45,33|47,32 47,08 44,64 42,26
+Dinie Kowalski & Thea Bodewes|43,15|47,62 41,67 43,15a 40,18
+Marian de Munck & Ria van der Stroom|42,59|45,54 40,00 48,21 36,61`,
+ "B-lijn":`
+Willemien Meershoek & Gerda Eerdmans|56,70|55,80 51,04 65,80 54,17
+Rene van Baal & Elly Moolenaar|54,66|43,94cm 58,33c 66,25 49,65
+Romy Abeen & Liesbeth Nievelstein|54,51|61,14m 56,60 49,13 51,74
+Jan Willem Brouwer & Gerrie Brouwer|54,38|53,69 51,74 57,57 54,51
+Dineke Bolding & Maria Leemreize|54,07|51,22 55,90 56,67 52,50a
+Hetty Kramer & Ans Vis|53,51|56,55 43,06c 52,54m 61,85h
+Trudy Smink & Johan Smink|51,88|53,54 40,63 51,87h 61,46
+Ria Biegstraaten & Han Biegstraaten|50,90|47,68 53,47 47,83m 54,51
+Anneloes Fokkema & Klaas Fokkema|50,34|51,64 47,57 54,58 47,57
+Willie Jansen & Bep Berger|49,59|48,84 58,33c 48,84a 42,36c
+Corry Timmer & Jos Timmer|49,37|53,66 44,10 49,37a 50,35
+Uco Sonnenberg & Jeanette Sonnenberg|48,45|53,60m 59,72 28,12m 51,74
+Willem Lunter & Nel Lunter|48,06|52,50m 52,43 43,23 44,44
+Hannie Mintjes & Gert Jan Nieland|46,77|36,96 50,69 48,80m 50,69
+Ine Tuerlings & Jeanne Lammers|44,01|37,83 44,56a 51,59m 42,36c
+Anja Bult & Hanny Wisman|43,38|43,94cm 46,53a 36,23cm 46,53
+Simon van de Grootevheen & Marjon Kooiman|39,41|42,44 34,72 40,21 40,28
+Tetty Corzilius & Partner 1|19,65|0,00a 43,06c 36,23cm 0,00a`}},
+ zomer:{name:"Zomercompetitie 2026", s:"♦", sub:"Afgerond · 5 zittingen in september", dates:["1/9","8/9","15/9","22/9","29/9"], lines:{"A-lijn":`
+Else Brinkman & Reinie de Jong|59,68|61,01 56,51 56,55c 64,26c 60,09m
+Joop van Wijk & Koos Vijverberg|55,57|62,20 59,90 49,11 56,58 50,06
+Henk van Valkenhoef & Martin van Westerlaak|55,31|61,61 51,30 58,93 51,16c 53,54
+Jan Louwes & Anton van den Hout|55,00|51,19 55,47 56,85 47,62 64,29m
+Ad Immink & Marijke Schutijser|54,77|47,92c 55,99 65,77 51,52m 52,50a
+Frans Tibbe & Simon van Valkenhoef|53,70|50,30 47,92 56,55c 64,26c 49,49
+Johan Jansen & Gerdien van Sandijk|53,68|51,79 49,48 54,76 55,09 57,29
+Annemarie van Empelen & Henk van Middelaar|53,34|49,11 56,77 47,32c 52,50a 61,01
+Jan Bart Jutte & Co Hilhorst|53,31|47,92c 60,68i 48,81 56,64 52,50a
+Henk Rigter & Herman Schrijver|53,29|52,68 63,02 47,32c 51,49 51,96
+Gerda Pool & Henk Pool|50,69|49,70 43,23 58,04 51,79 50,69a
+Alex Druyff & Denise Druyff|48,68|53,27 52,86 40,77 47,50a 48,97a
+Henk van de Grootevheen & Willem van der Ben|48,05|47,32 47,40 44,64 42,08m 58,57
+Evert van de Beek & Ge Boom|46,13|49,11 38,54c 47,62i 53,39 41,83m
+Timo Voskuilen & Ben Schoonderbeek|45,37|45,37a 43,75 36,61 56,21m 45,37a
+Hetty Kramer & Marjon ten Hoor|44,64|39,58 54,95 43,45 41,73 43,33m
+Bram Hurkmans & Renee Scholtemeijer|39,43|39,43a 34,11 47,92 36,30m 39,25m
+John Dols & Marianne Saelmans|39,10|36,61 38,54c 39,25a 35,93m 45,06
+Albert Rigter & Thea van Beers|38,98|36,61 28,13 42,86 51,16c 36,02m
+Patrica Heersink & Jan Dijkhuis|37,39|0,00a 46,94a 46,94a 46,93m 46,96m
+Petra Huigsloot & Joris Rademaker|0,00|0,00a 0,00a 0,00a 0,00a 0,00a`}},
+ mp:{name:"Meesterpuntenladder 2026/2027", s:"♣", sub:"Individueel · meesterpunten dit seizoen", mp:true, lines:{"Spelers":`Henk van Middelaar|87;Else Brinkman|68;Gerdien van Sandijk|64;Johan Jansen|64;Harry Overmars|58;Frans Tibbe|56;Hetty Kramer|56;Ruud van den Hoven|56;Karel Rietzschel|55;Ina Kraijo|54;Anton van den Hout|53;Gerrit Groenendaal|53;Joop van Wijk|53;Koos Vijverberg|53;Ans Vis|51;Henk van de Grootevheen|51;Henk Rigter|50;Herman Schrijver|49;Willie van Middelaar|49;Reinie de Jong|49;Denise Druyff|47;Alex Druyff|47;Trudy Dieke|46;Liesbeth Nievelstein|46;Jaap van Tuyll|46;Romy Abeen|46;Jan Louwes|45;Willemien Meershoek|44;Paul de Kleuver|44;Annemarie Overmars|44;Gerda Eerdmans|44;Han Biegstraaten|43;Ria Biegstraaten|43;Evert van de Beek|38;Martin van Westerlaak|38;Ben Mokkink|37;Annemarie van Empelen|37;Henk van Valkenhoef|36;Maria Leemreize|36;Ge Boom|36;Dineke Bolding|36;Henk Pool|35;Dinie Kowalski|35;Gerda Pool|35;Gerrie Brouwer|34;Simon van Valkenhoef|34;Jan Willem Brouwer|34;Marjo Scheijmans|33;Annelies Beentjes|32;Peter Beentjes|32;Trudy Smink|31;Marijke Schutijser|31;Ad Immink|31;Johan Smink|31;Gerry Ising|29;Frits Peters|28;Frans Daemen|28;Co Hilhorst|27;Uco Sonnenberg|26;Jeanette Sonnenberg|26;Jeroen Pels|25;Carla Pels|25;Mary Lans|24;Petra Huigsloot|24;Thea Bodewes|24;Hanny Wisman|24;Ben Schoonderbeek|24;Timo Voskuilen|24;Els Strijbos|24;Joris Rademaker|24;Mia van den Hoven|23;Carlie Vriesekoop|22;Bep Berger|21;Jeanne Lammers|20;Elly Moolenaar|20;Ine Tuerlings|20;Marijke Koelman|20;Wil de Ridder|20;Rene van Baal|19;Corry Timmer|18;Nel Lunter|18;Willem Lunter|18;Jos Timmer|18;Anja Bult|17;Valerie Welch|17;Tetty Corzilius|17;Jan Bart Jutte|15;Marian de Munck|14;Willie Jansen|13;Klaas Fokkema|12;Anneloes Fokkema|12;Willem van der Ben|11;Hermien Engberink|11;Marianne Saelmans|10;John Dols|10;Gert Jan Nieland|8;Hannie Mintjes|8;Marjon ten Hoor|5;Marjon Kooiman|5;Simon van de Grootevheen|5;Renee Scholtemeijer|4;Bram Hurkmans|4;Ria van der Stroom|3;Albert Rigter|3;Patrica Heersink|2;Jan Dijkhuis|2;Thea van Beers|1`}}
+};
+const FLAGS = {a:"afwezig",c:"combipaar",h:"gespeeld in hogere lijn",l:"gespeeld in lagere lijn",i:"met invallers",m:"meer of minder spellen",r:"arbitrale wijziging",n:"telt niet mee",v:"vervallen",b:"handmatig aangepast"};
+const num = s => parseFloat(s.replace(",","."));
+function parse(c, txt){
+  if(c.mp){ const rows = txt.split(";").map(x=>{const [n,p]=x.split("|");return {pair:n,gem:+p};}); let r=0; rows.forEach((x,i)=>{ if(i===0||x.gem!==rows[i-1].gem) r=i+1; x.rank=r; }); return rows; }
+  return txt.trim().split("\n").map((l,i)=>{ const [pair,gem,ss]=l.split("|"); const cells = ss.split(" ").reverse().map(v=>{ const m=v.match(/^([\d,]+)([a-z]*)$/); return {v:m[1],f:m[2]}; }); return {rank:i+1,pair,gem:num(gem),gemS:gem,cells}; });
+}
+let comp="avond", line=null, showAll=false;
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+$("#compTabs").innerHTML = Object.entries(COMP).map(([k,c])=>`<button type="button" role="tab" data-k="${k}" aria-selected="${k===comp}"><span class="s">${c.s}</span>${k==="avond"?"Dinsdagavond":k==="middag"?"Dinsdagmiddag":k==="zomer"?"Zomer 2026":"Meesterpunten"}</button>`).join("");
+$("#compTabs").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; comp=b.dataset.k; line=null; showAll=false; $("#compTabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-selected",x===b)); renderSt(); });
+$("#lineTabs").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; line=b.dataset.l; showAll=false; renderSt(); });
+$("#stMore").addEventListener("click",()=>{ showAll=true; renderSt(); });
+$("#stQ").addEventListener("input",()=>renderSt());
+function cellHTML(x){
+  const v=num(x.v), absent=x.f.includes("a");
+  const cls = absent ? "ab" : v>=60 ? "top" : v>=55 ? "hi" : v<45 ? "lo" : "";
+  const tip = x.f.split("").map(f=>FLAGS[f]).filter(Boolean).join(", ");
+  return `<span class="cell ${cls}"${tip?` title="${tip}"`:""}>${x.v}${x.f?`<sup>${x.f}</sup>`:""}</span>`;
+}
+function renderSt(){
+  const c=COMP[comp]; const names=Object.keys(c.lines); if(!line||!names.includes(line)) line=names[0];
+  const rows=parse(c,c.lines[line]);
+  $("#compTitle").textContent=c.name; $("#compSub").textContent=c.sub;
+  $("#lineTabs").innerHTML = names.length>1 ? names.map(n=>`<button type="button" data-l="${n}" aria-pressed="${n===line}">${n}</button>`).join("") : "";
+  const unit = c.mp ? " MP" : "%";
+  const fmtG = r => c.mp ? r.gem : r.gemS;
+  $("#podium").innerHTML = rows.slice(0,3).map((r,i)=>`<div class="pod p${i+1}"><span class="pl">${r.rank}</span><span class="nm">${esc(r.pair)}</span><span class="sc">${fmtG(r)}${unit}</span></div>`).join("");
+  const q=$("#stQ").value.trim().toLowerCase();
+  const limit = (c.mp && !showAll && !q) ? 25 : Infinity;
+  const head = c.mp ? `<tr><th>#</th><th>Speler</th><th style="text-align:right">Punten</th></tr>` :
+    `<tr><th>#</th><th>Paar</th><th style="text-align:right">Gem.</th>${c.dates.map((d,i)=>`<th class="r">${i+1}<br>${d}</th>`).join("")}</tr>`;
+  const max = c.mp ? rows[0].gem : 70;
+  const body = rows.map((r,i)=>{
+    const hit = q && r.pair.toLowerCase().includes(q);
+    const hide = (q && !hit) || i>=limit;
+    const bar = `<span class="bar"><i style="width:${Math.max(0,Math.min(100,r.gem/max*100))}%"></i></span>`;
+    return `<tr class="${hit?"me":""} ${hide?"hide":""}"><td class="rk">${r.rank}</td><td class="pair">${esc(r.pair)}</td><td class="gem">${fmtG(r)}${bar}</td>${c.mp?"":r.cells.map(x=>`<td class="r">${cellHTML(x)}</td>`).join("")}</tr>`;
+  }).join("");
+  $("#stTable").innerHTML = `<thead>${head}</thead><tbody>${body}</tbody>`;
+  $("#stMore").hidden = !(c.mp && !showAll && !q && rows.length>25);
+  $("#legend").innerHTML = c.mp ? "" : `<span><span class="cell top">60+</span> <span class="cell hi">55+</span> <span class="cell lo">onder 45</span></span>` + Object.entries(FLAGS).filter(([k])=>"acimh".includes(k)).map(([k,v])=>`<span><b>${k}</b> ${v}</span>`).join("");
+}
+renderSt();
+
+/* ---------- HCP-teller ---------- */
+const suits = [["♠","var(--spade)"],["♥","var(--heart)"],["♦","var(--diamond)"],["♣","var(--club)"]];
+const hon = [["A",4],["H",3],["V",2],["B",1]];
+$("#hcp").innerHTML = suits.map(([s,c],i) => `<div class="row"><span class="su" style="color:${c}">${s}</span>${hon.map(([h,v]) => `<button type="button" aria-pressed="false" data-v="${v}" aria-label="${h} ${s}">${h}</button>`).join("")}</div>`).join("");
+function hcpCalc(){
+  let t=0; document.querySelectorAll("#hcp button[aria-pressed='true']").forEach(b => t+= +b.dataset.v);
+  $("#hcpNum").textContent = t;
+  $("#hcpAdv").textContent = t<6 ? "Te weinig om te openen of veel te bieden. Pas, tenzij je partner sterk is." :
+    t<12 ? "Meestal niet openen. Wel antwoorden als je partner opent." :
+    t<=14 ? "Genoeg om te openen. Met 12–14 en een gelijkmatige hand denk je aan 1SA-herbieding." :
+    t<=17 ? "Mooie hand. Met 15–17 en geen korte kleur open je 1 Sans Atout." :
+    t<=19 ? "Sterk. Open één in een kleur en spring later." :
+    t<=21 ? "Zeer sterk. Met een gelijkmatige hand open je 2 Sans Atout." : "Een monster. Denk aan een sterke 2♣-opening.";
+}
+$("#hcp").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return; b.setAttribute("aria-pressed", b.getAttribute("aria-pressed")!=="true"); hcpCalc(); });
+hcpCalc();
+
+/* ---------- Scorecalculator ---------- */
+for(let i=1;i<=7;i++) $("#sLvl").insertAdjacentHTML("beforeend",`<option ${i===4?"selected":""}>${i}</option>`);
+for(let i=0;i<=13;i++) $("#sTricks").insertAdjacentHTML("beforeend",`<option ${i===10?"selected":""}>${i}</option>`);
+function score(lvl,suit,dbl,vul,tricks){
+  const need = lvl+6;
+  if(tricks < need){
+    const down = need-tricks; let pen=0;
+    if(dbl===1) pen = down*(vul?100:50);
+    else { for(let k=1;k<=down;k++){ pen += vul ? (k===1?200:300) : (k===1?100:(k<=3?200:300)); } if(dbl===4) pen*=2; }
+    return {pts:-pen, txt:`${down} down. De tegenpartij noteert ${pen} punten.`};
+  }
+  const per = (suit==="c"||suit==="d") ? 20 : 30;
+  let base = suit==="nt" ? 40 + (lvl-1)*30 : lvl*per;
+  base *= dbl;
+  let pts = base;
+  pts += base>=100 ? (vul?500:300) : 50;
+  if(lvl===6) pts += vul?750:500;
+  if(lvl===7) pts += vul?1500:1000;
+  if(dbl===2) pts += 50; if(dbl===4) pts += 100;
+  const over = tricks-need;
+  const overPts = dbl===1 ? over*(suit==="nt"?30:per) : over*(vul?200:100)*(dbl/2);
+  pts += overPts;
+  const kind = lvl===7 ? "groot slem" : lvl===6 ? "klein slem" : base>=100 ? "manche" : "deelscore";
+  return {pts, txt:`Gemaakt${over?` +${over}`:""}: ${kind}${over?`, met ${overPts} voor de overslagen`:""}.`};
+}
+function sCalc(){
+  const r = score(+$("#sLvl").value, $("#sSuit").value, +$("#sDbl").value, +$("#sVul").value==1, +$("#sTricks").value);
+  $("#sNum").textContent = r.pts; $("#sNum").style.color = r.pts<0 ? "var(--heart)" : "var(--club)"; $("#sTxt").textContent = r.txt;
+}
+["#sLvl","#sSuit","#sDbl","#sVul","#sTricks"].forEach(s => $(s).addEventListener("change", sCalc));
+$("#sLvl").addEventListener("change", () => { $("#sTricks").value = Math.min(13, +$("#sLvl").value+6); sCalc(); });
+sCalc();
+
+/* ---------- Bieden na 1SA ---------- */
+for(let i=0;i<=22;i++) $("#nsP").insertAdjacentHTML("beforeend",`<option ${i===10?"selected":""}>${i}</option>`);
+for(let i=0;i<=8;i++){ $("#nsH").insertAdjacentHTML("beforeend",`<option ${i===3?"selected":""}>${i}</option>`); $("#nsS").insertAdjacentHTML("beforeend",`<option ${i===4?"selected":""}>${i}</option>`); }
+function nsCalc(){
+  const p=+$("#nsP").value, h=+$("#nsH").value, s=+$("#nsS").value;
+  const C={h:["♥","harten","var(--heart)"],s:["♠","schoppen","var(--spade)"]};
+  let bid, color, title, steps=[];
+  if(h+s>13){ $("#nsOut").innerHTML=`<span class="big" style="color:var(--muted)">?</span><p>Samen meer dan 13 kaarten in harten en schoppen kan niet.</p>`; return; }
+  if(h>=5||s>=5){
+    const k = s>=h ? "s" : "h"; const n = Math.max(h,s);
+    bid = k==="h" ? "2♦" : "2♥"; color=C[k][2];
+    title = `Transfer naar ${C[k][1]}: je belooft 5+ ${C[k][1]}.`;
+    steps.push(`Partner biedt 2${C[k][0]}.`);
+    if(p<8) steps.push("Jij past. Je speelt 2"+C[k][0]+".");
+    else if(p<=9) steps.push(n>=6 ? `Jij biedt 3${C[k][0]}: uitnodigend met een zeskaart.` : "Jij biedt 2SA: uitnodigend met een vijfkaart.");
+    else if(p<=15) steps.push(n>=6 ? `Jij biedt 4${C[k][0]}: manche met een zeskaart.` : `Jij biedt 3SA. Partner kiest tussen 3SA en 4${C[k][0]}.`);
+    else steps.push("Je hebt slemkansen. Overleg met je partner welke afspraken jullie daarvoor hebben.");
+    if(h===5&&s===5) steps.push("Met 5-5 in de hoge kleuren hebben veel paren een aparte afspraak.");
+  } else if((h===4||s===4) && p>=8){
+    bid="2♣"; color="var(--club)"; title="Stayman: je vraagt naar een hoge vierkaart.";
+    const g = p>=10, kn = s===4 && h===4 ? "harten of schoppen" : s===4 ? "schoppen" : "harten";
+    steps.push(`Heeft partner vier ${kn}? Dan bied je ${g?"4":"3"} in die kleur.`);
+    steps.push(`Geen fit (2♦ of de andere kleur)? Dan bied je ${g?"3SA":"2SA"}.`);
+    if(p>=16) steps.push("Met 16+ punten zit er misschien een slem in.");
+  } else {
+    color="var(--diamond)";
+    if(p<8){ bid="Pas"; title="Te weinig voor een manche en geen vijfkaart hoog: laat partner 1SA spelen."; }
+    else if(p<=9){ bid="2SA"; title="Uitnodigend. Partner gaat met een maximum (17) naar 3SA."; }
+    else if(p<=15){ bid="3SA"; title="Genoeg voor een manche en geen hoge fit te zoeken."; }
+    else { bid="4SA"; title="Kwantitatief: nodigt uit voor slem in SA, als jullie dat zo spelen."; }
+  }
+  $("#nsOut").innerHTML = `<span class="big" style="color:${color}">${bid}</span><div style="flex:1;min-width:200px"><b>${title}</b>${steps.length?`<ol>${steps.map(x=>`<li>${x}</li>`).join("")}</ol>`:""}</div>`;
+}
+["#nsP","#nsH","#nsS"].forEach(s=>$(s).addEventListener("change",nsCalc));
+nsCalc();
+
+/* ---------- Niveau-tabs uitkomen ---------- */
+$("#lvlTabs").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return;
+  $("#lvlTabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  document.querySelectorAll(".lvlbox").forEach(x=>x.hidden = x.dataset.l!==b.dataset.l); });
+
+/* ---------- Signaalvertaler ---------- */
+const SU = {s:["♠","Schoppen","var(--spade)"],h:["♥","Harten","var(--heart)"],d:["♦","Ruiten","var(--diamond)"],c:["♣","Klaveren","var(--club)"]};
+const ORDER = ["s","h","d","c"]; // hoog naar laag
+for(let i=2;i<=9;i++) $("#sgCard").insertAdjacentHTML("beforeend",`<option value="${i}" ${i===3?"selected":""}>${i}</option>`);
+function signal(sys,tr,suit,card){
+  const hi = card>=6, odd = card%2===1;
+  if(sys==="rom" && odd) return {k:suit, why:`Oneven kaart: partner vraagt om door te gaan met ${SU[suit][1].toLowerCase()}.`};
+  if(sys==="sch"){
+    const black = suit==="s"||suit==="c";
+    const k = black ? (hi?"h":"d") : (hi?"s":"c");
+    if(k===tr) return {k:null, why:`Deze kaart vraagt om de troefkleur. Volgens Schiedams vraag je dus niets.`};
+    return {k, why:`${hi?"Hoge":"Lage"} ${black?"zwarte":"rode"} kaart vraagt om de ${hi?"hoge":"lage"} ${black?"rode":"zwarte"} kleur.`};
+  }
+  const rest = ORDER.filter(x => x!==tr && x!==suit);
+  if(sys==="lav" || sys==="rom"){
+    const k = hi ? rest[0] : rest[rest.length-1];
+    return {k, why:`${sys==="rom"?"Even kaart, dus Lavinthal: ":""}${hi?"hoog vraagt om de hoogste":"laag vraagt om de laagste"} overgebleven kleur (${rest.map(x=>SU[x][0]).join(" ")}).`};
+  }
+  // revolving: rondom, troef overslaan
+  let i = ORDER.indexOf(suit);
+  do { i = (i + (hi?-1:1) + 4) % 4; } while(ORDER[i]===tr || ORDER[i]===suit);
+  return {k:ORDER[i], why:`${hi?"Hoog vraagt om de aansluitende hogere":"Laag vraagt om de aansluitende lagere"} kleur, rondom gerekend en zonder troef.`};
+}
+function sgCalc(){
+  const tr=$("#sgTr").value, suit=$("#sgSuit").value;
+  if(suit===tr){ $("#sgOut").innerHTML = `<span class="big" style="color:var(--muted)">–</span><p>Je gooit bij omdat je niet kunt bekennen. Kies een andere kleur dan de troef.</p>`; return; }
+  const r = signal($("#sgSys").value, tr, suit, +$("#sgCard").value);
+  const card = `${SU[suit][0]}${$("#sgCard").value}`;
+  $("#sgOut").innerHTML = r.k ? `<span class="big" style="color:${SU[r.k][2]}">${SU[r.k][0]}</span><p><b>${card} vraagt om ${SU[r.k][1].toLowerCase()}.</b><br>${r.why}</p>`
+    : `<span class="big" style="color:var(--muted)">∅</span><p><b>${card} vraagt om niets.</b><br>${r.why}</p>`;
+}
+["#sgSys","#sgTr","#sgSuit","#sgCard"].forEach(s=>$(s).addEventListener("change",sgCalc));
+$("#sgTr").value="s"; sgCalc();
+
+/* ---------- Slagkrachtteller ---------- */
+// Honneurwaarde per kleur (tophonneurs + combinatie) en minimale lengte, naar de tabel van Wolthuis
+const SKT = {"":[0,0],A:[3,2],H:[2,2],V:[1,3],B:[0,3],T:[0,3],
+ AH:[6,3],AV:[5,3],AB:[4,3],AT:[3,4],HV:[4,3],HB:[3,3],HT:[3,3],VB:[2,3],VT:[2,3],BT:[1,3],
+ AHV:[9,3],AHB:[8,3],AHT:[8,4],AVB:[7,3],AVT:[7,3],ABT:[6,3],HVB:[6,3],HVT:[6,3],HBT:[5,3],VBT:[4,3],
+ AHVB:[12,4],AHVT:[12,4],AHBT:[11,4],AVBT:[10,4],HVBT:[9,4],AHVBT:[15,5]};
+const HCPV = {A:4,H:3,V:2,B:1,T:0};
+const skState = {s:{h:"AHB",n:5},h:{h:"VT",n:3},d:{h:"A",n:3},c:{h:"",n:2}};
+$("#sk").innerHTML = ORDER.map(s=>`<div class="r"><span class="su" style="color:${SU[s][2]}">${SU[s][0]}</span>
+  <div class="hn">${"AHVBT".split("").map(h=>`<button type="button" data-s="${s}" data-h="${h}" aria-pressed="${skState[s].h.includes(h)}" aria-label="${h} ${SU[s][1]}">${h}</button>`).join("")}
+  <select id="skn-${s}" data-s="${s}" aria-label="Aantal kaarten ${SU[s][1]}">${Array.from({length:14},(_,i)=>`<option ${i===skState[s].n?"selected":""}>${i}</option>`).join("")}</select></div>
+  <span class="pts" id="skp-${s}"></span></div>`).join("");
+$("#sk").addEventListener("click",e=>{ const b=e.target.closest("button[data-h]"); if(!b) return;
+  const st=skState[b.dataset.s]; const on = st.h.includes(b.dataset.h);
+  st.h = "AHVBT".split("").filter(h => h===b.dataset.h ? !on : st.h.includes(h)).join("");
+  if(st.n < st.h.length){ st.n = st.h.length; $("#skn-"+b.dataset.s).value = st.n; }
+  b.setAttribute("aria-pressed",!on); skCalc(); });
+$("#sk").addEventListener("change",e=>{ const s=e.target.dataset.s; if(!s) return; skState[s].n=+e.target.value; skCalc(); });
+function skCalc(){
+  let tot=0, hcp=0, fours=0, len=0;
+  ORDER.forEach(s=>{
+    const {h,n} = skState[s]; len+=n;
+    const [v,min] = SKT[h]; let p = v - (h && n<min ? 1 : 0);
+    p += Math.max(0,n-4)*3;
+    if(n>=4) fours++;
+    hcp += h.split("").reduce((a,x)=>a+HCPV[x],0);
+    tot += p; $("#skp-"+s).textContent = p+" pt";
+  });
+  if(fours>=2) tot += fours-1;
+  $("#skHcp").textContent = hcp; $("#skPts").textContent = tot;
+  $("#skTricks").textContent = "≈ "+(Math.round(tot/3*10)/10).toString().replace(".",",")+" slagen";
+  const w=$("#skWarn"); w.hidden = len===13; w.textContent = `Je hand heeft nu ${len} kaarten in plaats van 13.`;
+}
+skCalc();
+
+/* ---------- Begrippenlijst ---------- */
+const terms = [
+  ["Bieding","Basis","De veiling vóór het spel, waarin de paren afspreken hoeveel slagen ze denken te halen en in welke troefkleur."],
+  ["Contract","Basis","Het laatste bod van de bieding. Niveau plus zes is het aantal slagen dat de leider moet halen."],
+  ["Leider","Basis","De speler die het contract speelt. Hij noemde als eerste van zijn paar de kleur van het eindcontract."],
+  ["Blinde","Basis","De partner van de leider. Legt na de uitkomst zijn kaarten open op tafel en speelt verder niet mee."],
+  ["Uitkomst","Basis","De eerste kaart van het spel, gespeeld door de linkertegenstander van de leider."],
+  ["Slag","Basis","Vier kaarten, één van elke speler. De hoogste kaart van de gevraagde kleur of de hoogste troef wint."],
+  ["Troef","Basis","De kleur die in het contract is genoemd. Een troef wint van elke kaart in een andere kleur."],
+  ["Sans Atout (SA)","Basis","Contract zonder troefkleur. De hoogste kaart van de gevraagde kleur wint altijd de slag."],
+  ["Honneurs","Punten","Aas, Heer, Vrouw, Boer en Tien. De eerste vier tellen mee voor de punten: 4-3-2-1."],
+  ["Punten (HCP)","Punten","Honneurpunten. Er zijn er 40 in het spel. Met 12 of meer open je meestal de bieding."],
+  ["Verdeling","Punten","Hoe je 13 kaarten over de kleuren verdeeld zijn, bijvoorbeeld 4-4-3-2 of 5-3-3-2."],
+  ["Manche","Scoren","Een contract dat 100 of meer wedstrijdpunten oplevert, zoals 3SA, 4♥, 4♠, 5♣ of 5♦."],
+  ["Deelscore","Scoren","Een contract onder manche. Levert 50 bonuspunten op."],
+  ["Slem","Scoren","Klein slem: 12 slagen (zesniveau). Groot slem: alle 13 slagen (zevenniveau)."],
+  ["Kwetsbaar","Scoren","Een kwetsbaar paar krijgt meer bonus voor manche en slem, maar verliest ook meer bij down gaan."],
+  ["Doublet","Scoren","Een bod waarmee je aangeeft dat de tegenpartij het contract volgens jou niet haalt. Verdubbelt de score."],
+  ["Topscore","Scoren","Bij parenbridge krijg je per spel punten op basis van hoe je scoorde ten opzichte van de andere paren."],
+  ["Percentage","Scoren","Je totaalscore als deel van het maximum. 50% is gemiddeld; boven de 55% is een sterke zitting."],
+  ["Impasse","Spelen","Een speltechniek waarbij je hoopt dat een hogere kaart bij een bepaalde tegenstander zit, bijv. Vrouw spelen onder Aas-Vrouw."],
+  ["Introeven","Spelen","Een slag winnen met een troefkaart als je de gevraagde kleur niet meer hebt."],
+  ["Troeftrekken","Spelen","Troef spelen om de troeven van de tegenstanders weg te halen, zodat ze je winnaars niet kunnen introeven."],
+  ["Hoogste van een sequentie","Spelen","Uitkomen met de hoogste van twee of meer aansluitende honneurs, zoals de Heer van H-V-B."],
+  ["Signaleren","Tegenspel","Met de kaart die je bijspeelt of bijgooit vertel je partner wat je wilt, bijvoorbeeld door- of terugspelen."],
+  ["Hoog-laag","Tegenspel","Eerst een hoge, dan een lage kaart. Bij aan-af-signalen betekent het 'aan'; bij distributie een even aantal."],
+  ["MUD","Tegenspel","Middle, up, down: met drie kleintjes speel je eerst de middelste, dan de hoogste, dan de laagste."],
+  ["Gebroken serie","Tegenspel","Honneurs met een gat ertussen, zoals HBT of VT98. Je komt uit met de hoogste."],
+  ["Schiedams","Tegenspel","Signaal bij niet bekennen: zwart vraagt om rood, rood om zwart; hoog vraagt de hoge, laag de lage kleur."],
+  ["Lavinthal","Tegenspel","Signaal bij niet bekennen: hoog vraagt om de hoogste, laag om de laagste overgebleven kleur."],
+  ["Romeins Lavinthal","Tegenspel","Oneven kaart: ga door in deze kleur. Even kaart: hoog of laag vraagt om de hoogste of laagste andere kleur."],
+  ["1e, 3e, 5e","Tegenspel","Distributie-uitkomst: je speelt je 1e, 3e of 5e hoogste kaart, zodat partner je lengte kan afleiden."],
+  ["Revolving discards","Tegenspel","Signaal bij niet bekennen: hoog vraagt om de kleur erboven, laag om de kleur eronder, rondom gerekend."],
+  ["Renonce","Basis","Geen enkele kaart in een kleur hebben. Bij niet bekennen kun je introeven of bijgooien."],
+  ["Slagkracht-telling","Punten","Alternatieve kaartwaardering van Jan Wolthuis: honneurs per kleur, aansluitende honneurs tellen extra, 1 slag = 3 punten."],
+  ["Puntenkul","Punten","Blind vertrouwen op het aantal punten, terwijl het om het aantal slagen gaat."],
+  ["Stayman","Conventies","Na een 1SA-opening vraagt 2♣ of de opener een hoge vierkaart (♥ of ♠) heeft."],
+  ["Jacoby-transfer","Conventies","Na 1SA bied je de kleur onder je vijfkaart; partner biedt dan jouw kleur, zodat de sterke hand speelt."],
+  ["Niemeijer","Conventies","Na 2SA vraagt 3♣ of partner een vier- of vijfkaart hoog heeft. Lijkt op Puppet Stayman."],
+  ["Blackwood","Conventies","4SA vraagt naar het aantal azen, om te kijken of een slem kan."],
+  ["Sterke 2♣","Conventies","Kunstmatige opening voor een zeer sterke hand, meestal 22 of meer punten."],
+  ["Absentie","Club","Kun je niet spelen? Meld je afwezigheid op tijd bij de wedstrijdleiding, zodat de indeling klopt."],
+  ["A- en B-lijn","Club","De club speelt in twee lijnen. Na elke ronde promoveren en degraderen paren tussen de lijnen."],
+  ["Ladder","Club","Een reeks speelavonden die samen één ronde van de clubcompetitie vormen."],
+  ["Arbiter","Club","Bij een onregelmatigheid aan tafel roep je de arbiter of wedstrijdleider. Niet zelf oplossen."]
+];
+const cats = ["Alle", ...new Set(terms.map(t=>t[1]))];
+let cat = "Alle";
+$("#catF").innerHTML = cats.map(c => `<button type="button" data-c="${c}" aria-pressed="${c==="Alle"}">${c}</button>`).join("");
+$("#catF").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return; cat=b.dataset.c; $("#catF").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTerms(); });
+function renderTerms(){
+  const q = $("#q").value.trim().toLowerCase();
+  const list = terms.filter(t => (cat==="Alle"||t[1]===cat) && (!q || (t[0]+" "+t[2]).toLowerCase().includes(q)));
+  $("#terms").innerHTML = list.map(t => `<div class="term"><span class="cat">${t[1]}</span><b>${t[0]}</b><p>${t[2]}</p></div>`).join("") || `<p class="empty">Geen begrip gevonden. Probeer een ander woord.</p>`;
+}
+$("#q").addEventListener("input", renderTerms);
+renderTerms();
+
+/* ---------- Quiz ---------- */
+const qs = [
+  ["Hoeveel honneurpunten zitten er in een heel spel kaarten?",["30","40","52"],1,"Vier kleuren × (4+3+2+1) = 40."],
+  ["Hoeveel slagen moet je halen in een contract van 4♥?",["4","8","10"],2,"Niveau plus zes: 4 + 6 = 10 slagen."],
+  ["Welk contract is een manche?",["3♦","3SA","2♠"],1,"3SA levert 40+30+30 = 100 punten op en is dus manche."],
+  ["Wie legt de kaarten open op tafel?",["De leider","De blinde","De uitkomende speler"],1,"De partner van de leider is de blinde."],
+  ["Wat vraagt Stayman na een 1SA-opening?",["Azen","Een hoge vierkaart","Een vijfkaart klaveren"],1,"2♣ vraagt of de opener vier harten of vier schoppen heeft."],
+  ["Je hebt ♥ HVB32. Waarmee kom je uit?",["♥2","♥H","♥B"],1,"De hoogste van een serie: de heer."],
+  ["Schiedams: je gooit een kleine klaver bij. Wat vraag je?",["Ruiten","Harten","Schoppen"],0,"Zwart vraagt om rood, laag om de lage kleur: ruiten."],
+  ["Volgens de slagkracht-telling: hoeveel punten is 1 slag?",["2","3","4"],1,"Wolthuis rekent 3 punten per slag; een opening is 4 slagen, dus 12 punten."]
+];
+let qi=0, good=0;
+function renderQ(){
+  if(qi>=qs.length){ $("#quiz").innerHTML = `<h3>${good} van de ${qs.length} goed</h3><p>${good===qs.length?"Perfect! Tijd voor de A-lijn.":good>=3?"Netjes gedaan.":"Blader nog even door de begrippenlijst."}</p><div><button type="button" id="qr">Opnieuw</button></div>`; $("#qr").onclick=()=>{qi=0;good=0;renderQ();}; return; }
+  const [t,o] = qs[qi];
+  $("#quiz").innerHTML = `<span class="meta">Vraag ${qi+1} van ${qs.length}</span><h3>${t}</h3><div class="opts">${o.map((x,i)=>`<button type="button" data-i="${i}">${x}</button>`).join("")}</div><p id="qf" class="meta"></p>`;
+}
+$("#quiz").addEventListener("click", e => {
+  const b = e.target.closest("button[data-i]"); if(!b || b.disabled) return;
+  const [, , ok, why] = qs[qi]; const i=+b.dataset.i;
+  $("#quiz").querySelectorAll("button[data-i]").forEach(x => { x.disabled=true; if(+x.dataset.i===ok) x.classList.add("ok"); });
+  if(i===ok) good++; else b.classList.add("no");
+  $("#qf").innerHTML = why + ` <button type="button" id="qn">Volgende</button>`;
+  $("#qn").onclick = () => { qi++; renderQ(); };
+});
+renderQ();
+
+/* ---------- Kopiëren & contactformulier ---------- */
+function copy(text, btn){
+  const done = () => { const o=btn.textContent; btn.textContent="Gekopieerd"; setTimeout(()=>btn.textContent=o,1500); };
+  try { navigator.clipboard.writeText(text).then(done, () => sel(btn)); } catch(e){ sel(btn); }
+}
+function sel(btn){ const c=btn.parentElement.querySelector("code"); if(!c) return; const r=document.createRange(); r.selectNodeContents(c); const s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+document.addEventListener("click", e => { const b=e.target.closest("[data-copy]"); if(b) copy(b.dataset.copy,b); });
+$("#cf").addEventListener("submit", e => {
+  e.preventDefault();
+  const to = $("#cType").value==="Bridgecursus" ? "g.boom033@hetnet.nl" : "bchoogland@outlook.com";
+  const body = `Onderwerp: ${$("#cType").value}\n\n${$("#cMsg").value}\n\nMet vriendelijke groet,\n${$("#cName").value}\n${$("#cMail").value}`;
+  const out = $("#cOut"); out.hidden=false;
+  out.innerHTML = `<p><b>Je bericht staat klaar.</b> Kopieer het en mail het naar <code>${to}</code>.</p><pre style="white-space:pre-wrap;font-family:var(--f-body);margin:10px 0"></pre><div class="copy"><button type="button" id="cCopy">Kopieer bericht</button><button type="button" data-copy="${to}">Kopieer e-mailadres</button></div>`;
+  out.querySelector("pre").textContent = body;
+  $("#cCopy").onclick = function(){ copy(body,this); };
+});
+
+route();
+})();
+</script>
