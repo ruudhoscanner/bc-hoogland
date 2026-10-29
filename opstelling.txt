@@ -1,0 +1,31 @@
+# ============================================================
+#  OPSTELLING B.C. HOOGLAND
+#  Dit bestand vult de pagina "Opstelling" op de website.
+#  Regels die met # beginnen, worden niet getoond.
+# ============================================================
+#
+#  1. Vul de datum van de speeldag in als jaar-maand-dag,
+#     bijvoorbeeld:  speeldag: 2026-11-03
+#  2. Vul de datum van vandaag in bij "bijgewerkt".
+#  3. Een korte mededeling mag bij "opmerking" (mag ook leeg).
+#  4. Per zitting en lijn een kopje tussen blokhaken [ ],
+#     daaronder één regel per tafel:
+#        tafelnummer | paar Noord-Zuid | paar Oost-West
+#  5. Heb je de opstelling als pdf of foto? Upload dat bestand
+#     in GitHub (bijv. opstelling.pdf) en zet de naam bij "bestand".
+#     Dan hoef je de tafels niet over te typen.
+#
+#  Voorbeeld (zonder # ervoor wordt het zichtbaar):
+#  [Dinsdagmiddag · A-lijn]
+#  1 | Naam & Naam | Naam & Naam
+#  2 | Naam & Naam | Naam & Naam
+#
+#  [Dinsdagavond · A-lijn]
+#  1 | Naam & Naam | Naam & Naam
+# ============================================================
+
+speeldag:
+bijgewerkt:
+opmerking:
+bestand:
+

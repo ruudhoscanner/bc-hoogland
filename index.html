@@ -61,7 +61,7 @@ nav a.login:hover{background:#fff;color:#2b3a8f;border-color:#fff}
 .menu-btn{display:none;align-items:center;gap:8px;font:inherit;font-weight:700;color:#fff;background:transparent;border:2px solid rgba(255,255,255,.55);border-radius:999px;padding:6px 14px;cursor:pointer}
 .menu-btn .bars{display:inline-grid;gap:3px}
 .menu-btn .bars i{display:block;width:16px;height:2px;background:#fff;border-radius:2px}
-@media (max-width:1000px){
+@media (max-width:1120px){
   .top .wrap{flex-wrap:wrap}
   .menu-btn{display:inline-flex}
   nav{display:none;flex-direction:column;align-items:stretch;width:100%;padding-block:6px 10px;gap:4px}
@@ -219,6 +219,49 @@ a.panel:hover{border-color:var(--spade)}
 .sig ol{margin:6px 0 0;padding-left:1.2em}
 @media (max-width:860px){.form.f4{grid-template-columns:1fr 1fr}}
 
+/* Jump-menu infotheek */
+.jump{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 22px}
+.jump button{font:inherit;font-size:.88rem;font-weight:700;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.jump button:hover{border-color:var(--spade);color:var(--spade)}
+.sec-head{scroll-margin-top:90px}
+
+/* Conventies */
+.cv-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.cv-list{display:grid;gap:22px}
+.cv-group{display:grid;gap:8px}
+.cv-gh{font-size:1.1rem;display:flex;gap:8px;align-items:center}
+details.cv{background:var(--surface);border:2px solid var(--line);border-radius:14px;border-left-width:6px}
+details.cv.t-spade{border-left-color:var(--spade)} details.cv.t-heart{border-left-color:var(--heart)}
+details.cv.t-diamond{border-left-color:var(--diamond)} details.cv.t-club{border-left-color:var(--club)}
+details.cv summary{cursor:pointer;list-style:none;padding:12px 44px 12px 16px;position:relative;display:flex;flex-direction:column;gap:2px}
+details.cv summary::-webkit-details-marker{display:none}
+details.cv summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:var(--f-display);font-weight:800;font-size:1.4rem;color:var(--muted)}
+details.cv[open] summary::after{content:"−"}
+.cv-t{font-family:var(--f-display);font-weight:700;font-size:1.08rem}
+.cv-s{color:var(--muted);font-size:.92rem}
+details.cv[open] .cv-s{display:none}
+.cv-b{padding:0 16px 16px;display:grid;gap:10px;min-width:0}
+.cv-lead{font-weight:700}
+.cv-src{font-weight:700;justify-self:start}
+table.kv caption{text-align:left;font-family:var(--f-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-bottom:4px}
+
+/* Opstelling */
+.op-teaser{display:flex;align-items:center;gap:12px;margin-top:12px;padding:14px 18px;border-radius:16px;background:var(--club-soft);color:var(--ink);text-decoration:none;font-weight:700;flex-wrap:wrap}
+.op-teaser .s{font-size:1.4rem;color:var(--club)}
+.op-teaser .go{margin-left:auto;font-family:var(--f-mono);font-size:.85rem;color:var(--club)}
+.op-teaser:empty{display:none}
+.op-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.op-line h3{display:flex;align-items:center;gap:8px}
+table.op td.tf{font-family:var(--f-display);font-weight:800;font-size:1.15rem;width:52px;text-align:center}
+table.op td.vs{color:var(--muted);font-family:var(--f-mono);font-size:.8rem;width:28px;text-align:center}
+table.op td{white-space:normal}
+table.op tr.me td{background:var(--diamond-soft)}
+.op-empty{display:grid;gap:10px;justify-items:start}
+.op-empty .big{font-size:2.6rem;line-height:1;color:var(--club)}
+.op-file{display:grid;gap:12px}
+.op-file img{border-radius:12px;border:2px solid var(--line)}
+@media (max-width:860px){.op-grid{grid-template-columns:1fr}}
+
 /* Infotheek */
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .search input{flex:1;min-width:220px;font:inherit;padding:12px 16px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
@@ -277,6 +320,7 @@ footer a{color:#fff}
       <a href="#berichten">Berichten</a>
       <a href="#uitslagen">Uitslagen</a>
       <a href="#agenda">Agenda</a>
+      <a href="#opstelling">Opstelling</a>
       <a href="#club">Clubinfo</a>
       <a href="#infotheek">Infotheek</a>
       <a href="#contact">Contact</a>
@@ -309,6 +353,7 @@ footer a{color:#fff}
   </div>
   <div class="wrap">
     <div class="next" id="nextBox"></div>
+    <a class="op-teaser" id="opTeaser" href="#opstelling"></a>
 
     <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Dit seizoen</h2></div>
     <div class="grid g3">
@@ -418,7 +463,9 @@ footer a{color:#fff}
 <!-- INFOTHEEK -->
 <section class="page" id="v-infotheek" data-view="infotheek" hidden>
   <div class="wrap">
-    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Infotheek</h2><span class="meta">begrippen, hulpmiddelen en een quizje</span></div>
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Infotheek</h2><span class="meta">hulpmiddelen, conventies, begrippen en een quiz</span></div>
+    <nav class="jump" aria-label="Onderdelen van de infotheek"><button type="button" data-to="it-tools">Hulpmiddelen</button><button type="button" data-to="it-sa">Na sans atout</button><button type="button" data-to="it-conv">Conventies & speeltips</button><button type="button" data-to="it-uitkomen">Uitkomen & signaleren</button><button type="button" data-to="it-slag">Slagkracht</button><button type="button" data-to="it-begrip">Begrippen</button><button type="button" data-to="it-quiz">Quiz</button><button type="button" data-to="it-video">Video's</button></nav>
+    <span id="it-tools"></span>
 
     <div class="grid g2">
       <div class="panel t-spade">
@@ -442,7 +489,7 @@ footer a{color:#fff}
     </div>
 
     <!-- NA 1SA: STAYMAN & JACOBY -->
-    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Na sans atout: Stayman, Jacoby & Niemeijer</h2></div>
+    <div class="sec-head" id="it-sa"><span class="suit" style="color:var(--spade)">♠</span><h2>Na sans atout: Stayman, Jacoby & Niemeijer</h2></div>
     <p class="intro">Partner opent 1SA: 15–17 punten en een gelijkmatige hand. Heb je een hoge kleur, dan wil je weten of er een fit is. Met een <b>vierkaart</b> vraag je het met Stayman. Met een <b>vijfkaart</b> vertel je het met een transfer.</p>
     <div class="grid g2">
       <div class="panel t-spade">
@@ -505,8 +552,60 @@ footer a{color:#fff}
       <div class="sig" id="nsOut"></div>
     </div>
 
+    <!-- CONVENTIES & SPEELTIPS -->
+    <div class="sec-head" id="it-conv"><span class="suit" style="color:var(--diamond)">♦</span><h2>Conventies & speeltips</h2></div>
+    <p class="intro">Korte samenvattingen van de speeltips van <b>BC Vijfhuizen</b>, deels gebaseerd op de reeks <i>De achterkantjes</i> van Ron Jedema (BC IMP, Heemstede). Wil je de volledige uitleg met voorbeelden? Volg dan de link naar de pdf.</p>
+    <div class="cv-bar">
+      <div class="search" style="margin:0;flex:1"><input id="cvQ" type="search" placeholder="Zoek, bijv. Landy of doublet" aria-label="Zoek in conventies"></div>
+      <div class="filters" role="group" aria-label="Onderwerp" id="cvF" style="margin:0"></div>
+    </div>
+    <div class="cv-list" id="cvList">
+      <div class="cv-group" data-c="open"><h3 class="cv-gh"><span style="color:var(--spade)">♠</span> Openen & waarderen</h3>
+        <details class="cv t-spade"><summary><span class="cv-t">Regel van 17, 20 en 15</span><span class="cv-s">Wanneer open je een hand die net niet genoeg punten heeft?</span></summary><div class="cv-b"><p class="cv-lead">Wanneer open je een hand die net niet genoeg punten heeft?</p><ul class="ticks"><li><b>Regel van 17:</b> punten + lengte van je langste kleur is 17 of meer? Dan open je. Bijvoorbeeld 12 punten met een vijfkaart.</li><li><b>Regel van 20:</b> punten + de lengte van je twee langste kleuren is 20 of meer. Met twee vijfkaarten open je al met 10 punten.</li><li><b>Regel van 15 (vierde hand):</b> dreigt een rondpas? Tel je punten en je schoppenkaarten. Is dat 15 of meer, dan open je. Zonder schoppen helpt een opening de tegenpartij vaak alleen maar.</li><li>Open niet met te veel verliezers, ook niet als de regel klopt. Speel je de regel van 20, dan belooft een SA-antwoord van partner 1 punt meer dan normaal.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Regel-van-15-17-20.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-spade"><summary><span class="cv-t">Verliezers tellen (LTC)</span><span class="cv-s">Hoe hoog kun je bieden zodra je een troeffit hebt?</span></summary><div class="cv-b"><p class="cv-lead">Hoe hoog kun je bieden zodra je een troeffit hebt?</p><ul class="ticks"><li>Kijk per kleur alleen naar je hoogste drie kaarten. Elke ontbrekende aas, heer of vrouw is een verliezer. Een singleton is hooguit 1 verliezer, een doubleton hooguit 2.</li><li>Correcties: meer vrouwen dan azen +1; een troeffit met partner −1.</li><li>Tel de verliezers van jou en partner op en trek ze af van 18: dat is het biedniveau. 8 + 7 = 15 verliezers, dus 3-niveau.</li><li>Ga uit van 7 verliezers bij een opening van 1 in een kleur, 6 bij 1SA en hooguit 8 bij een volgbod of preëmptief bod (7 als je kwetsbaar bent).</li><li>Alleen voor troefcontracten. Zonder fit tel je weer punten.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/LosingTrickCount.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-spade"><summary><span class="cv-t">Aanvallend of verdedigend?</span><span class="cv-s">Twee handen met dezelfde punten kunnen heel verschillend uitpakken.</span></summary><div class="cv-b"><p class="cv-lead">Twee handen met dezelfde punten kunnen heel verschillend uitpakken.</p><ul class="ticks"><li><b>Aanvallende hand:</b> lange kleuren met de honneurs in die lange kleuren. Die levert slagen op als jíj speelt, dus je kunt hoger bieden.</li><li><b>Verdedigende hand:</b> honneurs in je korte kleuren. Daarmee maak je vooral slagen in de verdediging. Bied voorzichtig en speel de tegenpartij liever (gedoubleerd) down.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Wat-is-die-hand-waard.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="na"><h3 class="cv-gh"><span style="color:var(--heart)">♥</span> Na de opening</h3>
+        <details class="cv t-heart"><summary><span class="cv-t">Montreal (1<span class="blk">♣</span> – 1<span class="rd">♦</span>)</span><span class="cv-s">Een eenvoudige afspraak na een 1<span class="blk">♣</span>-opening die ook een tweekaart kan zijn.</span></summary><div class="cv-b"><p class="cv-lead">Een eenvoudige afspraak na een 1<span class="blk">♣</span>-opening die ook een tweekaart kan zijn.</p><ul class="ticks"><li>1<span class="rd">♥</span> of 1<span class="blk">♠</span> op partners 1<span class="blk">♣</span> belooft een <b>vijfkaart</b>.</li><li>1<span class="rd">♦</span> is een relay: 6+ punten, géén vijfkaart hoog. Je kunt wel vier harten of schoppen hebben.</li><li>1SA: 6+ punten, geen vijfkaart <span class="rd">♦</span> <span class="rd">♥</span> <span class="blk">♠</span> en geen vierkaart hoog.</li></ul><div class="tbl"><table class="kv"><caption>Opener na 1<span class="blk">♣</span> – 1<span class="rd">♦</span></caption><tbody><tr><td class="ex"><b>1<span class="rd">♥</span> / 1<span class="blk">♠</span></b></td><td>Vierkaart in die kleur</td></tr><tr><td class="ex"><b>1SA</b></td><td>Geen vierkaart hoog, geen zeskaart <span class="blk">♣</span></td></tr><tr><td class="ex"><b>2<span class="blk">♣</span></b></td><td>Zeskaart <span class="blk">♣</span></td></tr><tr><td class="ex"><b>2<span class="rd">♦</span> / 2<span class="rd">♥</span> / 2<span class="blk">♠</span></b></td><td>Reverse: 15+ punten, 5+ <span class="blk">♣</span> en 4+ in de geboden kleur</td></tr><tr><td class="ex"><b>2SA</b></td><td>18–19 punten, gelijkmatig, geen vierkaart hoog</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Montreal.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Check-back Stayman</span><span class="cv-s">Na 1-in-een-kleur, 1-in-een-kleur, 1SA: hebben we toch een fit in de hoge kleur?</span></summary><div class="cv-b"><p class="cv-lead">Na 1-in-een-kleur, 1-in-een-kleur, 1SA: hebben we toch een fit in de hoge kleur?</p><ul class="ticks"><li>Voorbeeld: 1<span class="blk">♣</span> – 1<span class="blk">♠</span> – 1SA – <b>2<span class="blk">♣</span></b>. Met 2<span class="blk">♣</span> vraag je de opener naar zijn hoge kleuren. Je belooft minstens een uitnodigende hand.</li><li>Steunen en 2SA daarna zijn uitnodigend, de rest is mancheforcing. Wil je alleen uitnodigen met een eigen kleur, bied die dan direct op 3-niveau.</li><li><b>Dubbele check-back:</b> 2<span class="blk">♣</span> voor uitnodigende handen (opener moet 2<span class="rd">♦</span> bieden) en 2<span class="rd">♦</span> voor alle mancheforcing handen. Zo is het nooit meer de vraag of iets forcing is.</li></ul><div class="tbl"><table class="kv"><caption>Antwoorden op 2<span class="blk">♣</span> (eenvoudige versie)</caption><tbody><tr><td class="ex"><b>2<span class="rd">♦</span></b></td><td>Geen vier harten, geen drie schoppen</td></tr><tr><td class="ex"><b>2<span class="rd">♥</span></b></td><td>Vier harten, misschien ook drie schoppen</td></tr><tr><td class="ex"><b>2<span class="blk">♠</span></b></td><td>Drie schoppen, geen vier harten</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Checkback-en-dubbele-checkback.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Negatief doublet</span><span class="cv-s">Partner opent, de tegenpartij volgt en jij kunt je kleur niet meer kwijt.</span></summary><div class="cv-b"><p class="cv-lead">Partner opent, de tegenpartij volgt en jij kunt je kleur niet meer kwijt.</p><ul class="ticks"><li>Het doublet belooft minstens <b>7 punten</b> en een <b>vierkaart in de hoogste nog niet geboden kleur</b>.</li><li>Noem je die kleur zelf, dan belooft dat een vijfkaart. Zo vind je ook een 5-3-fit.</li><li>Zijn alleen lage kleuren geboden (1<span class="blk">♣</span> – 1<span class="rd">♦</span>), dan belooft het doublet beide hoge kleuren.</li><li>Spreek af tot welke hoogte het geldt, bijvoorbeeld t/m 2<span class="blk">♠</span>, en zet het op je systeemkaart.</li></ul><div class="tbl"><table class="kv"><caption>Voorbeelden</caption><tbody><tr><td class="ex"><b>1<span class="blk">♣</span> – (1<span class="rd">♦</span>) – dbl</b></td><td>Beide hoge kleuren</td></tr><tr><td class="ex"><b>1<span class="blk">♣</span> – (1<span class="rd">♥</span>) – dbl</b></td><td>Vier schoppen</td></tr><tr><td class="ex"><b>1<span class="blk">♣</span> – (1<span class="rd">♥</span>) – 1<span class="blk">♠</span></b></td><td>Vijf schoppen</td></tr><tr><td class="ex"><b>1<span class="blk">♣</span> – (1<span class="rd">♦</span>) – 1SA</b></td><td>Geen vierkaart hoog</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Doublet-Negatief.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Redoublet</span><span class="cv-s">Partner opent en rechts doubleert. Wat nu?</span></summary><div class="cv-b"><p class="cv-lead">Partner opent en rechts doubleert. Wat nu?</p><ul class="ticks"><li><b>Redoublet:</b> 8+ punten, zegt niets over steun. Wij hebben de meeste punten; zij gaan desnoods gedoubleerd down.</li><li><b>Nieuwe kleur:</b> 3–7 punten, geen steun. Op 1-niveau een vierkaart, op 2-niveau een vijfkaart.</li><li><b>Steun:</b> 0–7 punten, en meteen zo hoog als jullie samen troeven hebben. Met drie troeven naast een vijfkaart opening bied je dus direct op 2-niveau.</li><li><b>Sprong in een nieuwe kleur:</b> zeskaart en openingskracht, mancheforcing.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Redoublet.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Competitief doublet</span><span class="cv-s">De tegenpartij biedt tussen en de bieding dreigt te stoppen.</span></summary><div class="cv-b"><p class="cv-lead">De tegenpartij biedt tussen en de bieding dreigt te stoppen.</p><ul class="ticks"><li>Voorbeeld: 1<span class="blk">♣</span> – pas – 1<span class="blk">♠</span> – 2<span class="rd">♥</span> – pas – pas – <b>dbl</b>. Je zegt: ‘ik heb wel wat, bied nog eens iets’.</li><li>Partner mag passen (dan wordt het strafdoublet), jouw kleur steunen, SA bieden of zijn eigen kleur herhalen.</li><li>Uitzonderingen: heb je eerst gepast en doubleer je later, of doubleer je een SA-contract, dan is het voor straf.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Doublet-Competitief.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="tegen"><h3 class="cv-gh"><span style="color:var(--diamond)">♦</span> Tegen de tegenpartij</h3>
+        <details class="cv t-diamond"><summary><span class="cv-t">Informatiedoublet en strafdoublet</span><span class="cv-s">Het bekendste en meest verkeerd begrepen bod.</span></summary><div class="cv-b"><p class="cv-lead">Het bekendste en meest verkeerd begrepen bod.</p><ul class="ticks"><li><b>Informatiedoublet:</b> een opening, geen vijfkaart voor een volgbod, en steun voor de ongeboden kleuren. Partner moet bieden, ook met 0 punten.</li><li>Biedt de doubleerder daarna zelf een kleur, dan had hij 16+ punten en een vijfkaart. Biedt hij daarna SA, dan 18+.</li><li><b>Strafdoublet:</b> je verwacht dat ze down gaan en kunt zelf niet meer verdienen. Ken de scores (zie ‘Tellen!’). Een gedoubleerde deelscore die gemaakt wordt, kan ineens een manche worden.</li></ul><div class="tbl"><table class="kv"><caption>Antwoorden op het informatiedoublet</caption><tbody><tr><td class="ex"><b>Kleur zonder sprong</b></td><td>0–8 punten</td></tr><tr><td class="ex"><b>Kleur met sprong</b></td><td>9–11 punten (kan een vierkaart zijn)</td></tr><tr><td class="ex"><b>1SA</b></td><td>6–9 punten, stop in hun kleur</td></tr><tr><td class="ex"><b>2SA</b></td><td>10–11 punten, stop in hun kleur</td></tr><tr><td class="ex"><b>Hun kleur bieden</b></td><td>12+ punten, forcing</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Doublet-Info-Straf.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Regel van 2 en 3</span><span class="cv-s">Een volgbod doe je op slagen, niet op punten.</span></summary><div class="cv-b"><p class="cv-lead">Een volgbod doe je op slagen, niet op punten.</p><ul class="ticks"><li>Bied hoogstens 2 slagen meer dan je zelf hebt als je kwetsbaar bent, of 3 als je niet kwetsbaar bent. Gedoubleerd down kost dan minder dan hun manche.</li><li>Slagen tellen: kijk per kleur naar je hoogste drie kaarten. Aas, heer en vrouw zijn elk een slag (in een doubleton alleen A en H, in een singleton alleen de aas). Elke vierde en volgende kaart telt als slag.</li><li>Voorbeelden: AV107 = 3 slagen · HB2 = 1 · 1098732 = 3 · V8 = 0 · AHB98 = 4.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Regel-van-2-en-3.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Law of total tricks</span><span class="cv-s">Hoe hoog bied je mee in een strijd om de deelscore?</span></summary><div class="cv-b"><p class="cv-lead">Hoe hoog bied je mee in een strijd om de deelscore?</p><ul class="ticks"><li>Het totaal aantal slagen in een spel is ongeveer gelijk aan het totaal aantal troeven van beide partijen.</li><li>Vuistregel: <b>met 8 troeven nooit, met 9 altijd</b>. Met 8 troeven samen bied je niet naar 3-niveau; met 9 troeven bied je tot 3-niveau mee.</li><li>Een slag meer met een dubbele fit; een slag minder met een 4-3-3-3 verdeling of met losse vrouwen en boeren in hun kleur. Bij twijfel: passen.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/LAW-of-total-number-of-tricks.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Muiderberg (2<span class="rd">♥</span> / 2<span class="blk">♠</span>)</span><span class="cv-s">Een zwakke opening om de tegenpartij te storen.</span></summary><div class="cv-b"><p class="cv-lead">Een zwakke opening om de tegenpartij te storen.</p><ul class="ticks"><li><b>Voorwaarden:</b> 5–10 punten, precies vijf kaarten in de hoge kleur, minstens een vierkaart in een lage kleur, geen andere vierkaart hoog. Hooguit 8 verliezers (7 kwetsbaar).</li><li>Partner alerteert. Hij past, verhoogt preëmptief, biedt de manche met fit, of vraagt met <b>2SA</b> naar je lage kleur.</li><li>Op 3<span class="blk">♣</span> past de opener met een vierkaart klaveren en biedt anders 3<span class="rd">♦</span>.</li><li>Let goed op de kwetsbaarheid. Gedoubleerd kwetsbaar 2 down kost meer dan hun manche niet kwetsbaar.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Muiderberg.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Verdedigen tegen Muiderberg</span><span class="cv-s">Hetzelfde als tegen een gewone opening, maar alles een niveau hoger.</span></summary><div class="cv-b"><p class="cv-lead">Hetzelfde als tegen een gewone opening, maar alles een niveau hoger.</p><ul class="ticks"><li><b>Doublet</b> is informatief: openingskracht (13+), kort in hun kleur, het liefst met de andere hoge kleur.</li><li><b>2SA</b> als volgbod: 15–18 punten (op de vierde hand 14–17). Speel daarna Niemeijer of Puppet Stayman.</li><li>Een sprongvolgbod is sterk: 6+ kaart en hooguit 6 verliezers. Bied nooit preëmptief tegen een preëmptief bod.</li><li>Sommige paren gebruiken de <b>negatieve 2SA</b> na partners doublet: een zwakke hand die 3<span class="blk">♣</span> afdwingt.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Muiderberg-Verdediging.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Multi (2<span class="rd">♦</span>)</span><span class="cv-s">Eén opening voor twee soorten handen: zwak met een lange hoge kleur, of heel sterk.</span></summary><div class="cv-b"><p class="cv-lead">Eén opening voor twee soorten handen: zwak met een lange hoge kleur, of heel sterk.</p><ul class="ticks"><li><b>Zwak:</b> een zeskaart harten of schoppen (een zevenkaart mag ook) en minder dan 11 punten. Hooguit 8 verliezers (7 als je kwetsbaar bent en zij niet). Niet met een slappe zeskaart.</li><li><b>Sterk:</b> 20–22 punten zonder SA-verdeling. Na partners antwoord laat je zien dat je sterk bent: je langste lage kleur op 3-niveau, of 2SA als je kracht in een hoge kleur zit.</li><li>Partner biedt meestal 2<span class="rd">♥</span>: ‘pas of verbeter’. Met 2<span class="blk">♠</span> nodigt hij uit als jouw kleur harten is. Met 2SA (15+) vraagt hij naar je kleur.</li><li>Alerteer de opening en de antwoorden.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/MultiColored-Zwak.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Verdedigen tegen Multi</span><span class="cv-s">Je weet nog niet of het zwak of sterk is, en welke kleur.</span></summary><div class="cv-b"><p class="cv-lead">Je weet nog niet of het zwak of sterk is, en welke kleur.</p><ul class="ticks"><li>Heb je een opening zonder eigen kleur? Pas eerst en wacht af. Er wordt na jou nog minstens één keer geboden.</li><li>Een direct volgbod belooft een vijfkaart hoog of zeskaart laag. Een direct doublet belooft een opening zonder biedbare kleur.</li><li>Doublet nadat je eerst gepast hebt, is voor straf. Reken uit of hun down meer oplevert dan je eigen manche.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/MultiColored-Verdediging.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">(Multi-)Landy tegen 1SA</span><span class="cv-s">De tegenpartij opent 1SA en jij hebt een verdeelde hand.</span></summary><div class="cv-b"><p class="cv-lead">De tegenpartij opent 1SA en jij hebt een verdeelde hand.</p><ul class="ticks"><li>Volg alleen met een <b>aanvallende</b> hand: lange kleuren, punten in die kleuren. Met een gelijkmatige hand pas je of doubleer je voor straf.</li><li><b>2<span class="blk">♣</span> = Landy:</b> beide hoge kleuren (5-4 of 5-5). Partner moet kiezen, ook met 0 punten: 2<span class="rd">♥</span> of 2<span class="blk">♠</span> is zijn voorkeur, 2<span class="rd">♦</span> laat de keuze aan jou.</li><li>Speel je <b>Multi-Landy</b>, dan krijgen ook de andere biedingen een betekenis:</li></ul><div class="tbl"><table class="kv"><caption>Multi-Landy na hun 1SA</caption><tbody><tr><td class="ex"><b>Doublet</b></td><td>Zelf een SA-opening, voor straf</td></tr><tr><td class="ex"><b>2<span class="blk">♣</span></b></td><td>Landy: beide hoge kleuren</td></tr><tr><td class="ex"><b>2<span class="rd">♦</span></b></td><td>Multi: zeskaart in een hoge kleur</td></tr><tr><td class="ex"><b>2<span class="rd">♥</span> / 2<span class="blk">♠</span></b></td><td>Muiderberg: vijfkaart hoog + vierkaart laag</td></tr><tr><td class="ex"><b>2SA</b></td><td>Beide lage kleuren, 5-5</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/MultiLandy.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="slem"><h3 class="cv-gh"><span style="color:var(--club)">♣</span> Op weg naar slem</h3>
+        <details class="cv t-club"><summary><span class="cv-t">Controlebiedingen (cuebids)</span><span class="cv-s">Kan de tegenpartij in één kleur twee slagen pakken?</span></summary><div class="cv-b"><p class="cv-lead">Kan de tegenpartij in één kleur twee slagen pakken?</p><ul class="ticks"><li>Met een controlebod laat je zien dat je in een zijkleur een <b>eerste</b> (aas of renonce) of <b>tweede controle</b> (heer of singleton) hebt.</li><li>Je begint vanaf 3-niveau, als de troefkleur vaststaat, en noemt steeds de goedkoopste kleur met controle. Sla je een kleur over, dan heb je daar geen controle.</li><li>Ontbreekt in een kleur bij jullie allebei de controle, stop dan de slempoging.</li><li>Vraag pas azen of keycards als alle kleuren gecontroleerd zijn.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Controlebiedingen.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-club"><summary><span class="cv-t">Blackwood (RKC 1430)</span><span class="cv-s">Na 4SA vraag je naar azen én troefheer: de vijf ‘keycards’.</span></summary><div class="cv-b"><p class="cv-lead">Na 4SA vraag je naar azen én troefheer: de vijf ‘keycards’.</p><ul class="ticks"><li>Spreek eerst een troefkleur af. Doe geen Blackwood met een renonce of een kleur zonder controle. Gebruik dan controlebiedingen.</li><li>Op een 5<span class="blk">♣</span>- of 5<span class="rd">♦</span>-antwoord vraagt het eerstvolgende bod (geen troef) naar troefvrouw. Het eerstvolgende antwoord ontkent die.</li><li>Daarna kan 5SA naar heren vragen.</li><li>Pas op met een lage kleur als troef: een tegenvallend antwoord brengt je dan al te hoog.</li></ul><div class="tbl"><table class="kv"><caption>Antwoorden op 4SA (1430)</caption><tbody><tr><td class="ex"><b>5<span class="blk">♣</span></b></td><td>1 of 4 keycards</td></tr><tr><td class="ex"><b>5<span class="rd">♦</span></b></td><td>0 of 3 keycards</td></tr><tr><td class="ex"><b>5<span class="rd">♥</span></b></td><td>2 keycards, zonder troefvrouw</td></tr><tr><td class="ex"><b>5<span class="blk">♠</span></b></td><td>2 keycards, met troefvrouw</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/RKC-Blackwood.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="afspel"><h3 class="cv-gh"><span style="color:var(--spade)">♠</span> Afspelen</h3>
+        <details class="cv t-spade"><summary><span class="cv-t">Regel van 7</span><span class="cv-s">Hoe vaak houd je op in sans atout?</span></summary><div class="cv-b"><p class="cv-lead">Hoe vaak houd je op in sans atout?</p><ul class="ticks"><li>Tel de kaarten die jij en de blinde samen hebben in de uitgekomen kleur. Trek dat af van 7: zo vaak houd je op.</li><li>Voorbeeld: samen zes kaarten (A B 6 tegenover 10 7 3), dus 7 − 6 = 1 keer ophouden. Daarna kan de partner van de uitkomer die kleur niet meer terugspelen.</li><li>Laat je verstand voorgaan: krijg je zelf een extra opvang, neem dan gewoon.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Regel-van-7.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-spade"><summary><span class="cv-t">Heer of vrouw tweede</span><span class="cv-s">Er wordt uitgekomen en in de blinde ligt heer-klein. Wat speel je?</span></summary><div class="cv-b"><p class="cv-lead">Er wordt uitgekomen en in de blinde ligt heer-klein. Wat speel je?</p><ul class="ticks"><li>Ligt er in de blinde een heer of vrouw tweede, speel die dan bij zolang er nog geen hogere kaart ligt.</li><li>Zit de aas links, dan is dit de enige manier om met de heer een slag te maken. Zit de aas rechts, dan ben je de heer toch kwijt.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Heer-of-vrouw-tweede.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-spade"><summary><span class="cv-t">Snijden of niet?</span><span class="cv-s">Een snit kan een overslag opleveren, maar ook een downslag.</span></summary><div class="cv-b"><p class="cv-lead">Een snit kan een overslag opleveren, maar ook een downslag.</p><ul class="ticks"><li>Vraag je eerst af of de snit nodig is, en wat er gebeurt als hij mislukt.</li><li>Haal je je contract zonder snit, stel hem dan zo lang mogelijk uit. Ga je zonder snit down, neem hem dan wel.</li><li>Gebruik de bieding: wie heeft gevolgd, wie heeft al punten laten zien?</li><li>Snijd in SA niet naar de ‘gevaarlijke hand’, de tegenspeler met de lange kleur.</li><li><b>Eight ever, nine never:</b> met negen kaarten samen en A H speel je van boven; met acht snijd je.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Snijden-en-gesneden-worden.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="tegenspel"><h3 class="cv-gh"><span style="color:var(--heart)">♥</span> Tegenspel</h3>
+        <details class="cv t-heart"><summary><span class="cv-t">Regel van 11</span><span class="cv-s">Partner komt tegen SA uit met de vierde van boven.</span></summary><div class="cv-b"><p class="cv-lead">Partner komt tegen SA uit met de vierde van boven.</p><ul class="ticks"><li>Trek de uitgekomen kaart af van 11. Dat is het aantal hogere kaarten in de handen van de blinde, jou en de leider samen.</li><li>Voorbeeld: partner speelt de 5, dus 6 hogere kaarten. Jij hebt er 2 en de blinde 2, dus de leider heeft er 2.</li><li>Kom niet met je langste kleur uit als partner een kleur heeft geboden, of als de leider jouw kleur heeft geboden.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Regel-van-11.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Speelplan bij tegenspel</span><span class="cv-s">Je verdedigt de helft van alle spellen, dus een plan loont.</span></summary><div class="cv-b"><p class="cv-lead">Je verdedigt de helft van alle spellen, dus een plan loont.</p><ul class="ticks"><li>Luister naar de bieding: hoeveel troeven en punten hebben ze, welke kleuren noemden ze, welke controle ontbreekt?</li><li>Heb je zelf lange troeven? Kom dan met je langste kleur uit, zodat de leider moet introeven.</li><li>Zit je sterk in een kleur die de leider bood? Dan is een troefstart vaak de beste.</li><li>Een singleton uitkomen helpt weinig als partner nauwelijks punten kan hebben.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Speelplan-bij-tegenspel.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-heart"><summary><span class="cv-t">Speel de bekende kleur</span><span class="cv-s">Wie een nieuwe kleur aanbreekt, verliest vaak een slag.</span></summary><div class="cv-b"><p class="cv-lead">Wie een nieuwe kleur aanbreekt, verliest vaak een slag.</p><ul class="ticks"><li>Weet je niet wat je moet spelen? Speel een kleur die al gespeeld is in plaats van zelf een nieuwe aan te breken.</li><li>Speel liever de kaart die de leider al kent. Zo blijft de kaart die hij nog niet kent verborgen.</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Speel-de-bekende-kleur.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+      <div class="cv-group" data-c="tafel"><h3 class="cv-gh"><span style="color:var(--diamond)">♦</span> Aan tafel</h3>
+        <details class="cv t-diamond"><summary><span class="cv-t">Alerteren, STOP-kaartje en denkpauzes</span><span class="cv-s">De regels aan tafel.</span></summary><div class="cv-b"><p class="cv-lead">De regels aan tafel.</p><ul class="ticks"><li><b>Denkpauze:</b> lang nadenken geeft informatie. Partner mag daar niets mee doen.</li><li><b>STOP-kaartje:</b> leg het neer bij elk sprongbod. De volgende speler wacht dan 10 seconden.</li><li><b>Alert:</b> de partner van de bieder alerteert elk bod dat iets anders betekent dan normaal. Uitleg alleen als erom gevraagd wordt, en dan de afspraak, niet je eigen uitleg.</li><li>Altijd alerteren: Stayman, Jacoby, Niemeijer, Muiderberg, Multi, Landy, Unusual 2SA, een SA-opening buiten 14–18 punten en een 1<span class="blk">♣</span> of 1<span class="rd">♦</span> die een tweekaart kan zijn.</li><li>Niet alerteren: zwakke twee, preëmptieve biedingen, gewone doubletten en biedingen boven 3SA (behalve in de eerste biedronde).</li></ul><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Alerteren-en-Denkpauzes.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+        <details class="cv t-diamond"><summary><span class="cv-t">Tellen!</span><span class="cv-s">Ken de scores, dan kun je aan tafel snel beslissen.</span></summary><div class="cv-b"><p class="cv-lead">Ken de scores, dan kun je aan tafel snel beslissen.</p><ul class="ticks"><li>Wie een manche ‘uitneemt’, moet weten wat dat kost. Dit zijn de getallen om te onthouden:</li></ul><div class="tbl"><table class="kv"><caption>Scores om te onthouden</caption><tbody><tr><td class="ex"><b>Deelscore</b></td><td>100 – 180</td></tr><tr><td class="ex"><b>Manche</b></td><td>400 niet kwetsbaar · 600 kwetsbaar</td></tr><tr><td class="ex"><b>Klein slem</b></td><td>± 1000 niet kwetsbaar · ± 1500 kwetsbaar</td></tr><tr><td class="ex"><b>Gedoubleerd down, niet kwetsbaar</b></td><td>100 · 300 · 500 · 800</td></tr><tr><td class="ex"><b>Gedoubleerd down, kwetsbaar</b></td><td>200 · 500 · 800 · 1100</td></tr></tbody></table></div><a class="cv-src" href="https://bridgeclub-vijfhuizen.nl/documents/speeltips/Tellen.pdf" target="_blank" rel="noopener">Volledige uitleg (pdf) ↗</a></div></details>
+      </div>
+    </div>
+    <p class="empty" id="cvNone" hidden>Niets gevonden. Probeer een ander woord.</p>
+    <p class="meta" style="margin-top:12px">Bron: <a href="https://bridgeclub-vijfhuizen.nl/bieden-spelen/conventies" target="_blank" rel="noopener">Conventies – BC Vijfhuizen ↗</a>. Stayman, Jacoby, Puppet Stayman en signaleren staan al eerder op deze pagina.</p>
+
     <!-- UITKOMEN & SIGNALEREN -->
-    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Uitkomen & signaleren</h2></div>
+    <div class="sec-head" id="it-uitkomen"><span class="suit" style="color:var(--heart)">♥</span><h2>Uitkomen & signaleren</h2></div>
     <p class="intro">Je speelt veel vaker tegen dan af. Goed tegenspel begint bij afspraken met je partner: waarmee kom je uit, en wat betekent de kaart die je bijspeelt? Kies je niveau.</p>
     <div class="lines lvl" id="lvlTabs" style="margin-bottom:14px">
       <button type="button" data-l="b" aria-pressed="true">Beginners</button>
@@ -592,7 +691,7 @@ footer a{color:#fff}
     </div>
 
     <!-- SLAGKRACHT -->
-    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Van puntenkul naar slagkracht</h2></div>
+    <div class="sec-head" id="it-slag"><span class="suit" style="color:var(--club)">♣</span><h2>Van puntenkul naar slagkracht</h2></div>
     <p class="intro">Uit het bridge-essay van Jan Wolthuis (Groningen, april 2024). Zijn punt: punten tellen is een middel, het doel is inschatten hoeveel <b>slagen</b> je hand kan maken. Twee handen met 10 punten kunnen 1 slag of 13 slagen waard zijn.</p>
     <div class="grid g3">
       <div class="tile spade"><span class="s">1</span><h3>Denk in slagen</h3><p>Waardeer je hand op slagkracht, voor honneurs en voor verdeling. In zijn telling is 1 slag 3 punten.</p></div>
@@ -630,15 +729,15 @@ footer a{color:#fff}
       </div>
     </div>
 
-    <div class="sec-head"><span class="suit" style="color:var(--diamond)">♦</span><h2>Begrippenlijst</h2></div>
+    <div class="sec-head" id="it-begrip"><span class="suit" style="color:var(--diamond)">♦</span><h2>Begrippenlijst</h2></div>
     <div class="search"><input id="q" type="search" placeholder="Zoek een begrip, bijv. impasse of Stayman" aria-label="Zoek in de begrippenlijst"></div>
     <div class="filters" role="group" aria-label="Categorie" id="catF"></div>
     <div class="terms" id="terms"></div>
 
-    <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Test jezelf</h2></div>
+    <div class="sec-head" id="it-quiz"><span class="suit" style="color:var(--heart)">♥</span><h2>Test jezelf</h2></div>
     <div class="panel t-diamond quiz" id="quiz"></div>
 
-    <div class="sec-head"><span class="suit" style="color:var(--spade)">♠</span><h2>Kijken & leren</h2></div>
+    <div class="sec-head" id="it-video"><span class="suit" style="color:var(--spade)">♠</span><h2>Kijken & leren</h2></div>
     <div class="grid g2">
       <a class="panel t-heart video" href="https://www.youtube.com/@bicacademie1807" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><h3>Speel Bridge met Berry ↗</h3><p>Kijk mee over de schouder van Berry Westra. Per aflevering bespreekt hij een of twee spellen: bieden, afspelen en tegenspel. Op het YouTube-kanaal van BiC Academie.</p></a>
       <a class="panel t-diamond video" href="https://www.youtube.com/@nederlandsecontent9688/search?query=Iedereen%20kan%20Bridgen" target="_blank" rel="noopener"><span class="play" aria-hidden="true">▶</span><h3>Iedereen kan Bridgen ↗</h3><p>De tv-lessenreeks met Berry Westra, van puntentelling en openen tot tussenbieden en preëmptief bieden. Handig naast de beginnerscursus.</p></a>
@@ -649,6 +748,14 @@ footer a{color:#fff}
       <a class="panel" href="https://www.bridgeshop.nl/" target="_blank" rel="noopener"><h3>Bridge- en Boekenshop ↗</h3><p>Lesboeken, biedboxen en kaarten.</p></a>
       <a class="panel" href="https://clubsites.bridge.nl/faq/" target="_blank" rel="noopener"><h3>Veelgestelde vragen ↗</h3><p>Over inloggen en de clubsites.</p></a>
     </div>
+  </div>
+</section>
+
+<!-- OPSTELLING -->
+<section class="page" id="v-opstelling" data-view="opstelling" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Opstelling</h2><span class="meta" id="opMeta"></span></div>
+    <div id="opBody"><p class="meta">Opstelling laden…</p></div>
   </div>
 </section>
 
@@ -682,7 +789,7 @@ footer a{color:#fff}
 
 <footer>
   <div class="wrap">
-    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 28 oktober 2026</span></div>
+    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 29 oktober 2026</span></div>
     <div>Aangesloten bij de <a href="https://www.bridge.nl" target="_blank" rel="noopener">Nederlandse Bridge Bond</a><br><a href="https://www.bridge.nl/privacy/" target="_blank" rel="noopener">Privacybeleid</a> · <a href="https://www.bridge.nl/cookiereglement/" target="_blank" rel="noopener">Cookiereglement</a></div>
   </div>
 </footer>
@@ -693,7 +800,7 @@ const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 const $ = s => document.querySelector(s);
 
 /* ---------- Routing ---------- */
-const views = ["home","berichten","uitslagen","agenda","club","infotheek","contact"];
+const views = ["home","berichten","uitslagen","agenda","opstelling","club","infotheek","contact"];
 function route(){
   const h = (location.hash||"").replace("#","");
   const v = views.includes(h) ? h : "home";
@@ -966,6 +1073,87 @@ function nsCalc(){
 }
 ["#nsP","#nsH","#nsS"].forEach(s=>$(s).addEventListener("change",nsCalc));
 nsCalc();
+
+/* ---------- Infotheek: snel naar ---------- */
+document.querySelector(".jump").addEventListener("click", e => {
+  const b = e.target.closest("button[data-to]"); if(!b) return;
+  const t = document.getElementById(b.dataset.to); if(t) t.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+});
+
+/* ---------- Conventies: zoeken en filteren ---------- */
+(function(){
+  const groups = [...document.querySelectorAll(".cv-group")];
+  const names = groups.map(g => [g.dataset.c, g.querySelector(".cv-gh").textContent.trim().slice(2)]);
+  let cat = "alle";
+  $("#cvF").innerHTML = `<button type="button" data-c="alle" aria-pressed="true">Alle</button>` + names.map(([k,n]) => `<button type="button" data-c="${k}" aria-pressed="false">${n}</button>`).join("");
+  function apply(){
+    const q = $("#cvQ").value.trim().toLowerCase(); let any = false;
+    groups.forEach(g => {
+      let shown = 0;
+      g.querySelectorAll("details.cv").forEach(d => {
+        const ok = (cat==="alle" || g.dataset.c===cat) && (!q || d.textContent.toLowerCase().includes(q));
+        d.hidden = !ok; if(ok) shown++;
+        if(q && ok) d.open = true;
+      });
+      g.hidden = shown===0; if(shown) any = true;
+    });
+    $("#cvNone").hidden = any;
+  }
+  $("#cvF").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return; cat=b.dataset.c; $("#cvF").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x===b)); apply(); });
+  $("#cvQ").addEventListener("input", apply);
+})();
+
+/* ---------- Opstelling ---------- */
+(function(){
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  const fmtD = d => d.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
+  const nextTue = () => { const d=new Date(TODAY); d.setDate(d.getDate() + ((2 - d.getDay() + 7) % 7)); return d; };
+  function parse(txt){
+    const o = {meta:{}, lines:[]}; let cur = null;
+    txt.split(/\r?\n/).forEach(raw => {
+      const l = raw.trim(); if(!l || l.startsWith("#")) return;
+      const h = l.match(/^\[(.+)\]$/); if(h){ cur = {name:h[1].trim(), rows:[]}; o.lines.push(cur); return; }
+      const m = l.match(/^(speeldag|bijgewerkt|opmerking|bestand)\s*:\s*(.*)$/i); if(m){ o.meta[m[1].toLowerCase()] = m[2].trim(); return; }
+      if(cur && l.includes("|")){ const p = l.split("|").map(x=>x.trim()); cur.rows.push({t:p[0], nz:p[1]||"", ow:p[2]||""}); }
+    });
+    o.lines = o.lines.filter(x => x.rows.length);
+    return o;
+  }
+  const pDate = s => { const m = (s||"").match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? new Date(+m[1], m[2]-1, +m[3]) : null; };
+  function teaser(html){ $("#opTeaser").innerHTML = html; }
+  function render(o){
+    const day = pDate(o.meta.speeldag), upd = pDate(o.meta.bijgewerkt);
+    const file = o.meta.bestand;
+    const has = o.lines.length || file;
+    const tue = nextTue();
+    if(!has || !day){
+      $("#opMeta").textContent = "";
+      $("#opBody").innerHTML = `<div class="panel op-empty"><span class="big" aria-hidden="true">♣</span><h3>De opstelling voor ${fmtD(tue)} volgt</h3><p>De opstelling voor de eerstvolgende speeldag wordt meestal op zondag gemaakt en verschijnt dan hier.</p><p class="meta">Kun je niet spelen? Meld je dan op tijd af bij de wedstrijdleiding.</p></div>`;
+      teaser(`<span class="s">♣</span>Opstelling ${fmtD(tue)}: volgt zondag <span class="go">Bekijk →</span>`);
+      return;
+    }
+    const old = day < TODAY;
+    $("#opMeta").textContent = upd ? "bijgewerkt " + upd.toLocaleDateString("nl-NL",{day:"numeric",month:"long"}) : "";
+    const suits = [["♠","spade"],["♥","heart"],["♦","diamond"],["♣","club"]];
+    let html = old ? `<div class="notice" style="margin-bottom:16px"><b>Let op:</b> dit is de opstelling van ${fmtD(day)}. De nieuwe opstelling volgt meestal op zondag.</div>` : "";
+    html += `<div class="panel" style="margin-bottom:18px"><h3 style="font-size:1.5rem">${(d=>d.charAt(0).toUpperCase()+d.slice(1))(fmtD(day))}</h3>${o.meta.opmerking?`<p>${esc(o.meta.opmerking)}</p>`:""}
+      ${o.lines.length?`<div class="search" style="margin:0"><input id="opQ" type="search" placeholder="Zoek je naam" aria-label="Zoek je naam in de opstelling" style="max-width:320px"></div>`:""}</div>`;
+    if(file){
+      const isImg = /\.(png|jpe?g|webp|gif)$/i.test(file);
+      html += `<div class="panel op-file" style="margin-bottom:18px">${isImg?`<img src="${esc(file)}" alt="Opstelling ${fmtD(day)}">`:""}<a class="btn p" href="${esc(file)}" target="_blank" rel="noopener" style="justify-self:start">Open de opstelling ${isImg?"(groot)":"(pdf)"} ↗</a></div>`;
+    }
+    if(o.lines.length){
+      html += `<div class="op-grid">` + o.lines.map((ln,i) => { const [su,tone]=suits[i%4];
+        return `<div class="panel t-${tone} op-line"><h3><span style="color:var(--${tone})">${su}</span>${esc(ln.name)}</h3><div class="tbl"><table class="op"><thead><tr><th style="text-align:center">Tafel</th><th>Noord-Zuid</th><th></th><th>Oost-West</th></tr></thead><tbody>${ln.rows.map(r=>`<tr><td class="tf">${esc(r.t)}</td><td>${esc(r.nz)}</td><td class="vs">–</td><td>${esc(r.ow)}</td></tr>`).join("")}</tbody></table></div></div>`; }).join("") + `</div>`;
+    }
+    $("#opBody").innerHTML = html;
+    const q = $("#opQ");
+    if(q) q.addEventListener("input", () => { const v=q.value.trim().toLowerCase(); document.querySelectorAll("table.op tbody tr").forEach(tr => tr.classList.toggle("me", !!v && tr.textContent.toLowerCase().includes(v))); });
+    teaser(old ? `<span class="s">♣</span>Opstelling ${fmtD(tue)}: volgt zondag <span class="go">Bekijk →</span>`
+               : `<span class="s">♣</span>De opstelling voor ${fmtD(day)} staat klaar <span class="go">Bekijk →</span>`);
+  }
+  fetch("opstelling.txt", {cache:"no-store"}).then(r => r.ok ? r.text() : "").then(t => render(parse(t))).catch(() => render(parse("")));
+})();
 
 /* ---------- Niveau-tabs uitkomen ---------- */
 $("#lvlTabs").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return;
