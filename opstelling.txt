@@ -4,28 +4,57 @@
 #  Regels die met # beginnen, worden niet getoond.
 # ============================================================
 #
-#  1. Vul de datum van de speeldag in als jaar-maand-dag,
-#     bijvoorbeeld:  speeldag: 2026-11-03
-#  2. Vul de datum van vandaag in bij "bijgewerkt".
-#  3. Een korte mededeling mag bij "opmerking" (mag ook leeg).
-#  4. Per zitting en lijn een kopje tussen blokhaken [ ],
-#     daaronder één regel per tafel:
-#        tafelnummer | paar Noord-Zuid | paar Oost-West
-#  5. Heb je de opstelling als pdf of foto? Upload dat bestand
-#     in GitHub (bijv. opstelling.pdf) en zet de naam bij "bestand".
-#     Dan hoef je de tafels niet over te typen.
-#
-#  Voorbeeld (zonder # ervoor wordt het zichtbaar):
-#  [Dinsdagmiddag · A-lijn]
-#  1 | Naam & Naam | Naam & Naam
-#  2 | Naam & Naam | Naam & Naam
-#
-#  [Dinsdagavond · A-lijn]
-#  1 | Naam & Naam | Naam & Naam
+#  1. speeldag: datum van de speeldag als jaar-maand-dag
+#  2. bijgewerkt: datum van vandaag
+#  3. opmerking: korte mededeling (mag leeg)
+#  4. Per lijn een kopje tussen blokhaken [ ], daaronder:
+#       tafelnummer | paar Noord-Zuid | paar Oost-West
+#     of, als er nog geen tafels bekend zijn:
+#       paarnummer | paar
+#  5. bestand: naam van een geüploade pdf of foto (mag leeg)
 # ============================================================
 
-speeldag:
-bijgewerkt:
-opmerking:
+speeldag: 2026-11-03
+bijgewerkt: 2026-11-01
+opmerking: Voorlopige indeling. Kun je niet spelen? Meld je dan zo snel mogelijk af.
 bestand:
 
+[Dinsdagmiddag · Lijn A]
+1 | Jeroen Pels & Carla Pels-van Zwol | Frans Daemen & Frits Peters
+2 | Gerry Ising & Wil de Ridder | Marian de Munck & Ria van der Stroom
+3 | Carlie Vriesekoop & Valerie Welch | Marijke Koelman-Schuyt & Ben Mokkink
+4 | Paul de Kleuver & Ruud van den Hoven | Annemarie Overmars & Harry Overmars
+5 | Wil van Middelaar & Henk van Middelaar | Trudy Dieke & Els Strijbos
+6 | Mary Lans & Marjo Scheijmans | Dinie Kowalski & Thea Bodewes
+7 | Ina Kraijo & Jaap van Tuyll | Annelies Beentjes & Peter Beentjes
+8 | Mia van den Hoven & Gerrit Groenendaal | (afwezig)
+
+[Dinsdagmiddag · Lijn B]
+1 | Ria Biegstraaten & Han Biegstraaten | Tetty Corzilius & partner
+2 | Willemien Meershoek & Gerda Eerdmans | Hetty Kramer-van Spanning & Ans Vis
+3 | Willem Lunter & Nel Lunter | Uco Sonnenberg & Jeanette Sonnenberg
+4 | Willie Jansen & Bep Berger | Anneloes Fokkema & Klaas Fokkema
+5 | René van Baal & Elly Moolenaar | Romy Abeen & Liesbeth Nievelstein
+6 | Dineke Bolding & Maria Leemreize | Corry Timmer & Jos Timmer
+7 | Trudy Smink & Johan Smink | Simon van de Grootevheen & Marjon Kooiman
+8 | Hannie Mintjes & Jeanne Lammers | Gerrie Brouwer & Anja Bult
+
+[Dinsdagavond]
+1 | Gerda Pool-Hoytingh & Henk Pool
+2 | Simon van Valkenhoef & Frans Tibbe
+3 | Alex Druijff & Denise Druijff
+4 | Evert van de Beek & Gé Boom
+5 | Ad Immink & Marijke Schutijser-Mol
+6 | Henk Rigter & Herman Schrijver
+7 | Petra Huigsloot & Joris Rademaker
+8 | Else Brinkman & Reinie de Jong
+9 | Jan Louwes & Anton van den Hout
+10 | Henk van de Grootevheen & Wim van de Ben
+11 | invaller & Ben Schoonderbeek
+12 | Jan Bart Jutte & Co Hilhorst
+13 | Henk van Valkenhoef & Martin van Westerlaak
+14 | Johan Jansen & Gerdien Sandijk-de Jager
+15 | Hetty Kramer-van Spanning & Marjon ten Hoor
+16 | Bram Hurkmans & Renée Scholtemeijer
+17 | Henk van Middelaar & Annemarie van Empelen
+18 | Joop van Wijk & Koos Vijverberg
