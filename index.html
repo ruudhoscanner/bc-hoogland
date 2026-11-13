@@ -815,7 +815,7 @@ footer a{color:#fff}
 
 <footer>
   <div class="wrap">
-    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 12 november 2026</span></div>
+    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 13 november 2026</span></div>
     <div>Aangesloten bij de <a href="https://www.bridge.nl" target="_blank" rel="noopener">Nederlandse Bridge Bond</a><br><a href="https://www.bridge.nl/privacy/" target="_blank" rel="noopener">Privacybeleid</a> · <a href="https://www.bridge.nl/cookiereglement/" target="_blank" rel="noopener">Cookiereglement</a></div>
   </div>
 </footer>
@@ -844,6 +844,7 @@ $("#menuBtn").addEventListener("click", () => {
 
 /* ---------- Berichten ---------- */
 const posts = [
+  {t:"Uitslagen bijgewerkt en nieuwe quizvragen", d:"13-11-2026", a:"Ruud van den Hoven", x:"De uitslagen staan weer op datum (ronde 2, na 10 november) en de quiz bij Infotheek is uitgebreid met 30 nieuwe vragen: extra basisvragen over vijfkaart hoog en een hele serie over het volgbod.", u:"#infotheek", c:"diamond"},
   {t:"Clubcompetitie 2026 – 2027", d:"11-08-2026", a:"Frans Tibbe", x:"De agenda van het nieuwe seizoen: zomercompetitie, jaarvergadering, ladders en het Hooglands kampioenschap.", u:"https://24022.bridge.nl/clubcompetitie-2026-2027/", c:"heart"},
   {t:"Statuten en reglementen", d:"07-02-2026", a:"Frans Tibbe", x:"In de bijlage staan de statuten en reglementen van onze club.", u:"https://24022.bridge.nl/statuten-en-reglementen/", c:"spade"},
   {t:"Nieuwsbrief augustus 2025", d:"21-08-2025", a:"Frans Tibbe", x:"Het bestuur heeft af en toe wat te melden. Lees hier de nieuwsbrief van augustus.", u:"https://24022.bridge.nl/1652-2/", c:"club"}
@@ -1329,7 +1330,17 @@ const QS = [
  ["Basis","Wat is de volgorde van laag naar hoog in de bieding?",["♣ ♦ ♥ ♠ SA","♠ ♥ ♦ ♣ SA","♦ ♣ ♥ ♠ SA"],0,"Klaveren is het laagst, dan ruiten, harten, schoppen en sans atout."],
  ["Basis","Hoeveel slagen heb je nodig voor een klein slem?",["11","12","13"],1,"Klein slem is het zesniveau: 6 + 6 = 12 slagen."],
  ["Basis","Hoeveel punten zijn A, H, V en B samen in één kleur?",["8","10","12"],1,"4 + 3 + 2 + 1 = 10."],
+ ["Basis","Wat betekent de systeemnaam 'vijfkaart hoog'?",["Je deelt vijf kaarten per speler uit","Een opening van 1♥ of 1♠ belooft minstens vijf kaarten","Je hebt vijf azen nodig om te openen"],1,"In vijfkaarthoog open je een hoge kleur (♥ of ♠) alleen met minstens een vijfkaart; met minder kies je een andere opening."],
+ ["Basis","Met hoeveel punten mag je in de regel openen?",["8","12","15"],1,"De vuistregel is: vanaf 12 punten mag je openen (of eerder met een lange kleur, via de regel van 20)."],
  // Bieden
+ ["Bieden","Hoeveel kaarten belooft een opening van 1♥ of 1♠ in vijfkaarthoog minimaal?",["Vier","Vijf","Zes"],1,"Vandaar de naam: een hoge kleur open je alleen met minstens een vijfkaart."],
+ ["Bieden","Hoeveel kaarten belooft een opening van 1♣ of 1♦ meestal minimaal?",["Drie","Vier","Vijf"],1,"Een lage kleur mag je al met een vierkaart openen; alleen bij een heel vlakke hand zonder vierkaart is het soms een driekaart."],
+ ["Bieden","Je hebt vijf harten én vijf schoppen en genoeg punten om te openen. Welke kleur open je?",["1♥","1♠","1SA"],1,"Bij twee vijfkaarten open je de hoogste eerst: 1♠. De harten laat je later nog zien."],
+ ["Bieden","Je hebt 13 punten en een gelijkmatige hand, maar geen vijfkaart hoog. Wat open je?",["1 Sans Atout","1 in je langste kleur","Pas"],1,"1SA is voor 15–17 punten. Met 12–14 open je gewoon je langste kleur en herbied je later 1SA."],
+ ["Bieden","Vanaf hoeveel punten mag je als antwoordende hand meedoen in de bieding?",["0","6","12"],1,"Vanaf ongeveer 6 punten mag je antwoorden op partners opening; met minder pas je meestal."],
+ ["Bieden","Partner opent 1♥. Jij hebt vier harten en 8 punten. Wat bied je?",["Pas","2♥","3♥"],1,"Met steun (drie of meer kaarten) en 6–9 punten steun je naar het tweeniveau."],
+ ["Bieden","Partner opent 1♠. Jij hebt drie schoppen en 11 punten. Wat bied je?",["2♠","3♠","4♠"],1,"Met 10–12 punten en steun bied je een uitnodigende steunverhoging naar het drieniveau."],
+ ["Bieden","Wat is het verschil tussen een hoge en een lage kleur bij het openen in vijfkaarthoog?",["Geen verschil","Een hoge kleur (♥/♠) belooft minstens vijf kaarten, een lage (♣/♦) meestal vier","Een lage kleur belooft altijd meer punten"],1,"Dat is precies de kern van het systeem: hoog = vijf of meer, laag = meestal vier."],
  ["Bieden","Met hoeveel punten open je meestal 1SA?",["12–14","15–17","18–20"],1,"Een 1SA-opening belooft 15–17 punten en een gelijkmatige hand."],
  ["Bieden","Wat vraagt Stayman na een 1SA-opening?",["Azen","Een hoge vierkaart","Een vijfkaart klaveren"],1,"2♣ vraagt of de opener vier harten of vier schoppen heeft."],
  ["Bieden","Partner opent 1SA, jij vraagt 2♣. Partner heeft geen hoge vierkaart. Wat biedt hij?",["2♦","2SA","Pas"],0,"Zonder vierkaart harten of schoppen antwoordt de opener 2♦."],
@@ -1340,6 +1351,27 @@ const QS = [
  ["Bieden","Waar staat een sterke 2♣-opening voor?",["Lange klaveren","Een zwakke hand","Een zeer sterke hand, meestal 22+"],2,"Sterke 2♣ is kunstmatig en zegt niets over klaveren."],
  ["Bieden","Niemeijer: partner opent 2SA, jij vraagt 3♣. Wat betekent 3♦?",["Geen hoge vier- of vijfkaart","Minstens één vierkaart hoog, geen vijfkaart","Vijf ruiten"],1,"3♦ belooft een vierkaart hoog; met een vijfkaart had hij 3♥ of 3♠ geboden."],
  ["Bieden","Wat zegt de regel van 20?",["Open met 20 punten","Punten plus de lengte van je twee langste kleuren is 20+: openen","20 punten samen is genoeg voor manche"],1,"Bijvoorbeeld 11 punten met een 5-4-verdeling: 11 + 9 = 20, dus openen."],
+ // Bieden: wat bied je? en volgbod
+ ["Bieden","Je hebt 13 punten, een vijfkaart harten en verder een gelijkmatige hand. Wat bied je als je opent?",["1♥","1SA","Pas"],0,"Met een vijfkaart hoog en 12+ punten open je die kleur, ook al zou 1SA qua punten net niet passen (dat is voor 15–17)."],
+ ["Bieden","Je hebt 16 punten, een gelijkmatige 4-3-3-3-hand zonder vijfkaart hoog. Wat bied je als je opent?",["1 in je langste kleur","1SA","2SA"],1,"15–17 punten en een gelijkmatige hand zonder vijfkaart hoog is de klassieke 1SA-opening."],
+ ["Bieden","Partner opent 1♠. Jij hebt 15 punten en vier schoppen. Wat bied je?",["3♠","4♠","2♠"],1,"Met 13+ punten samen en steun ga je direct naar de manche: 4♠."],
+ ["Bieden","Partner opent 1♣. Jij hebt 9 punten, geen steun, maar een eigen vijfkaart ruiten. Wat bied je?",["Pas","1♦","2♣"],1,"Een nieuwe kleur op 1-niveau belooft maar 6+ punten; dat kun je hier prima bieden."],
+ ["Bieden","Tegenstander (links) opent 1♦. Jij hebt 10 punten en een goede vijfkaart schoppen. Wat bied je?",["Pas","1♠","Dbl"],1,"Een natuurlijk volgbod: een eigen vijfkaart en voldoende punten (ongeveer 8+)."],
+ ["Bieden","Wat belooft een volgbod (overcall) op 1-niveau vooral?",["Minstens 13 punten","Een goede vijfkaart en meestal 8–16 punten","Steun voor partners kleur"],1,"Een volgbod zegt vooral iets over je eigen kleur: een redelijke vijfkaart, met een wat ruimere ondergrens dan een opening."],
+ ["Bieden","Een volgbod bied je vooral op basis van…",["Punten","Slagen die je kleur oplevert","De score van vorige keer"],1,"De regel van 2 en 3: je telt hoeveel slagen je kleur zelf oplevert, niet alleen je punten."],
+ ["Bieden","Regel van 2 en 3: hoeveel slagen boven je eigen aantal mag je hoogstens bieden als je niet kwetsbaar bent?",["1","2","3"],2,"Niet kwetsbaar mag je tot 3 slagen verder bieden dan je zelf hebt; gedoubleerd down kost dan nog minder dan hun manche."],
+ ["Bieden","Regel van 2 en 3: hoeveel slagen boven je eigen aantal mag je hoogstens bieden als je kwetsbaar bent?",["1","2","3"],1,"Kwetsbaar reken je voorzichtiger: hoogstens 2 slagen verder dan je zelf hebt."],
+ ["Bieden","Je telt slagen voor de regel van 2 en 3. Wat levert AV107 in een kleur op?",["1 slag","2 slagen","3 slagen"],2,"Aas, heer en vrouw zijn ieder goed voor een slag: 3 slagen."],
+ ["Bieden","Tegenstander opent 1♥. Jij hebt een opening (13 punten) maar geen vijfkaart om te volgen. Wat is dan een logisch bod?",["Pas","1SA","Informatiedoublet"],2,"Zonder eigen vijfkaart maar met voldoende punten en steun voor de andere kleuren is het informatiedoublet het aangewezen bod, niet een volgbod."],
+ ["Bieden","Wat belooft een informatiedoublet vooral?",["Een sterke eigen kleur","Een opening zonder volgbod-kleur, met steun voor de overige kleuren","Dat je zeker gaat doubleren voor straf"],1,"Het informatiedoublet zegt: ik heb een opening, maar geen geschikte kleur om te volgen; partner moet bieden."],
+ ["Bieden","Partner doet een informatiedoublet, jij hebt 3 punten en geen bijzondere kleur. Wat bied je?",["Pas","De goedkoopste kleur","2SA"],1,"Ook met 0 punten moet je op een informatiedoublet bieden; met weinig punten bied je gewoon je goedkoopste/langste kleur."],
+ ["Bieden","Partner opent 1♠, rechts volgt met 2♥. Jij hebt vier schoppen en 9 punten. Wat bied je?",["Pas","3♠","4♠"],1,"Met steun en een middenhand bied je uitnodigend door, hier naar 3♠."],
+ ["Bieden","Je zit op de vierde hand (iedereen is al gepast). Volgens welke vuistregel mag je dan iets ruimer openen?",["Regel van 11","Regel van 15","Regel van 20"],1,"Regel van 15 (vierde hand): punten plus je schoppenkaarten moet 15 of meer zijn om te openen."],
+ ["Bieden","Partner opent 1♥, jij hebt 3 punten en een zwakke hand zonder steun of bijzondere kleur. Wat bied je?",["Pas","1SA","2♥"],0,"Met minder dan ongeveer 6 punten en niets bijzonders pas je gewoon."],
+ ["Bieden","Partner opent 1♦, jij hebt vier ruiten en 6 punten. Wat bied je?",["Pas","2♦","3♦"],1,"Met minimale steun en 6–9 punten steun je naar het tweeniveau, net als bij een hoge kleur."],
+ ["Bieden","Tegenstander opent 1♠. Jij hebt 16 punten en een vijfkaart harten. Wat bied je?",["Pas, 1♠ kun je niet meer overnemen","2♥","Dbl"],1,"Met voldoende punten en een eigen goede kleur volg je gewoon, eventueel al wat hoger: hier 2♥."],
+ ["Bieden","Wat is het verschil tussen een volgbod en een informatiedoublet in dezelfde situatie?",["Geen verschil","Een volgbod toont een eigen kleur, een doublet juist steun voor de andere kleuren","Een doublet is altijd sterker"],1,"Een volgbod is kleur-specifiek, het informatiedoublet juist kleurloos: steun voor wat partner ook kiest."],
+ ["Bieden","Je hebt 7 punten en een zwakke hand zonder bijzondere kleur. Tegenstander opent 1♥. Wat bied je meestal?",["Pas","1♠","Dbl"],0,"Zonder goede kleur en met te weinig voor een doublet of volgbod pas je gewoon."],
  // Spelen & tegenspel
  ["Spelen","Je hebt ♥ HVB32. Waarmee kom je uit?",["♥2","♥H","♥B"],1,"De hoogste van een serie: de heer."],
  ["Spelen","Je hebt ♠ 973 en wilt in die kleur uitkomen. Welke kaart?",["9","7","3"],0,"Top van niets: de hoogste kaart, zodat partner weet dat je geen plaatje hebt."],
