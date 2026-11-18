@@ -2,7 +2,6 @@
 <html lang="nl">
 <meta charset="utf-8">
 <title>B.C. Hoogland</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -182,6 +181,19 @@ tr.hide{display:none}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.82rem;color:var(--muted)}
 .legend b{font-family:var(--f-mono);color:var(--ink)}
 @media (max-width:860px){.podium{grid-template-columns:1fr}.pod.p1{order:-1}}
+.deal{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-areas:". n ." "w . e" ". s .";gap:10px;justify-items:center;margin:4px 0 14px;font-family:var(--f-mono);font-size:.92rem}
+.deal .seat{text-align:center;min-width:110px}
+.deal .seat b{display:block;font-family:var(--f-display);font-size:.8rem;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.deal .seat .su{display:inline-block;width:1.1em;font-weight:800}
+.deal .north{grid-area:n}.deal .west{grid-area:w}.deal .east{grid-area:e}.deal .south{grid-area:s}
+.spot-meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline}
+table.spotr td,table.spotr th{white-space:nowrap;font-size:.86rem}
+table.spotr td.nm{white-space:normal}
+table.spotr tr.top td{font-weight:800}
+@media (max-width:640px){
+  .deal{grid-template-columns:1fr;grid-template-areas:"n" "w" "e" "s"}
+  .deal .seat{min-width:0}
+}
 
 /* Uitkomen, signaleren, slagkracht */
 .intro{max-width:68ch;color:var(--muted);margin:-6px 0 16px}
@@ -245,23 +257,6 @@ details.cv[open] .cv-s{display:none}
 .cv-lead{font-weight:700}
 .cv-src{font-weight:700;justify-self:start}
 table.kv caption{text-align:left;font-family:var(--f-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-bottom:4px}
-
-/* Opstelling */
-.op-teaser{display:flex;align-items:center;gap:12px;margin-top:12px;padding:14px 18px;border-radius:16px;background:var(--club-soft);color:var(--ink);text-decoration:none;font-weight:700;flex-wrap:wrap}
-.op-teaser .s{font-size:1.4rem;color:var(--club)}
-.op-teaser .go{margin-left:auto;font-family:var(--f-mono);font-size:.85rem;color:var(--club)}
-.op-teaser:empty{display:none}
-.op-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.op-line h3{display:flex;align-items:center;gap:8px}
-table.op td.tf{font-family:var(--f-display);font-weight:800;font-size:1.15rem;width:52px;text-align:center}
-table.op td.vs{color:var(--muted);font-family:var(--f-mono);font-size:.8rem;width:28px;text-align:center}
-table.op td{white-space:normal}
-table.op tr.me td{background:var(--diamond-soft)}
-.op-empty{display:grid;gap:10px;justify-items:start}
-.op-empty .big{font-size:2.6rem;line-height:1;color:var(--club)}
-.op-file{display:grid;gap:12px}
-.op-file img{border-radius:12px;border:2px solid var(--line)}
-@media (max-width:860px){.op-grid{grid-template-columns:1fr}}
 
 /* Leesvoer */
 .ls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
@@ -332,7 +327,6 @@ footer a{color:#fff}
       <a href="#berichten">Berichten</a>
       <a href="#uitslagen">Uitslagen</a>
       <a href="#agenda">Agenda</a>
-      <a href="#opstelling">Opstelling</a>
       <a href="#club">Clubinfo</a>
       <a href="#infotheek">Infotheek</a>
       <a href="#contact">Contact</a>
@@ -365,7 +359,6 @@ footer a{color:#fff}
   </div>
   <div class="wrap">
     <div class="next" id="nextBox"></div>
-    <a class="op-teaser" id="opTeaser" href="#opstelling"></a>
 
     <div class="sec-head"><span class="suit" style="color:var(--heart)">♥</span><h2>Dit seizoen</h2></div>
     <div class="grid g3">
@@ -391,7 +384,7 @@ footer a{color:#fff}
 <!-- UITSLAGEN -->
 <section class="page" id="v-uitslagen" data-view="uitslagen" hidden>
   <div class="wrap">
-    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Uitslagen</h2><span class="meta">stand na dinsdag 10 november 2026</span></div>
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Uitslagen</h2><span class="meta">stand na dinsdag 17 november 2026</span></div>
     <div class="tabs" role="tablist" id="compTabs"></div>
     <div class="podium" id="podium"></div>
     <div class="panel standings">
@@ -405,6 +398,11 @@ footer a{color:#fff}
       <div class="legend" id="legend"></div>
     </div>
     <p class="meta" style="margin-top:12px">Overgenomen van de NBB-uitslagenservice. Bij verschillen is die leidend.</p>
+
+    <div class="sec-head" style="margin-top:28px"><span class="suit" style="color:var(--heart)">♥</span><h2>Uitgelichte spellen</h2><span class="meta" id="spotSub"></span></div>
+    <p class="intro">Een paar spellen uit de meest recente zitting om samen na te bespreken: de volledige verdeling, wat de paren bij ons speelden, en een korte toelichting.</p>
+    <div class="grid" id="spotlightList" style="gap:16px"></div>
+
     <div class="grid g3" style="margin-top:18px">
       <div class="panel t-club"><h3>Actuele uitslagen</h3><p>De officiële uitslagen per zitting, direct na de speeldag bijgewerkt, inclusief spelverdelingen en het archief van eerdere seizoenen.</p><a class="btn p more" href="https://24022.bridge.nl/competities/" target="_blank" rel="noopener">Naar de uitslagen ↗</a></div>
       <div class="panel t-spade"><h3>Uitslagenservice NBB</h3><p>Rechtstreeks naar het overzicht van alle competities van B.C. Hoogland bij de Bridgebond.</p><a class="btn s more" href="https://uitslagen.bridge.nl/ords/f?p=USS:2010::::RP:AI_AANROEP_VANUIT_CLUBSITES,P0_VER_ID_NBB:J,24022" target="_blank" rel="noopener">Open de NBB-uitslagen ↗</a></div>
@@ -777,14 +775,6 @@ footer a{color:#fff}
   </div>
 </section>
 
-<!-- OPSTELLING -->
-<section class="page" id="v-opstelling" data-view="opstelling" hidden>
-  <div class="wrap">
-    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Opstelling</h2><span class="meta" id="opMeta"></span></div>
-    <div id="opBody"><p class="meta">Opstelling laden…</p></div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section class="page" id="v-contact" data-view="contact" hidden>
   <div class="wrap">
@@ -815,7 +805,7 @@ footer a{color:#fff}
 
 <footer>
   <div class="wrap">
-    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 13 november 2026</span></div>
+    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 18 november 2026</span></div>
     <div>Aangesloten bij de <a href="https://www.bridge.nl" target="_blank" rel="noopener">Nederlandse Bridge Bond</a><br><a href="https://www.bridge.nl/privacy/" target="_blank" rel="noopener">Privacybeleid</a> · <a href="https://www.bridge.nl/cookiereglement/" target="_blank" rel="noopener">Cookiereglement</a></div>
   </div>
 </footer>
@@ -826,7 +816,7 @@ const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 const $ = s => document.querySelector(s);
 
 /* ---------- Routing ---------- */
-const views = ["home","berichten","uitslagen","agenda","opstelling","club","infotheek","contact"];
+const views = ["home","berichten","uitslagen","agenda","club","infotheek","contact"];
 function route(){
   const h = (location.hash||"").replace("#","");
   const v = views.includes(h) ? h : "home";
@@ -844,6 +834,7 @@ $("#menuBtn").addEventListener("click", () => {
 
 /* ---------- Berichten ---------- */
 const posts = [
+  {t:"Opstelling niet meer op de website", d:"16-11-2026", a:"Ruud van den Hoven", x:"De pagina Opstelling is van de website gehaald. De definitieve opstelling wordt ter plekke op de speeldag zelf bekendgemaakt. Ook zijn er bij de Uitslagen-pagina toelichtingen bij 3 uitgelichte spellen toegevoegd: per spel de kaartverdeling, de uitslagen van de paren en een korte uitleg over het bod.", u:"#home", c:"club"},
   {t:"Uitslagen bijgewerkt en nieuwe quizvragen", d:"13-11-2026", a:"Ruud van den Hoven", x:"De uitslagen staan weer op datum (ronde 2, na 10 november) en de quiz bij Infotheek is uitgebreid met 30 nieuwe vragen: extra basisvragen over vijfkaart hoog en een hele serie over het volgbod.", u:"#infotheek", c:"diamond"},
   {t:"Clubcompetitie 2026 – 2027", d:"11-08-2026", a:"Frans Tibbe", x:"De agenda van het nieuwe seizoen: zomercompetitie, jaarvergadering, ladders en het Hooglands kampioenschap.", u:"https://24022.bridge.nl/clubcompetitie-2026-2027/", c:"heart"},
   {t:"Statuten en reglementen", d:"07-02-2026", a:"Frans Tibbe", x:"In de bijlage staan de statuten en reglementen van onze club.", u:"https://24022.bridge.nl/statuten-en-reglementen/", c:"spade"},
@@ -889,64 +880,65 @@ if(next){
 /* ---------- Standen ---------- */
 // Rijen: paar | gemiddelde | zittingen van nieuw naar oud (zoals op de NBB-site)
 const COMP = {
- avond:{name:"Dinsdagavondcompetitie '26-'27", s:"♠", sub:"Ronde 2 · 1 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11"], lines:{"A-lijn":`
-Johan Jansen & Gerdien van Sandijk|63,39|63,39
-Evert van de Beek & Ge Boom|62,50|62,50
-Henk Rigter & Herman Schrijver|61,31|61,31
-Petra Huigsloot & Joris Rademaker|59,82|59,82
-Jan Louwes & Anton van den Hout|58,63|58,63
-Else Brinkman & Reinie de Jong|56,55|56,55
-Frans Tibbe & Simon van Valkenhoef|55,36|55,36
-Annemarie van Empelen & Henk van Middelaar|52,98|52,98i
-Albert Rigter & Thea van Beers|45,24|45,24c
-Joop van Wijk & Koos Vijverberg|45,24|45,24c
-Ad Immink & Marijke Schutijser|43,45|43,45
-Henk van Valkenhoef & Martin van Westerlaak|42,56|42,56c
-Timo Voskuilen & Ben Schoonderbeek|42,56|42,56c
-Alex Druyff & Denise Druyff|42,56|42,56
-Hetty Kramer & Marjon ten Hoor|42,26|42,26
-Henk van de Grootevheen & Willem van der Ben|41,67|41,67
-Bram Hurkmans & Renee Scholtemeijer|38,99|38,99
-John Dols & Marianne Saelmans|32,74|32,74
-Jan Bart Jutte & Co Hilhorst|0,00|0,00a
-Patrica Heersink & Jan Dijkhuis|0,00|0,00a
-Gerda Pool & Henk Pool|0,00|0,00a`}},
- middag:{name:"BC Hoogland middag 2026/2027", s:"♥", sub:"Ronde 2 · 1 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11"], lines:{"A-lijn":`
-Annelies Beentjes & Peter Beentjes|61,11|61,11
-Frans Daemen & Frits Peters|59,03|59,03
-Jeroen Pels & Carla Pels|56,94|56,94
-Gerrit Groenendaal & Karel Rietzschel|56,94|56,94
-Willie van Middelaar & Henk van Middelaar|55,90|55,90
-Mary Lans & Marjo Scheijmans|55,56|55,56
-Trudy Dieke & Els Strijbos|48,61|48,61
-Carlie Vriesekoop & Valerie Welch|47,92|47,92
-Marijke Koelman & Ben Mokkink|47,92|47,92c
-Paul de Kleuver & Ruud van den Hoven|47,92|47,92c
-Rene van Baal & Elly Moolenaar|45,83|45,83
-Ina Kraijo & Jaap van Tuyll|44,79|44,79
-Willemien Meershoek & Gerda Eerdmans|41,67|41,67
-Dineke Bolding & Maria Leemreize|40,63|40,63
-Annemarie Overmars & Harry Overmars|37,15|37,15
-Gerry Ising & Wil de Ridder|0,00|0,00a`,
+ avond:{name:"Dinsdagavondcompetitie '26-'27", s:"♠", sub:"Ronde 2 · 2 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11"], lines:{"A-lijn":`
+Frans Tibbe & Simon van Valkenhoef|59,37|63,39 55,36
+Henk Rigter & Herman Schrijver|58,99|56,67 61,31
+Petra Huigsloot & Joris Rademaker|56,97|54,11 59,82
+Evert van de Beek & Ge Boom|56,50|50,49 62,50
+Johan Jansen & Gerdien van Sandijk|55,63|47,86 63,39
+Else Brinkman & Reinie de Jong|55,41|54,27 56,55
+Gerda Pool & Henk Pool|53,54|54,58 52,50a
+Annemarie van Empelen & Henk van Middelaar|52,84|52,71 52,98i
+Henk van Valkenhoef & Martin van Westerlaak|50,21|57,86 42,56c
+Jan Bart Jutte & Co Hilhorst|49,58|49,58 49,58a
+Jan Louwes & Anton van den Hout|49,58|40,52 58,63
+Timo Voskuilen & Ben Schoonderbeek|47,57|52,58 42,56c
+Ad Immink & Marijke Schutijser|47,06|50,82m 43,45
+Henk van de Grootevheen & Willem van der Ben|46,89|52,11 41,67
+Hetty Kramer & Marjon ten Hoor|46,29|50,31i 42,26
+Joop van Wijk & Koos Vijverberg|44,05|42,86 45,24c
+Alex Druyff & Denise Druyff|42,56|42,56a 42,56
+Albert Rigter & Thea van Beers|39,17|33,10 45,24c
+Bram Hurkmans & Renee Scholtemeijer|38,99|38,99a 38,99
+John Dols & Marianne Saelmans|34,14|35,60m 32,74
+Patrica Heersink & Jan Dijkhuis|0,00|0,00a 0,00a`}},
+ middag:{name:"BC Hoogland middag 2026/2027", s:"♥", sub:"Ronde 2 · 2 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11"], lines:{"A-lijn":`
+Jeroen Pels & Carla Pels|55,90|54,86 56,94
+Gerrit Groenendaal & Karel Rietzschel|54,72|52,50a 56,94
+Frans Daemen & Frits Peters|54,69|50,35 59,03
+Gerry Ising & Wil de Ridder|53,85|55,21 52,50a
+Ina Kraijo & Jaap van Tuyll|53,82|62,85 44,79
+Annelies Beentjes & Peter Beentjes|52,78|44,44 61,11
+Mary Lans & Marjo Scheijmans|51,22|46,88 55,56
+Carlie Vriesekoop & Valerie Welch|50,52|53,13c 47,92
+Marijke Koelman & Ben Mokkink|50,52|53,13c 47,92c
+Paul de Kleuver & Ruud van den Hoven|50,00|52,08i 47,92c
+Willie van Middelaar & Henk van Middelaar|50,00|44,10 55,90
+Trudy Dieke & Els Strijbos|48,09|47,57 48,61
+Dineke Bolding & Maria Leemreize|47,05|53,47 40,63
+Annemarie Overmars & Harry Overmars|46,53|55,90 37,15
+Willemien Meershoek & Gerda Eerdmans|42,19|42,71 41,67
+Rene van Baal & Elly Moolenaar|41,15|36,46 45,83`,
  "B-lijn":`
-Ine Tuerlings & Jeanne Lammers|64,56|64,56
-Marian de Munck & Ria van der Stroom|62,73|62,73
-Hetty Kramer & Ans Vis|58,46|58,46
-Willie Jansen & Bep Berger|56,61|56,61
-Dinie Kowalski & Thea Bodewes|55,23|55,23
-Romy Abeen & Liesbeth Nievelstein|53,62|53,62
-Jan Willem Brouwer & Gerrie Brouwer|53,54|53,54
-Anneloes Fokkema & Klaas Fokkema|53,15|53,15
-Hermien Engberink & Mia van den Hoven|51,95|51,95
-Uco Sonnenberg & Jeanette Sonnenberg|50,54|50,54m
-Ria Biegstraaten & Han Biegstraaten|49,35|49,35
-Tetty Corzilius & Partner 1|41,77|41,77i
-Trudy Smink & Johan Smink|41,17|41,17
-Willem Lunter & Nel Lunter|41,03|41,03m
-Corry Timmer & Jos Timmer|40,23|40,23
-Anja Bult & Hanny Wisman|39,74|39,74c
-Hannie Mintjes & Gert Jan Nieland|39,74|39,74c
-Simon van de Grootevheen & Marjon Kooiman|38,65|38,65`}},
+Ine Tuerlings & Jeanne Lammers|58,53|52,50a 64,56
+Romy Abeen & Liesbeth Nievelstein|58,37|63,13 53,62
+Willie Jansen & Bep Berger|58,12|59,62c 56,61
+Loes van Hooft & Gerard van Hooft|56,42|56,42 0,00a
+Hetty Kramer & Ans Vis|55,24|52,01c 58,46
+Marian de Munck & Ria van der Stroom|55,01|47,29 62,73
+Hermien Engberink & Mia van den Hoven|54,67|57,40 51,95
+Jan Willem Brouwer & Gerrie Brouwer|54,30|55,21m 53,54
+Dinie Kowalski & Thea Bodewes|53,62|52,01c 55,23
+Ria Biegstraaten & Han Biegstraaten|51,20|53,06 49,35
+Trudy Smink & Johan Smink|50,39|59,62c 41,17
+Uco Sonnenberg & Jeanette Sonnenberg|49,73|48,91m 50,54m
+Anneloes Fokkema & Klaas Fokkema|45,71|36,79m 53,15
+Corry Timmer & Jos Timmer|44,90|50,50m 40,23
+Hannie Mintjes & Gert Jan Nieland|44,63|50,50m 39,74c
+Willem Lunter & Nel Lunter|41,32|41,67m 41,03m
+Anja Bult & Hanny Wisman|40,99|42,50m 39,74c
+Tetty Corzilius & Partner 1|36,28|30,80c 41,77i
+Simon van de Grootevheen & Marjon Kooiman|34,72|30,80c 38,65`}},
  zomer:{name:"Zomercompetitie 2026", s:"♦", sub:"Afgerond · 5 zittingen in september", dates:["1/9","8/9","15/9","22/9","29/9"], lines:{"A-lijn":`
 Else Brinkman & Reinie de Jong|59,68|61,01 56,51 56,55c 64,26c 60,09m
 Joop van Wijk & Koos Vijverberg|55,57|62,20 59,90 49,11 56,58 50,06
@@ -969,7 +961,7 @@ John Dols & Marianne Saelmans|39,10|36,61 38,54c 39,25a 35,93m 45,06
 Albert Rigter & Thea van Beers|38,98|36,61 28,13 42,86 51,16c 36,02m
 Patrica Heersink & Jan Dijkhuis|37,39|0,00a 46,94a 46,94a 46,93m 46,96m
 Petra Huigsloot & Joris Rademaker|0,00|0,00a 0,00a 0,00a 0,00a 0,00a`}},
- mp:{name:"Meesterpuntenladder 2026/2027", s:"♣", sub:"Individueel · meesterpunten dit seizoen", mp:true, lines:{"Spelers":`Henk van Middelaar|115;Else Brinkman|86;Gerdien van Sandijk|82;Johan Jansen|82;Ruud van den Hoven|72;Gerrit Groenendaal|71;Frans Tibbe|70;Hetty Kramer|67;Reinie de Jong|67;Willie van Middelaar|66;Ina Kraijo|66;Ans Vis|65;Karel Rietzschel|64;Joop van Wijk|63;Anton van den Hout|62;Harry Overmars|61;Henk Rigter|61;Herman Schrijver|60;Henk van de Grootevheen|60;Jaap van Tuyll|58;Evert van de Beek|57;Ge Boom|55;Willemien Meershoek|54;Gerda Eerdmans|54;Jan Louwes|54;Koos Vijverberg|53;Liesbeth Nievelstein|52;Denise Druyff|52;Alex Druyff|52;Romy Abeen|52;Annemarie van Empelen|52;Peter Beentjes|50;Trudy Dieke|50;Annelies Beentjes|50;Han Biegstraaten|49;Ria Biegstraaten|49;Frits Peters|48;Simon van Valkenhoef|48;Frans Daemen|48;Joris Rademaker|46;Petra Huigsloot|46;Ben Mokkink|46;Dineke Bolding|44;Maria Leemreize|44;Annemarie Overmars|44;Paul de Kleuver|44;Dinie Kowalski|43;Marjo Scheijmans|41;Gerda Pool|40;Henk Pool|40;Jan Willem Brouwer|39;Martin van Westerlaak|39;Gerrie Brouwer|39;Henk van Valkenhoef|38;Bep Berger|36;Jeroen Pels|35;Carla Pels|35;Marijke Schutijser|34;Ad Immink|34;Trudy Smink|33;Gerry Ising|33;Johan Smink|33;Uco Sonnenberg|32;Jeanette Sonnenberg|32;Mary Lans|32;Marijke Koelman|32;Thea Bodewes|32;Ine Tuerlings|31;Jeanne Lammers|31;Carlie Vriesekoop|30;Els Strijbos|28;Willie Jansen|28;Mia van den Hoven|28;Co Hilhorst|27;Elly Moolenaar|26;Valerie Welch|25;Rene van Baal|25;Ben Schoonderbeek|25;Hanny Wisman|24;Marian de Munck|24;Wil de Ridder|24;Timo Voskuilen|24;Anneloes Fokkema|21;Klaas Fokkema|21;Nel Lunter|18;Jos Timmer|18;Corry Timmer|18;Willem Lunter|18;Tetty Corzilius|17;Anja Bult|17;Jan Bart Jutte|15;Hermien Engberink|14;Ria van der Stroom|13;Willem van der Ben|11;John Dols|10;Marianne Saelmans|10;Gert Jan Nieland|8;Hannie Mintjes|8;Albert Rigter|6;Simon van de Grootevheen|5;Marjon ten Hoor|5;Marjon Kooiman|5;Renee Scholtemeijer|4;Bram Hurkmans|4;Patrica Heersink|2;Jan Dijkhuis|2;Thea van Beers|1`}}
+ mp:{name:"Meesterpuntenladder 2026/2027", s:"♣", sub:"Individueel · meesterpunten dit seizoen", mp:true, lines:{"Spelers":`Henk van Middelaar|121;Else Brinkman|94;Frans Tibbe|83;Gerdien van Sandijk|82;Johan Jansen|82;Ina Kraijo|78;Ruud van den Hoven|76;Reinie de Jong|75;Harry Overmars|72;Henk Rigter|72;Gerrit Groenendaal|71;Herman Schrijver|71;Jaap van Tuyll|70;Ans Vis|69;Henk van de Grootevheen|68;Hetty Kramer|67;Willie van Middelaar|66;Karel Rietzschel|64;Joop van Wijk|63;Anton van den Hout|62;Liesbeth Nievelstein|62;Romy Abeen|62;Simon van Valkenhoef|61;Evert van de Beek|59;Annemarie van Empelen|58;Ge Boom|57;Gerda Eerdmans|54;Han Biegstraaten|54;Willemien Meershoek|54;Jan Louwes|54;Annemarie Overmars|54;Ria Biegstraaten|54;Joris Rademaker|53;Petra Huigsloot|53;Koos Vijverberg|53;Denise Druyff|52;Alex Druyff|52;Trudy Dieke|51;Frans Daemen|51;Frits Peters|51;Martin van Westerlaak|51;Henk van Valkenhoef|50;Maria Leemreize|50;Annelies Beentjes|50;Peter Beentjes|50;Dineke Bolding|50;Henk Pool|49;Gerda Pool|49;Dinie Kowalski|47;Ben Mokkink|46;Gerrie Brouwer|45;Bep Berger|45;Jan Willem Brouwer|45;Paul de Kleuver|44;Carla Pels|43;Jeroen Pels|43;Trudy Smink|42;Gerry Ising|42;Marjo Scheijmans|41;Marijke Schutijser|37;Ad Immink|37;Marijke Koelman|37;Mia van den Hoven|36;Carlie Vriesekoop|35;Wil de Ridder|33;Johan Smink|33;Uco Sonnenberg|33;Jeanette Sonnenberg|33;Thea Bodewes|32;Mary Lans|32;Ine Tuerlings|31;Jeanne Lammers|31;Ben Schoonderbeek|30;Els Strijbos|29;Timo Voskuilen|29;Willie Jansen|28;Co Hilhorst|27;Elly Moolenaar|26;Rene van Baal|25;Valerie Welch|25;Hanny Wisman|24;Marian de Munck|24;Hermien Engberink|22;Corry Timmer|21;Jos Timmer|21;Anneloes Fokkema|21;Klaas Fokkema|21;Willem Lunter|18;Nel Lunter|18;Tetty Corzilius|17;Anja Bult|17;Jan Bart Jutte|15;Willem van der Ben|15;Ria van der Stroom|13;Gert Jan Nieland|11;Hannie Mintjes|11;Marianne Saelmans|10;John Dols|10;Gerard van Hooft|7;Loes van Hooft|7;Albert Rigter|6;Marjon ten Hoor|6;Simon van de Grootevheen|5;Marjon Kooiman|5;Bram Hurkmans|4;Renee Scholtemeijer|4;Patrica Heersink|2;Jan Dijkhuis|2;Thea van Beers|1`}}
 };
 const FLAGS = {a:"afwezig",c:"combipaar",h:"gespeeld in hogere lijn",l:"gespeeld in lagere lijn",i:"met invallers",m:"meer of minder spellen",r:"arbitrale wijziging",n:"telt niet mee",v:"vervallen",b:"handmatig aangepast"};
 const num = s => parseFloat(s.replace(",","."));
@@ -1014,6 +1006,72 @@ function renderSt(){
   $("#legend").innerHTML = c.mp ? "" : `<span><span class="cell top">60+</span> <span class="cell hi">55+</span> <span class="cell lo">onder 45</span></span>` + Object.entries(FLAGS).filter(([k])=>"acimh".includes(k)).map(([k,v])=>`<span><b>${k}</b> ${v}</span>`).join("");
 }
 renderSt();
+
+/* ---------- Uitgelichte spellen ---------- */
+const SPOT_SUITS = [["♠","var(--spade)"],["♥","var(--heart)"],["♦","var(--diamond)"],["♣","var(--club)"]];
+const SPOTLIGHT = {
+  sub: "Dinsdagavond, ronde 2 · zitting 2 (17 november)",
+  deals: [
+    {nr:3, dealer:"Zuid", vul:"Oost-west",
+     hands:{N:["AH42","HVB","9","A10876"], W:["B3","82","AHB1086","H92"], E:["V9","97543","V753","VB"], S:["108765","A106","42","543"]},
+     results:[
+       {score:"+800", contract:"4♦x −3", door:"West", nz:"Henk Rigter & Herman Schrijver", ow:"John Dols & Marianne Saelmans", pct:100},
+       {score:"+450", contract:"4♠ +1", door:"Noord", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Timo Voskuilen & Ben Schoonderbeek", pct:81.25},
+       {score:"", contract:"4♠ +1", door:"Zuid", nz:"Annemarie van Empelen & Henk van Middelaar", ow:"Jan Louwes & Anton van den Hout", pct:81.25},
+       {score:"+420", contract:"4♠ C", door:"Noord", nz:"Ad Immink & Marijke Schutijser", ow:"Joop van Wijk & Koos Vijverberg", pct:56.25},
+       {score:"", contract:"4♠ C", door:"Zuid", nz:"Else Brinkman & Reinie de Jong", ow:"Frans Tibbe & Simon van Valkenhoef", pct:56.25},
+       {score:"+200", contract:"3♠ +2", door:"Zuid", nz:"Johan Jansen & Gerdien van Sandijk", ow:"Evert van de Beek & Ge Boom", pct:31.25},
+       {score:"", contract:"3♠ +2", door:"Zuid", nz:"Henk van de Grootevheen & Willem van der Ben", ow:"Petra Huigsloot & Joris Rademaker", pct:31.25},
+       {score:"+170", contract:"3♠ +1", door:"Noord", nz:"Albert Rigter & Thea van Beers", ow:"Gerda Pool & Henk Pool", pct:12.5},
+       {score:"−50", contract:"5♣ −1", door:"Noord", nz:"Henk van Valkenhoef & Martin van Westerlaak", ow:"Harry Overmars & Marjon ten Hoor", pct:0}
+     ],
+     uitleg:"Noord-zuid heeft hier twee lange kleuren liggen: een negenkaart schoppenfit (aas en heer bij noord) én een achtkaart klaverenfit. De meeste paren kozen voor schoppen en haalden daarmee simpel het contract (4♠, soms met een overslag) voor 420 tot 450 punten. Eén paar, Henk van Valkenhoef & Martin van Westerlaak, zocht het juist in de klaverenfit tot het vijfniveau en ging daar één down (−50). De beste score kwam van heel andere kant: Henk Rigter & Herman Schrijver lieten de tegenpartij uiteindelijk in 4♦ belanden, doubleerden, en zetten dat drie down voor +800 — ruim beter dan zelfs de eigen schoppengame. Mooie les: met zoveel lengte in twee kleuren kun je soms meer verdienen aan een goed getimede tegendoublet dan aan je eigen hoogste bod."},
+    {nr:5, dealer:"Noord", vul:"Noord-zuid",
+     hands:{N:["873","HB8762","AH10","6"], W:["H654","93","VB97","B95"], E:["AV109","V105","532","A83"], S:["B2","A4","864","HV10742"]},
+     results:[
+       {score:"+620", contract:"4♥ C", door:"Noord", nz:"Ad Immink & Marijke Schutijser", ow:"Harry Overmars & Marjon ten Hoor", pct:100},
+       {score:"+140", contract:"2♥ +1", door:"Noord", nz:"Henk Rigter & Herman Schrijver", ow:"Petra Huigsloot & Joris Rademaker", pct:75},
+       {score:"", contract:"2♥ +1", door:"Noord", nz:"Joop van Wijk & Koos Vijverberg", ow:"Jan Louwes & Anton van den Hout", pct:75},
+       {score:"", contract:"2♥ +1", door:"Noord", nz:"Evert van de Beek & Ge Boom", ow:"Henk van de Grootevheen & Willem van der Ben", pct:75},
+       {score:"+50", contract:"3♠ −1", door:"West", nz:"Else Brinkman & Reinie de Jong", ow:"Johan Jansen & Gerdien van Sandijk", pct:50},
+       {score:"−100", contract:"3♥ −1", door:"Zuid", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:31.25},
+       {score:"", contract:"3♥ −1", door:"Noord", nz:"John Dols & Marianne Saelmans", ow:"Frans Tibbe & Simon van Valkenhoef", pct:31.25},
+       {score:"−110", contract:"2♠ C", door:"Oost", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Gerda Pool & Henk Pool", pct:6.25},
+       {score:"", contract:"2♠ C", door:"West", nz:"Albert Rigter & Thea van Beers", ow:"Annemarie van Empelen & Henk van Middelaar", pct:6.25}
+     ],
+     uitleg:"Noord-zuid heeft hier een mooie achtkaart hartenfit (zes bij noord, twee bij zuid) en 21 punten samen — niet overweldigend, maar met zo'n lange fit vaak toch genoeg voor de game. Ad Immink & Marijke Schutijser waren de enigen die doorbogen naar 4♥, en maakten het precies: +620 en de volle 100%. De rest bleef in een deelscore steken: de meeste in 2♥ met een overslag (+140), twee paren gingen zelfs in hun eigen fit nog down op het 3-niveau. Mooi voorbeeld dat een goede fit soms zwaarder weegt dan het aantal punten."},
+    {nr:6, dealer:"Oost", vul:"Oost-west",
+     hands:{N:["V2","A62","83","B98642"], W:["AH63","HB10","AB954","V"], E:["B109754","V85","V72","7"], S:["8","9743","H106","AH1053"]},
+     results:[
+       {score:"+200", contract:"5♠x −1", door:"Oost", nz:"Evert van de Beek & Ge Boom", ow:"Henk van de Grootevheen & Willem van der Ben", pct:100},
+       {score:"+100", contract:"5♠ −1", door:"Oost", nz:"Else Brinkman & Reinie de Jong", ow:"Johan Jansen & Gerdien van Sandijk", pct:87.5},
+       {score:"−130", contract:"1♦ +3", door:"West", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Gerda Pool & Henk Pool", pct:68.75},
+       {score:"", contract:"1♦ +3", door:"West", nz:"Ad Immink & Marijke Schutijser", ow:"Harry Overmars & Marjon ten Hoor", pct:68.75},
+       {score:"−150", contract:"5♣ −3", door:"Noord", nz:"Joop van Wijk & Koos Vijverberg", ow:"Jan Louwes & Anton van den Hout", pct:50},
+       {score:"−300", contract:"5♣x −2", door:"Zuid", nz:"Henk Rigter & Herman Schrijver", ow:"Petra Huigsloot & Joris Rademaker", pct:37.5},
+       {score:"−620", contract:"4♠ C", door:"West", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:25},
+       {score:"−650", contract:"4♠ +1", door:"Oost", nz:"Albert Rigter & Thea van Beers", ow:"Annemarie van Empelen & Henk van Middelaar", pct:12.5},
+       {score:"−710", contract:"4♠ +3", door:"Oost", nz:"John Dols & Marianne Saelmans", ow:"Frans Tibbe & Simon van Valkenhoef", pct:0}
+     ],
+     uitleg:"Dit spel is een botsing van twee enorme fits: oost-west heeft een tienkaart schoppenfit mét de meeste punten (23 om 17), maar noord-zuid heeft zelf weer een unieke elfkaart klaverenfit. Oost-west kan 4♠ altijd maken, en wie dat laat doorlopen betaalt fors: van −620 tot zelfs −710 met overslagen. De beste noord-zuid-paren beperkten de schade juist door de tegenpartij door te laten bieden en dan te doubleren: Evert van de Beek & Ge Boom deden dat bij 5♠ (+200), Else Brinkman & Reinie de Jong bij het ongedoubleerde 5♠ (+100). Andere paren zochten het zelf in hun eigen klaverenfit en gingen daar drie down (Joop van Wijk & Koos Vijverberg, −150) of gedoubleerd twee down (Henk Rigter & Herman Schrijver, −300) — nog altijd goedkoper dan de volle schoppengame laten lopen. Mooie les: bij zo'n dubbele fit win je vaak meer met een goed getimede tegenzet dan met zelf het hoogste bod willen hebben."}
+  ]
+};
+function handHTML(label, h){
+  return `<div class="seat ${label.toLowerCase()==='n'?'north':label.toLowerCase()==='w'?'west':label.toLowerCase()==='e'?'east':'south'}"><b>${label}</b>${h.map((cards,i)=>`<div><span class="su" style="color:${SPOT_SUITS[i][1]}">${SPOT_SUITS[i][0]}</span>${esc(cards)}</div>`).join("")}</div>`;
+}
+function contractHTML(t){ return esc(t).replace(/♠|♥|♦|♣/g, m => `<span class="su" style="color:${({"♠":"var(--spade)","♥":"var(--heart)","♦":"var(--diamond)","♣":"var(--club)"})[m]}">${m}</span>`); }
+function renderSpotlight(){
+  $("#spotSub").textContent = SPOTLIGHT.sub;
+  $("#spotlightList").innerHTML = SPOTLIGHT.deals.map((d,i)=>{
+    const colors=["heart","club","diamond","spade"]; const c=colors[i%colors.length];
+    const rows = d.results.map(r=>`<tr class="${r.pct===100?'top':''}"><td>${esc(r.score)}</td><td>${contractHTML(r.contract)}</td><td>${esc(r.door)}</td><td class="nm">${esc(r.nz)}</td><td class="nm">${esc(r.ow)}</td><td style="text-align:right">${r.pct}%</td></tr>`).join("");
+    return `<div class="panel t-${c}"><div class="spot-meta"><h3 style="margin:0">Spel ${d.nr}</h3><span class="meta">Gever: ${d.dealer} · Kwetsbaar: ${d.vul}</span></div>
+      <div class="deal">${handHTML("N",d.hands.N)}${handHTML("W",d.hands.W)}${handHTML("E",d.hands.E)}${handHTML("S",d.hands.S)}</div>
+      <div class="tbl"><table class="spotr"><thead><tr><th>NZ</th><th>Contract</th><th>Door</th><th>Paar NZ</th><th>Paar OW</th><th>% NZ</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p>${esc(d.uitleg)}</p></div>`;
+  }).join("");
+}
+renderSpotlight();
 
 /* ---------- HCP-teller ---------- */
 const suits = [["♠","var(--spade)"],["♥","var(--heart)"],["♦","var(--diamond)"],["♣","var(--club)"]];
@@ -1128,63 +1186,6 @@ document.querySelector(".jump").addEventListener("click", e => {
   }
   $("#cvF").addEventListener("click", e => { const b=e.target.closest("button"); if(!b) return; cat=b.dataset.c; $("#cvF").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x===b)); apply(); });
   $("#cvQ").addEventListener("input", apply);
-})();
-
-/* ---------- Opstelling ---------- */
-(function(){
-  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
-  const fmtD = d => d.toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
-  const nextTue = () => { const d=new Date(TODAY); d.setDate(d.getDate() + ((2 - d.getDay() + 7) % 7)); return d; };
-  function parse(txt){
-    const o = {meta:{}, lines:[]}; let cur = null;
-    txt.split(/\r?\n/).forEach(raw => {
-      const l = raw.trim(); if(!l || l.startsWith("#")) return;
-      const h = l.match(/^\[(.+)\]$/); if(h){ cur = {name:h[1].trim(), rows:[]}; o.lines.push(cur); return; }
-      const m = l.match(/^(speeldag|bijgewerkt|opmerking|bestand)\s*:\s*(.*)$/i); if(m){ o.meta[m[1].toLowerCase()] = m[2].trim(); return; }
-      if(cur && l.includes("|")){ const p = l.split("|").map(x=>x.trim()); cur.rows.push({t:p[0], nz:p[1]||"", ow:p[2]||""}); }
-    });
-    o.lines = o.lines.filter(x => x.rows.length);
-    return o;
-  }
-  const pDate = s => { const m = (s||"").match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? new Date(+m[1], m[2]-1, +m[3]) : null; };
-  function teaser(html){ $("#opTeaser").innerHTML = html; }
-  function render(o){
-    const day = pDate(o.meta.speeldag), upd = pDate(o.meta.bijgewerkt);
-    const file = o.meta.bestand;
-    const has = o.lines.length || file;
-    const tue = nextTue();
-    if(!has || !day){
-      $("#opMeta").textContent = "";
-      $("#opBody").innerHTML = `<div class="panel op-empty"><span class="big" aria-hidden="true">♣</span><h3>De opstelling voor ${fmtD(tue)} volgt</h3><p>De opstelling voor de eerstvolgende speeldag wordt meestal op zondag gemaakt en verschijnt dan hier.</p><p class="meta">Kun je niet spelen? Meld je dan op tijd af bij de wedstrijdleiding.</p></div>`;
-      teaser(`<span class="s">♣</span>Opstelling ${fmtD(tue)}: volgt zondag <span class="go">Bekijk →</span>`);
-      return;
-    }
-    const old = day < TODAY;
-    $("#opMeta").textContent = upd ? "bijgewerkt " + upd.toLocaleDateString("nl-NL",{day:"numeric",month:"long"}) : "";
-    const suits = [["♠","spade"],["♥","heart"],["♦","diamond"],["♣","club"]];
-    let html = old ? `<div class="notice" style="margin-bottom:16px"><b>Let op:</b> dit is de opstelling van ${fmtD(day)}. De nieuwe opstelling volgt meestal op zondag.</div>` : "";
-    html += `<div class="panel" style="margin-bottom:18px"><h3 style="font-size:1.5rem">${(d=>d.charAt(0).toUpperCase()+d.slice(1))(fmtD(day))}</h3>${o.meta.opmerking?`<p>${esc(o.meta.opmerking)}</p>`:""}
-      ${o.lines.length?`<div class="search" style="margin:0"><input id="opQ" type="search" placeholder="Zoek je naam" aria-label="Zoek je naam in de opstelling" style="max-width:320px"></div>`:""}</div>`;
-    if(file){
-      const isImg = /\.(png|jpe?g|webp|gif)$/i.test(file);
-      html += `<div class="panel op-file" style="margin-bottom:18px">${isImg?`<img src="${esc(file)}" alt="Opstelling ${fmtD(day)}">`:""}<a class="btn p" href="${esc(file)}" target="_blank" rel="noopener" style="justify-self:start">Open de opstelling ${isImg?"(groot)":"(pdf)"} ↗</a></div>`;
-    }
-    if(o.lines.length){
-      html += `<div class="op-grid">` + o.lines.map((ln,i) => { const [su,tone]=suits[i%4];
-        const pairs = ln.rows.every(r => !r.ow);
-        const cell = v => /afwezig/i.test(v) ? `<span class="meta">${esc(v)}</span>` : esc(v);
-        const table = pairs
-          ? `<table class="op"><thead><tr><th style="text-align:center">Paar</th><th>Spelers</th></tr></thead><tbody>${ln.rows.map(r=>`<tr><td class="tf">${esc(r.t)}</td><td>${cell(r.nz)}</td></tr>`).join("")}</tbody></table><p class="meta" style="margin-top:8px">${ln.rows.length} paren · de tafelindeling volgt aan tafel</p>`
-          : `<table class="op"><thead><tr><th style="text-align:center">Tafel</th><th>Noord-Zuid</th><th></th><th>Oost-West</th></tr></thead><tbody>${ln.rows.map(r=>`<tr><td class="tf">${esc(r.t)}</td><td>${cell(r.nz)}</td><td class="vs">–</td><td>${cell(r.ow)}</td></tr>`).join("")}</tbody></table>`;
-        return `<div class="panel t-${tone} op-line"><h3><span style="color:var(--${tone})">${su}</span>${esc(ln.name)}</h3><div class="tbl">${table}</div></div>`; }).join("") + `</div>`;
-    }
-    $("#opBody").innerHTML = html;
-    const q = $("#opQ");
-    if(q) q.addEventListener("input", () => { const v=q.value.trim().toLowerCase(); document.querySelectorAll("table.op tbody tr").forEach(tr => tr.classList.toggle("me", !!v && tr.textContent.toLowerCase().includes(v))); });
-    teaser(old ? `<span class="s">♣</span>Opstelling ${fmtD(tue)}: volgt zondag <span class="go">Bekijk →</span>`
-               : `<span class="s">♣</span>De opstelling voor ${fmtD(day)} staat klaar <span class="go">Bekijk →</span>`);
-  }
-  fetch("opstelling.txt", {cache:"no-store"}).then(r => r.ok ? r.text() : "").then(t => render(parse(t))).catch(() => render(parse("")));
 })();
 
 /* ---------- Niveau-tabs uitkomen ---------- */
