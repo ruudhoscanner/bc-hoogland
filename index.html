@@ -189,7 +189,8 @@ tr.hide{display:none}
 .spot-meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline}
 table.spotr td,table.spotr th{white-space:nowrap;font-size:.86rem}
 table.spotr td.nm{white-space:normal}
-table.spotr tr.top td{font-weight:800}
+table.spotr tr.best td{font-weight:800;background:var(--band);color:#fff}
+table.spotr tr.best .su{color:#fff!important}
 @media (max-width:640px){
   .deal{grid-template-columns:1fr;grid-template-areas:"n" "w" "e" "s"}
   .deal .seat{min-width:0}
@@ -384,7 +385,7 @@ footer a{color:#fff}
 <!-- UITSLAGEN -->
 <section class="page" id="v-uitslagen" data-view="uitslagen" hidden>
   <div class="wrap">
-    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Uitslagen</h2><span class="meta">stand na dinsdag 17 november 2026</span></div>
+    <div class="sec-head"><span class="suit" style="color:var(--club)">♣</span><h2>Uitslagen</h2><span class="meta">stand na dinsdag 24 november 2026</span></div>
     <div class="tabs" role="tablist" id="compTabs"></div>
     <div class="podium" id="podium"></div>
     <div class="panel standings">
@@ -805,7 +806,7 @@ footer a{color:#fff}
 
 <footer>
   <div class="wrap">
-    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 18 november 2026</span></div>
+    <div><b>B.C. Hoogland</b><br>Dorpshuis De Neng · Engweg 7 · Hoogland<br><span style="opacity:.75">Laatst bijgewerkt: 26 november 2026</span></div>
     <div>Aangesloten bij de <a href="https://www.bridge.nl" target="_blank" rel="noopener">Nederlandse Bridge Bond</a><br><a href="https://www.bridge.nl/privacy/" target="_blank" rel="noopener">Privacybeleid</a> · <a href="https://www.bridge.nl/cookiereglement/" target="_blank" rel="noopener">Cookiereglement</a></div>
   </div>
 </footer>
@@ -880,65 +881,65 @@ if(next){
 /* ---------- Standen ---------- */
 // Rijen: paar | gemiddelde | zittingen van nieuw naar oud (zoals op de NBB-site)
 const COMP = {
- avond:{name:"Dinsdagavondcompetitie '26-'27", s:"♠", sub:"Ronde 2 · 2 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11"], lines:{"A-lijn":`
-Frans Tibbe & Simon van Valkenhoef|59,37|63,39 55,36
-Henk Rigter & Herman Schrijver|58,99|56,67 61,31
-Petra Huigsloot & Joris Rademaker|56,97|54,11 59,82
-Evert van de Beek & Ge Boom|56,50|50,49 62,50
-Johan Jansen & Gerdien van Sandijk|55,63|47,86 63,39
-Else Brinkman & Reinie de Jong|55,41|54,27 56,55
-Gerda Pool & Henk Pool|53,54|54,58 52,50a
-Annemarie van Empelen & Henk van Middelaar|52,84|52,71 52,98i
-Henk van Valkenhoef & Martin van Westerlaak|50,21|57,86 42,56c
-Jan Bart Jutte & Co Hilhorst|49,58|49,58 49,58a
-Jan Louwes & Anton van den Hout|49,58|40,52 58,63
-Timo Voskuilen & Ben Schoonderbeek|47,57|52,58 42,56c
-Ad Immink & Marijke Schutijser|47,06|50,82m 43,45
-Henk van de Grootevheen & Willem van der Ben|46,89|52,11 41,67
-Hetty Kramer & Marjon ten Hoor|46,29|50,31i 42,26
-Joop van Wijk & Koos Vijverberg|44,05|42,86 45,24c
-Alex Druyff & Denise Druyff|42,56|42,56a 42,56
-Albert Rigter & Thea van Beers|39,17|33,10 45,24c
-Bram Hurkmans & Renee Scholtemeijer|38,99|38,99a 38,99
-John Dols & Marianne Saelmans|34,14|35,60m 32,74
-Patrica Heersink & Jan Dijkhuis|0,00|0,00a 0,00a`}},
- middag:{name:"BC Hoogland middag 2026/2027", s:"♥", sub:"Ronde 2 · 2 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11"], lines:{"A-lijn":`
-Jeroen Pels & Carla Pels|55,90|54,86 56,94
-Gerrit Groenendaal & Karel Rietzschel|54,72|52,50a 56,94
-Frans Daemen & Frits Peters|54,69|50,35 59,03
-Gerry Ising & Wil de Ridder|53,85|55,21 52,50a
-Ina Kraijo & Jaap van Tuyll|53,82|62,85 44,79
-Annelies Beentjes & Peter Beentjes|52,78|44,44 61,11
-Mary Lans & Marjo Scheijmans|51,22|46,88 55,56
-Carlie Vriesekoop & Valerie Welch|50,52|53,13c 47,92
-Marijke Koelman & Ben Mokkink|50,52|53,13c 47,92c
-Paul de Kleuver & Ruud van den Hoven|50,00|52,08i 47,92c
-Willie van Middelaar & Henk van Middelaar|50,00|44,10 55,90
-Trudy Dieke & Els Strijbos|48,09|47,57 48,61
-Dineke Bolding & Maria Leemreize|47,05|53,47 40,63
-Annemarie Overmars & Harry Overmars|46,53|55,90 37,15
-Willemien Meershoek & Gerda Eerdmans|42,19|42,71 41,67
-Rene van Baal & Elly Moolenaar|41,15|36,46 45,83`,
+ avond:{name:"Dinsdagavondcompetitie '26-'27", s:"♠", sub:"Ronde 2 · 3 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11","24/11"], lines:{"A-lijn":`
+Henk Rigter & Herman Schrijver|60,85|64,58 56,67 61,31
+Petra Huigsloot & Joris Rademaker|58,90|62,76 54,11 59,82
+Frans Tibbe & Simon van Valkenhoef|56,16|49,74 63,39 55,36
+Else Brinkman & Reinie de Jong|55,17|54,69 54,27 56,55
+Johan Jansen & Gerdien van Sandijk|53,58|49,48 47,86 63,39
+Gerda Pool & Henk Pool|52,88|51,56 54,58 52,50a
+Evert van de Beek & Ge Boom|52,60|44,79c 50,49 62,50
+Annemarie van Empelen & Henk van Middelaar|52,07|50,52 52,71 52,98i
+Jan Bart Jutte & Co Hilhorst|52,01|54,43 49,58 52,01a
+Jan Louwes & Anton van den Hout|50,85|53,39 40,52 58,63
+Henk van de Grootevheen & Willem van der Ben|50,79|58,59 52,11 41,67
+Henk van Valkenhoef & Martin van Westerlaak|49,36|47,66 57,86 42,56c
+Ad Immink & Marijke Schutijser|47,61|48,70 50,82m 43,45
+Joop van Wijk & Koos Vijverberg|46,56|51,56 42,86 45,24c
+Hetty Kramer & Marjon ten Hoor|45,79|44,79c 50,31i 42,26
+Timo Voskuilen & Ben Schoonderbeek|45,17|40,36 52,58 42,56c
+Bram Hurkmans & Renee Scholtemeijer|43,71|48,44 43,71a 38,99
+Alex Druyff & Denise Druyff|42,56|42,56a 42,56a 42,56
+Albert Rigter & Thea van Beers|36,27|30,47 33,10 45,24c
+John Dols & Marianne Saelmans|35,54|38,28 35,60m 32,74
+Patrica Heersink & Jan Dijkhuis|0,00|0,00a 0,00a 0,00a`}},
+ middag:{name:"BC Hoogland middag 2026/2027", s:"♥", sub:"Ronde 2 · 3 van 5 zittingen gespeeld (vanaf 10 november)", dates:["10/11","17/11","24/11"], lines:{"A-lijn":`
+Ina Kraijo & Jaap van Tuyll|57,64|65,28 62,85 44,79
+Frans Daemen & Frits Peters|53,13|50,00 50,35 59,03
+Gerrit Groenendaal & Karel Rietzschel|52,31|47,50a 52,50a 56,94
+Marijke Koelman & Ben Mokkink|52,20|55,56 53,13c 47,92c
+Gerry Ising & Wil de Ridder|51,56|47,92 55,21 51,56a
+Jeroen Pels & Carla Pels|51,39|42,36 54,86 56,94
+Trudy Dieke & Els Strijbos|51,04|56,94 47,57 48,61
+Paul de Kleuver & Ruud van den Hoven|50,69|52,08c 52,08i 47,92c
+Annemarie Overmars & Harry Overmars|49,88|56,60 55,90 37,15
+Annelies Beentjes & Peter Beentjes|49,77|43,75 44,44 61,11
+Willie van Middelaar & Henk van Middelaar|48,96|46,88 44,10 55,90
+Dineke Bolding & Maria Leemreize|48,50|51,39 53,47 40,63
+Carlie Vriesekoop & Valerie Welch|46,88|39,58 53,13c 47,92
+Mary Lans & Marjo Scheijmans|46,53|37,15 46,88 55,56
+Willemien Meershoek & Gerda Eerdmans|46,30|54,51 42,71 41,67
+Rene van Baal & Elly Moolenaar|44,79|52,08c 36,46 45,83`,
  "B-lijn":`
-Ine Tuerlings & Jeanne Lammers|58,53|52,50a 64,56
-Romy Abeen & Liesbeth Nievelstein|58,37|63,13 53,62
-Willie Jansen & Bep Berger|58,12|59,62c 56,61
-Loes van Hooft & Gerard van Hooft|56,42|56,42 0,00a
-Hetty Kramer & Ans Vis|55,24|52,01c 58,46
-Marian de Munck & Ria van der Stroom|55,01|47,29 62,73
-Hermien Engberink & Mia van den Hoven|54,67|57,40 51,95
-Jan Willem Brouwer & Gerrie Brouwer|54,30|55,21m 53,54
-Dinie Kowalski & Thea Bodewes|53,62|52,01c 55,23
-Ria Biegstraaten & Han Biegstraaten|51,20|53,06 49,35
-Trudy Smink & Johan Smink|50,39|59,62c 41,17
-Uco Sonnenberg & Jeanette Sonnenberg|49,73|48,91m 50,54m
-Anneloes Fokkema & Klaas Fokkema|45,71|36,79m 53,15
-Corry Timmer & Jos Timmer|44,90|50,50m 40,23
-Hannie Mintjes & Gert Jan Nieland|44,63|50,50m 39,74c
-Willem Lunter & Nel Lunter|41,32|41,67m 41,03m
-Anja Bult & Hanny Wisman|40,99|42,50m 39,74c
-Tetty Corzilius & Partner 1|36,28|30,80c 41,77i
-Simon van de Grootevheen & Marjon Kooiman|34,72|30,80c 38,65`}},
+Willie Jansen & Bep Berger|62,15|70,21 59,62c 56,61
+Romy Abeen & Liesbeth Nievelstein|61,54|67,86 63,13 53,62
+Ine Tuerlings & Jeanne Lammers|58,24|57,66 52,50a 64,56
+Marian de Munck & Ria van der Stroom|55,78|57,32 47,29 62,73
+Ria Biegstraaten & Han Biegstraaten|53,46|57,97 53,06 49,35
+Trudy Smink & Johan Smink|53,42|59,48 59,62c 41,17
+Anneloes Fokkema & Klaas Fokkema|50,16|58,31 36,79m 53,15
+Dinie Kowalski & Thea Bodewes|50,12|43,13 52,01c 55,23
+Hetty Kramer & Ans Vis|50,10|39,38cm 52,01c 58,46
+Hermien Engberink & Mia van den Hoven|49,86|40,23 57,40 51,95
+Uco Sonnenberg & Jeanette Sonnenberg|48,95|47,39m 48,91m 50,54m
+Jan Willem Brouwer & Gerrie Brouwer|47,87|36,09 55,21m 53,54
+Corry Timmer & Jos Timmer|47,58|52,50 50,50m 40,23
+Loes van Hooft & Gerard van Hooft|47,42|38,41 56,42 0,00a
+Willem Lunter & Nel Lunter|45,29|52,55m 41,67m 41,03m
+Anja Bult & Hanny Wisman|43,14|47,26m 42,50m 39,74c
+Hannie Mintjes & Gert Jan Nieland|43,04|40,13 50,50m 39,74c
+Tetty Corzilius & Partner 1|37,29|39,38cm 30,80c 41,77i
+Simon van de Grootevheen & Marjon Kooiman|34,34|33,57 30,80c 38,65`}},
  zomer:{name:"Zomercompetitie 2026", s:"♦", sub:"Afgerond · 5 zittingen in september", dates:["1/9","8/9","15/9","22/9","29/9"], lines:{"A-lijn":`
 Else Brinkman & Reinie de Jong|59,68|61,01 56,51 56,55c 64,26c 60,09m
 Joop van Wijk & Koos Vijverberg|55,57|62,20 59,90 49,11 56,58 50,06
@@ -961,7 +962,7 @@ John Dols & Marianne Saelmans|39,10|36,61 38,54c 39,25a 35,93m 45,06
 Albert Rigter & Thea van Beers|38,98|36,61 28,13 42,86 51,16c 36,02m
 Patrica Heersink & Jan Dijkhuis|37,39|0,00a 46,94a 46,94a 46,93m 46,96m
 Petra Huigsloot & Joris Rademaker|0,00|0,00a 0,00a 0,00a 0,00a 0,00a`}},
- mp:{name:"Meesterpuntenladder 2026/2027", s:"♣", sub:"Individueel · meesterpunten dit seizoen", mp:true, lines:{"Spelers":`Henk van Middelaar|121;Else Brinkman|94;Frans Tibbe|83;Gerdien van Sandijk|82;Johan Jansen|82;Ina Kraijo|78;Ruud van den Hoven|76;Reinie de Jong|75;Harry Overmars|72;Henk Rigter|72;Gerrit Groenendaal|71;Herman Schrijver|71;Jaap van Tuyll|70;Ans Vis|69;Henk van de Grootevheen|68;Hetty Kramer|67;Willie van Middelaar|66;Karel Rietzschel|64;Joop van Wijk|63;Anton van den Hout|62;Liesbeth Nievelstein|62;Romy Abeen|62;Simon van Valkenhoef|61;Evert van de Beek|59;Annemarie van Empelen|58;Ge Boom|57;Gerda Eerdmans|54;Han Biegstraaten|54;Willemien Meershoek|54;Jan Louwes|54;Annemarie Overmars|54;Ria Biegstraaten|54;Joris Rademaker|53;Petra Huigsloot|53;Koos Vijverberg|53;Denise Druyff|52;Alex Druyff|52;Trudy Dieke|51;Frans Daemen|51;Frits Peters|51;Martin van Westerlaak|51;Henk van Valkenhoef|50;Maria Leemreize|50;Annelies Beentjes|50;Peter Beentjes|50;Dineke Bolding|50;Henk Pool|49;Gerda Pool|49;Dinie Kowalski|47;Ben Mokkink|46;Gerrie Brouwer|45;Bep Berger|45;Jan Willem Brouwer|45;Paul de Kleuver|44;Carla Pels|43;Jeroen Pels|43;Trudy Smink|42;Gerry Ising|42;Marjo Scheijmans|41;Marijke Schutijser|37;Ad Immink|37;Marijke Koelman|37;Mia van den Hoven|36;Carlie Vriesekoop|35;Wil de Ridder|33;Johan Smink|33;Uco Sonnenberg|33;Jeanette Sonnenberg|33;Thea Bodewes|32;Mary Lans|32;Ine Tuerlings|31;Jeanne Lammers|31;Ben Schoonderbeek|30;Els Strijbos|29;Timo Voskuilen|29;Willie Jansen|28;Co Hilhorst|27;Elly Moolenaar|26;Rene van Baal|25;Valerie Welch|25;Hanny Wisman|24;Marian de Munck|24;Hermien Engberink|22;Corry Timmer|21;Jos Timmer|21;Anneloes Fokkema|21;Klaas Fokkema|21;Willem Lunter|18;Nel Lunter|18;Tetty Corzilius|17;Anja Bult|17;Jan Bart Jutte|15;Willem van der Ben|15;Ria van der Stroom|13;Gert Jan Nieland|11;Hannie Mintjes|11;Marianne Saelmans|10;John Dols|10;Gerard van Hooft|7;Loes van Hooft|7;Albert Rigter|6;Marjon ten Hoor|6;Simon van de Grootevheen|5;Marjon Kooiman|5;Bram Hurkmans|4;Renee Scholtemeijer|4;Patrica Heersink|2;Jan Dijkhuis|2;Thea van Beers|1`}}
+ mp:{name:"Meesterpuntenladder 2026/2027", s:"♣", sub:"Individueel · meesterpunten dit seizoen", mp:true, lines:{"Spelers":`Henk van Middelaar|125;Else Brinkman|103;Ina Kraijo|90;Frans Tibbe|86;Henk Rigter|85;Gerdien van Sandijk|84;Johan Jansen|84;Herman Schrijver|84;Reinie de Jong|84;Jaap van Tuyll|82;Harry Overmars|81;Ruud van den Hoven|81;Henk van de Grootevheen|79;Liesbeth Nievelstein|72;Romy Abeen|72;Gerrit Groenendaal|71;Anton van den Hout|69;Ans Vis|69;Joop van Wijk|69;Hetty Kramer|67;Willie van Middelaar|66;Joris Rademaker|65;Petra Huigsloot|65;Karel Rietzschel|64;Simon van Valkenhoef|64;Annemarie Overmars|63;Annemarie van Empelen|62;Trudy Dieke|61;Han Biegstraaten|61;Ria Biegstraaten|61;Jan Louwes|61;Gerda Eerdmans|60;Willemien Meershoek|60;Evert van de Beek|59;Koos Vijverberg|59;Ge Boom|57;Bep Berger|56;Gerda Pool|55;Henk Pool|55;Frans Daemen|54;Dineke Bolding|54;Ben Mokkink|54;Frits Peters|54;Maria Leemreize|54;Alex Druyff|52;Denise Druyff|52;Martin van Westerlaak|51;Trudy Smink|51;Henk van Valkenhoef|50;Annelies Beentjes|50;Peter Beentjes|50;Dinie Kowalski|48;Marijke Koelman|45;Gerrie Brouwer|45;Jan Willem Brouwer|45;Paul de Kleuver|44;Jeroen Pels|43;Gerry Ising|43;Carla Pels|43;Johan Smink|42;Marjo Scheijmans|41;Willie Jansen|39;Els Strijbos|39;Marijke Schutijser|38;Ad Immink|38;Jeanne Lammers|37;Ine Tuerlings|37;Mia van den Hoven|36;Carlie Vriesekoop|35;Co Hilhorst|35;Uco Sonnenberg|35;Jeanette Sonnenberg|35;Wil de Ridder|34;Thea Bodewes|33;Mary Lans|32;Elly Moolenaar|31;Ben Schoonderbeek|30;Anneloes Fokkema|29;Klaas Fokkema|29;Timo Voskuilen|29;Marian de Munck|29;Hanny Wisman|26;Willem van der Ben|26;Valerie Welch|25;Rene van Baal|25;Jos Timmer|24;Corry Timmer|24;Jan Bart Jutte|23;Willem Lunter|22;Hermien Engberink|22;Nel Lunter|22;Anja Bult|19;Ria van der Stroom|18;Tetty Corzilius|17;Gert Jan Nieland|11;Hannie Mintjes|11;Marianne Saelmans|10;John Dols|10;Gerard van Hooft|7;Loes van Hooft|7;Albert Rigter|6;Marjon ten Hoor|6;Simon van de Grootevheen|5;Marjon Kooiman|5;Renee Scholtemeijer|4;Bram Hurkmans|4;Jan Dijkhuis|2;Patrica Heersink|2;Thea van Beers|1`}}
 };
 const FLAGS = {a:"afwezig",c:"combipaar",h:"gespeeld in hogere lijn",l:"gespeeld in lagere lijn",i:"met invallers",m:"meer of minder spellen",r:"arbitrale wijziging",n:"telt niet mee",v:"vervallen",b:"handmatig aangepast"};
 const num = s => parseFloat(s.replace(",","."));
@@ -1010,50 +1011,50 @@ renderSt();
 /* ---------- Uitgelichte spellen ---------- */
 const SPOT_SUITS = [["♠","var(--spade)"],["♥","var(--heart)"],["♦","var(--diamond)"],["♣","var(--club)"]];
 const SPOTLIGHT = {
-  sub: "Dinsdagavond, ronde 2 · zitting 2 (17 november)",
+  sub: "Dinsdagavond, ronde 2 · zitting 3 (24 november)",
   deals: [
     {nr:3, dealer:"Zuid", vul:"Oost-west",
-     hands:{N:["AH42","HVB","9","A10876"], W:["B3","82","AHB1086","H92"], E:["V9","97543","V753","VB"], S:["108765","A106","42","543"]},
+     hands:{N:["H75","H64","HB10874","B"], W:["A632","B2","A932","1098"], E:["VB8","A1093","","AHV765"], S:["1094","V875","V65","432"]},
      results:[
-       {score:"+800", contract:"4♦x −3", door:"West", nz:"Henk Rigter & Herman Schrijver", ow:"John Dols & Marianne Saelmans", pct:100},
-       {score:"+450", contract:"4♠ +1", door:"Noord", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Timo Voskuilen & Ben Schoonderbeek", pct:81.25},
-       {score:"", contract:"4♠ +1", door:"Zuid", nz:"Annemarie van Empelen & Henk van Middelaar", ow:"Jan Louwes & Anton van den Hout", pct:81.25},
-       {score:"+420", contract:"4♠ C", door:"Noord", nz:"Ad Immink & Marijke Schutijser", ow:"Joop van Wijk & Koos Vijverberg", pct:56.25},
-       {score:"", contract:"4♠ C", door:"Zuid", nz:"Else Brinkman & Reinie de Jong", ow:"Frans Tibbe & Simon van Valkenhoef", pct:56.25},
-       {score:"+200", contract:"3♠ +2", door:"Zuid", nz:"Johan Jansen & Gerdien van Sandijk", ow:"Evert van de Beek & Ge Boom", pct:31.25},
-       {score:"", contract:"3♠ +2", door:"Zuid", nz:"Henk van de Grootevheen & Willem van der Ben", ow:"Petra Huigsloot & Joris Rademaker", pct:31.25},
-       {score:"+170", contract:"3♠ +1", door:"Noord", nz:"Albert Rigter & Thea van Beers", ow:"Gerda Pool & Henk Pool", pct:12.5},
-       {score:"−50", contract:"5♣ −1", door:"Noord", nz:"Henk van Valkenhoef & Martin van Westerlaak", ow:"Harry Overmars & Marjon ten Hoor", pct:0}
+       {score:"+110", contract:"3♦ C", door:"Noord", nz:"Johan Jansen & Gerdien van Sandijk", ow:"Joop van Wijk & Koos Vijverberg", pct:100},
+       {score:"−100", contract:"3♦ −2", door:"Noord", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Else Brinkman & Reinie de Jong", pct:87.5},
+       {score:"−130", contract:"3♦ +1", door:"West", nz:"Henk Rigter & Herman Schrijver", ow:"John Dols & Marianne Saelmans", pct:75},
+       {score:"−150", contract:"3♣ +2", door:"Oost", nz:"Jan Louwes & Anton van den Hout", ow:"Gerda Pool & Henk Pool", pct:43.75},
+       {score:"", contract:"2♣ +3", door:"Oost", nz:"Petra Huigsloot & Joris Rademaker", ow:"Annemarie van Empelen & Henk van Middelaar", pct:43.75},
+       {score:"", contract:"3♣ +2", door:"Oost", nz:"Frans Tibbe & Simon van Valkenhoef", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:43.75},
+       {score:"", contract:"3♣ +2", door:"Oost", nz:"Henk van de Grootevheen & Willem van der Ben", ow:"Bram Hurkmans & Renee Scholtemeijer", pct:43.75},
+       {score:"−200", contract:"5♦ −4", door:"Noord", nz:"Evert van de Beek & Marjon ten Hoor", ow:"Ad Immink & Marijke Schutijser", pct:6.25},
+       {score:"", contract:"3♠ +2", door:"West", nz:"Albert Rigter & Thea van Beers", ow:"Jan Bart Jutte & Co Hilhorst", pct:6.25}
      ],
-     uitleg:"Noord-zuid heeft hier twee lange kleuren liggen: een negenkaart schoppenfit (aas en heer bij noord) én een achtkaart klaverenfit. De meeste paren kozen voor schoppen en haalden daarmee simpel het contract (4♠, soms met een overslag) voor 420 tot 450 punten. Eén paar, Henk van Valkenhoef & Martin van Westerlaak, zocht het juist in de klaverenfit tot het vijfniveau en ging daar één down (−50). De beste score kwam van heel andere kant: Henk Rigter & Herman Schrijver lieten de tegenpartij uiteindelijk in 4♦ belanden, doubleerden, en zetten dat drie down voor +800 — ruim beter dan zelfs de eigen schoppengame. Mooie les: met zoveel lengte in twee kleuren kun je soms meer verdienen aan een goed getimede tegendoublet dan aan je eigen hoogste bod."},
-    {nr:5, dealer:"Noord", vul:"Noord-zuid",
-     hands:{N:["873","HB8762","AH10","6"], W:["H654","93","VB97","B95"], E:["AV109","V105","532","A83"], S:["B2","A4","864","HV10742"]},
+     uitleg:"Een echt dubbelfit-spel: noord-zuid heeft samen negen ruitens (met heer en boer bij noord), maar oost-west heeft zelf ook twee lange kleuren liggen — negen klavers mét aas, heer en vrouw, en zeven schoppens mét aas, vrouw en boer. Wie in de eigen ruitenfit bleef steken kwam meestal goed weg (+110 tot −130), maar Evert van de Beek & Marjon ten Hoor lieten zich verleiden tot 5♦ en gingen daar vier down (−200) — de slechtste score van het spel. Mooie les: als de tegenpartij zelf duidelijk een eigen fit heeft, is doorbieden in je eigen kleur niet automatisch veilig, ook al heb je zelf negen kaarten. Een mooi voorbeeld van de 'Law of total tricks' uit de Infotheek: met negen troeven mag je tot het 3-niveau meebieden, maar de stap naar de manche moet dan nog wel echt verdiend worden. Noords opening (11 punten, maar met 6 ruitens plus 3 schoppens samen 9 lang, dus 11+9=20) past trouwens precies bij de regel van 20 uit diezelfde Infotheek-rubriek: met zo'n lengte mag je ook onder de gebruikelijke 12 punten al openen."},
+    {nr:4, dealer:"West", vul:"Allen",
+     hands:{N:["V4","B10873","A863","A8"], W:["AH75","H42","97","V975"], E:["8","6","VB10542","HB1042"], S:["B109632","AV95","H","63"]},
      results:[
-       {score:"+620", contract:"4♥ C", door:"Noord", nz:"Ad Immink & Marijke Schutijser", ow:"Harry Overmars & Marjon ten Hoor", pct:100},
-       {score:"+140", contract:"2♥ +1", door:"Noord", nz:"Henk Rigter & Herman Schrijver", ow:"Petra Huigsloot & Joris Rademaker", pct:75},
-       {score:"", contract:"2♥ +1", door:"Noord", nz:"Joop van Wijk & Koos Vijverberg", ow:"Jan Louwes & Anton van den Hout", pct:75},
-       {score:"", contract:"2♥ +1", door:"Noord", nz:"Evert van de Beek & Ge Boom", ow:"Henk van de Grootevheen & Willem van der Ben", pct:75},
-       {score:"+50", contract:"3♠ −1", door:"West", nz:"Else Brinkman & Reinie de Jong", ow:"Johan Jansen & Gerdien van Sandijk", pct:50},
-       {score:"−100", contract:"3♥ −1", door:"Zuid", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:31.25},
-       {score:"", contract:"3♥ −1", door:"Noord", nz:"John Dols & Marianne Saelmans", ow:"Frans Tibbe & Simon van Valkenhoef", pct:31.25},
-       {score:"−110", contract:"2♠ C", door:"Oost", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Gerda Pool & Henk Pool", pct:6.25},
-       {score:"", contract:"2♠ C", door:"West", nz:"Albert Rigter & Thea van Beers", ow:"Annemarie van Empelen & Henk van Middelaar", pct:6.25}
+       {score:"+620", contract:"4♥ C", door:"Noord", nz:"Evert van de Beek & Marjon ten Hoor", ow:"Ad Immink & Marijke Schutijser", pct:93.75},
+       {score:"", contract:"4♥ C", door:"Noord", nz:"Henk Rigter & Herman Schrijver", ow:"John Dols & Marianne Saelmans", pct:93.75},
+       {score:"+200", contract:"5♣x −1", door:"West", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Else Brinkman & Reinie de Jong", pct:75},
+       {score:"+170", contract:"3♥ +1", door:"Noord", nz:"Frans Tibbe & Simon van Valkenhoef", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:56.25},
+       {score:"", contract:"3♥ +1", door:"Noord", nz:"Johan Jansen & Gerdien van Sandijk", ow:"Joop van Wijk & Koos Vijverberg", pct:56.25},
+       {score:"+100", contract:"4♦ −1", door:"Oost", nz:"Petra Huigsloot & Joris Rademaker", ow:"Annemarie van Empelen & Henk van Middelaar", pct:31.25},
+       {score:"", contract:"4♣ −1", door:"West", nz:"Jan Louwes & Anton van den Hout", ow:"Gerda Pool & Henk Pool", pct:31.25},
+       {score:"−110", contract:"2♣ +1", door:"West", nz:"Albert Rigter & Thea van Beers", ow:"Jan Bart Jutte & Co Hilhorst", pct:12.5},
+       {score:"−200", contract:"5♥ −2", door:"Noord", nz:"Henk van de Grootevheen & Willem van der Ben", ow:"Bram Hurkmans & Renee Scholtemeijer", pct:0}
      ],
-     uitleg:"Noord-zuid heeft hier een mooie achtkaart hartenfit (zes bij noord, twee bij zuid) en 21 punten samen — niet overweldigend, maar met zo'n lange fit vaak toch genoeg voor de game. Ad Immink & Marijke Schutijser waren de enigen die doorbogen naar 4♥, en maakten het precies: +620 en de volle 100%. De rest bleef in een deelscore steken: de meeste in 2♥ met een overslag (+140), twee paren gingen zelfs in hun eigen fit nog down op het 3-niveau. Mooi voorbeeld dat een goede fit soms zwaarder weegt dan het aantal punten."},
+     uitleg:"Noord-zuid heeft hier een sterke negenkaart hartenfit (aas en vrouw bij zuid, boer-tien-acht-zeven-drie bij noord) en haalt daarmee simpel de game: 4♥ precies voor +620. Oost-west zat met een eigen klaverenfit (negen kaarten, met heer en boer bij oost) en probeerde dat als redmiddel: Timo Voskuilen & Ben Schoonderbeek doubleerden hun 5♣-sacrifice en zetten dat één down (+200, bijna net zo goed als de game zelf). Twee paren bleven in een te lage 3♥ steken (+170) en lieten zo punten liggen, en Henk van de Grootevheen & Willem van der Ben bepaalden het dieptepunt door zelf naar 5♥ door te bieden en daar twee down te gaan (−200). Mooie les: als je fit en punten voor de game hebt, is doorbieden naar het vijfniveau vaak een gok te veel — op tijd stoppen in de game was hier al genoeg. Met maar 21 punten samen lijkt 4♥ niet vanzelfsprekend, maar de negenkaart fit maakt het verschil — precies de gedachte achter 'Van puntenkul naar slagkracht' in de Infotheek: tel niet alleen punten, maar ook lengte en pas. De 5♣-sacrifice van Timo Voskuilen & Ben Schoonderbeek paste binnen de regel van 2 en 3 (kwetsbaar mag je hoogstens 2 slagen verder bieden dan je zelf hebt) en bleek dan ook een prima zet."},
     {nr:6, dealer:"Oost", vul:"Oost-west",
-     hands:{N:["V2","A62","83","B98642"], W:["AH63","HB10","AB954","V"], E:["B109754","V85","V72","7"], S:["8","9743","H106","AH1053"]},
+     hands:{N:["74","H","10532","A109763"], W:["983","10952","HV8","84"], E:["V10","AB87643","B74","V"], S:["AHB652","","A96","HB52"]},
      results:[
-       {score:"+200", contract:"5♠x −1", door:"Oost", nz:"Evert van de Beek & Ge Boom", ow:"Henk van de Grootevheen & Willem van der Ben", pct:100},
-       {score:"+100", contract:"5♠ −1", door:"Oost", nz:"Else Brinkman & Reinie de Jong", ow:"Johan Jansen & Gerdien van Sandijk", pct:87.5},
-       {score:"−130", contract:"1♦ +3", door:"West", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Gerda Pool & Henk Pool", pct:68.75},
-       {score:"", contract:"1♦ +3", door:"West", nz:"Ad Immink & Marijke Schutijser", ow:"Harry Overmars & Marjon ten Hoor", pct:68.75},
-       {score:"−150", contract:"5♣ −3", door:"Noord", nz:"Joop van Wijk & Koos Vijverberg", ow:"Jan Louwes & Anton van den Hout", pct:50},
-       {score:"−300", contract:"5♣x −2", door:"Zuid", nz:"Henk Rigter & Herman Schrijver", ow:"Petra Huigsloot & Joris Rademaker", pct:37.5},
-       {score:"−620", contract:"4♠ C", door:"West", nz:"Timo Voskuilen & Ben Schoonderbeek", ow:"Henk van Valkenhoef & Martin van Westerlaak", pct:25},
-       {score:"−650", contract:"4♠ +1", door:"Oost", nz:"Albert Rigter & Thea van Beers", ow:"Annemarie van Empelen & Henk van Middelaar", pct:12.5},
-       {score:"−710", contract:"4♠ +3", door:"Oost", nz:"John Dols & Marianne Saelmans", ow:"Frans Tibbe & Simon van Valkenhoef", pct:0}
+       {score:"+510", contract:"4♠ +3", door:"Zuid", nz:"Henk van Valkenhoef & Martin van Westerlaak", ow:"Jan Louwes & Anton van den Hout", pct:87.5},
+       {score:"", contract:"4♠ +3", door:"Zuid", nz:"Henk van de Grootevheen & Willem van der Ben", ow:"Timo Voskuilen & Ben Schoonderbeek", pct:87.5},
+       {score:"", contract:"5♠ +2", door:"Zuid", nz:"Henk Rigter & Herman Schrijver", ow:"Gerda Pool & Henk Pool", pct:87.5},
+       {score:"+440", contract:"5♠ +2", door:"Noord", nz:"Petra Huigsloot & Joris Rademaker", ow:"Frans Tibbe & Simon van Valkenhoef", pct:62.5},
+       {score:"+260", contract:"3♠ +4", door:"Zuid", nz:"John Dols & Marianne Saelmans", ow:"Annemarie van Empelen & Henk van Middelaar", pct:50},
+       {score:"+200", contract:"5♥ −2", door:"Oost", nz:"Evert van de Beek & Marjon ten Hoor", ow:"Joop van Wijk & Koos Vijverberg", pct:37.5},
+       {score:"+100", contract:"4♥ −1", door:"Oost", nz:"Ad Immink & Marijke Schutijser", ow:"Else Brinkman & Reinie de Jong", pct:25},
+       {score:"−140", contract:"3♥ C", door:"Oost", nz:"Albert Rigter & Thea van Beers", ow:"Bram Hurkmans & Renee Scholtemeijer", pct:12.5},
+       {score:"−790", contract:"4♥x C", door:"Oost", nz:"Jan Bart Jutte & Co Hilhorst", ow:"Johan Jansen & Gerdien van Sandijk", pct:0}
      ],
-     uitleg:"Dit spel is een botsing van twee enorme fits: oost-west heeft een tienkaart schoppenfit mét de meeste punten (23 om 17), maar noord-zuid heeft zelf weer een unieke elfkaart klaverenfit. Oost-west kan 4♠ altijd maken, en wie dat laat doorlopen betaalt fors: van −620 tot zelfs −710 met overslagen. De beste noord-zuid-paren beperkten de schade juist door de tegenpartij door te laten bieden en dan te doubleren: Evert van de Beek & Ge Boom deden dat bij 5♠ (+200), Else Brinkman & Reinie de Jong bij het ongedoubleerde 5♠ (+100). Andere paren zochten het zelf in hun eigen klaverenfit en gingen daar drie down (Joop van Wijk & Koos Vijverberg, −150) of gedoubleerd twee down (Henk Rigter & Herman Schrijver, −300) — nog altijd goedkoper dan de volle schoppengame laten lopen. Mooie les: bij zo'n dubbele fit win je vaak meer met een goed getimede tegenzet dan met zelf het hoogste bod willen hebben."}
+     uitleg:"Noord-zuid heeft hier een prachtige achtkaart schoppenfit (aas, heer en boer bij zuid) en kan zelfs alle 13 slagen halen — drie paren die in schoppen speelden haalden dan ook precies de volle pot (4♠+3 of 5♠+2, allebei 13 slagen). Maar oost-west heeft op zijn beurt een reusachtige twaalfkaart hartenfit (vijf bij west, zeven bij oost, met aas en boer), en wie dat liet doorlopen betaalde de rekening: Jan Bart Jutte & Co Hilhorst doubleerden een hartencontract dat gewoon gemaakt werd, en gingen daarmee van een prima schoppenresultaat naar de slechtste score van het spel (−790). Mooie les: een eigen cold slam is geen garantie voor een topscore als de tegenpartij met een even grote fit kan terugbieden — soms is voorzichtig doubleren duurder dan gewoon zelf doorbieden. Acht troeven bij noord-zuid plus twaalf bij oost-west is twintig in totaal, zo'n beetje de 'Law of total tricks' in het extreem. En het doublet van Jan Bart Jutte & Co Hilhorst is precies de valkuil uit de Infotheek-tip over het strafdoublet: dat werkt alleen als je vrij zeker weet dat ze down gaan, en een gedoubleerde deelscore die tóch gemaakt wordt, kan zomaar in een manche veranderen."}
   ]
 };
 function handHTML(label, h){
@@ -1064,7 +1065,7 @@ function renderSpotlight(){
   $("#spotSub").textContent = SPOTLIGHT.sub;
   $("#spotlightList").innerHTML = SPOTLIGHT.deals.map((d,i)=>{
     const colors=["heart","club","diamond","spade"]; const c=colors[i%colors.length];
-    const rows = d.results.map(r=>`<tr class="${r.pct===100?'top':''}"><td>${esc(r.score)}</td><td>${contractHTML(r.contract)}</td><td>${esc(r.door)}</td><td class="nm">${esc(r.nz)}</td><td class="nm">${esc(r.ow)}</td><td style="text-align:right">${r.pct}%</td></tr>`).join("");
+    const rows = d.results.map(r=>`<tr class="${r.pct===100?'best':''}"><td>${esc(r.score)}</td><td>${contractHTML(r.contract)}</td><td>${esc(r.door)}</td><td class="nm">${esc(r.nz)}</td><td class="nm">${esc(r.ow)}</td><td style="text-align:right">${r.pct}%</td></tr>`).join("");
     return `<div class="panel t-${c}"><div class="spot-meta"><h3 style="margin:0">Spel ${d.nr}</h3><span class="meta">Gever: ${d.dealer} · Kwetsbaar: ${d.vul}</span></div>
       <div class="deal">${handHTML("N",d.hands.N)}${handHTML("W",d.hands.W)}${handHTML("E",d.hands.E)}${handHTML("S",d.hands.S)}</div>
       <div class="tbl"><table class="spotr"><thead><tr><th>NZ</th><th>Contract</th><th>Door</th><th>Paar NZ</th><th>Paar OW</th><th>% NZ</th></tr></thead><tbody>${rows}</tbody></table></div>
